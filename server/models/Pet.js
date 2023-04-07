@@ -5,11 +5,11 @@ const petSchema = new Schema({
         type: String,
         required: true
     },
-    Breed: {
+    breed: {
         type: String,
         required: true
     },
-    Size: {
+    size: {
         type: String,
         required: true
     },
@@ -20,7 +20,7 @@ const petSchema = new Schema({
         type: Number,
         required: true
     },
-    isNeutered: {
+    isFixed: {
         type: Boolean,
         default: false
     }
