@@ -24,7 +24,7 @@ const renterSchema = new Schema({
         type: String,
     },
     // references the pet model to generate an array with all the renters pets.
-    pet: [
+    pets: [
         { 
           type: mongoose.Schema.Types.ObjectId,
           ref: 'Pet',
