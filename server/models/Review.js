@@ -12,6 +12,10 @@ const reviewSchema = new Schema({
         minlength: 10,
         trim: true,
     },
+    rating:{
+        type: Number,
+        
+    },
     createdAt: {
         type: Date,
         default: Date.now,
