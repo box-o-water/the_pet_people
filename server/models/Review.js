@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model, mongoose } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
 const reviewSchema = new Schema({
@@ -14,13 +14,18 @@ const reviewSchema = new Schema({
     },
     rating:{
         type: Number,
-        
+        match: ['/^[1-9]|10$/', "only a rating of 1-10"],
     },
     createdAt: {
         type: Date,
         default: Date.now,
         get: (timestamp) => dateFormat(timestamp),
     },
+    renter: {
+        type:  mongoose.Schema.Types.String,
+        ref: "Renter",
+        required: true
+      }
 });
 
 

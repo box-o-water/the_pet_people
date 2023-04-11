@@ -23,20 +23,7 @@ const renterSchema = new Schema({
     location: {
         type: String,
     },
-    // references the pet model to generate an array with all the renters pets.
-    pets: [
-        { 
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Pet',
-        },
-      ],
-      // references the review model to generate an array with all the renters reviews.
-      reviews: [
-        { 
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Review',
-        },
-      ]
+
 });
 
 // encrypts password before save
