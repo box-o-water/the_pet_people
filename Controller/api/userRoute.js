@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const user = require('../../models/Tyler');
+const user = require('../../server/models/Renter');
 
 module.exports = (app) => {
 
@@ -11,7 +11,7 @@ module.exports = (app) => {
         //checking to make sure the user entered the correct username/password combo
         if(username === user.username && password === user.password) { 
             //if user log in success, generate a JWT token for the user with a secret key
-            jwt.sign({user}, 'privatekey', { expiresIn: '1h' },(err, token) => {
+            jwt.sign({user}, 'privatekey', { expiresIn: '2min' },(err, token) => {
                 if(err) { console.log(err) }    
                 res.send(token);
             });
