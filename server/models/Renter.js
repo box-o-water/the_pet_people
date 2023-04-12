@@ -1,7 +1,7 @@
-const { Schema, model, mongoose } = require('mongoose');
+const {  model, mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const renterSchema = new Schema({
+const renterSchema = new mongoose.Schema({
     username:{
         type: String,
         required: true,
@@ -23,20 +23,15 @@ const renterSchema = new Schema({
     location: {
         type: String,
     },
-    // references the pet model to generate an array with all the renters pets.
-    pets: [
-        { 
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Pet',
-        },
-      ],
-      // references the review model to generate an array with all the renters reviews.
-      reviews: [
-        { 
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Review',
-        },
-      ]
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review'
+    }],
+    pets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pet'
+    }]
+
 });
 
 // encrypts password before save
@@ -49,7 +44,7 @@ renterSchema.pre('save', async function (next) {
 });
 
 // compares passwords for login
-renterSchema.methods.isCorrectPassword = async function (password) {
+renterSchema.methods.checkPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
 

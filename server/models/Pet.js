@@ -1,12 +1,21 @@
-const { Schema, model } = require('mongoose');
+const { mongoose, model } = require('mongoose');
 
-const petSchema = new Schema({
+const petSchema = new mongoose.Schema({
     animalType: {
+        type: String,
+        required: true
+    },
+    petName: {
         type: String,
         required: true
     },
     breed: {
         type: String,
+        required: true
+    },
+    gender: {
+        type: String,
+        enum: ['female', 'male', 'other'],
         required: true
     },
     size: {
@@ -23,7 +32,7 @@ const petSchema = new Schema({
     isFixed: {
         type: Boolean,
         default: false
-    }
+    },
 });
 
 const Pet = model('Pet', petSchema)
