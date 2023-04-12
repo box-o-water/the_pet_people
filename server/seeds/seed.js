@@ -107,7 +107,7 @@ const seedPets = async () => {
     const renters = await Renter.find();
     const pets = seedData.pets.map(pet => {
       const randomRenter = renters[Math.floor(Math.random() * renters.length)];
-      return { ...pets, pets: randomRenter._id };
+      return { ...pet, pets: randomRenter._id };
     });
     await Pet.insertMany(pets);
     console.log(`${pets.length} reviews seeded successfully!`);
