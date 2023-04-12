@@ -16,9 +16,12 @@ const typeDefs = gql`
     landlord: String
     reviewContents: String
     createdAt: String
+    rating: Int
   }
+
   type Pet {
     _id: ID
+    petName: String
     animalType: String
     breed: String
     size: String
@@ -32,7 +35,8 @@ const typeDefs = gql`
     Reviews: [Review]
     Pets: [Pet]
   }
-
 `;
+
+
 
 module.exports = typeDefs;

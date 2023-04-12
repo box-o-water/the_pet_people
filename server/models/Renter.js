@@ -1,7 +1,7 @@
-const { Schema, model, mongoose } = require('mongoose');
+const {  model, mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const renterSchema = new Schema({
+const renterSchema = new mongoose.Schema({
     username:{
         type: String,
         required: true,
@@ -23,20 +23,15 @@ const renterSchema = new Schema({
     location: {
         type: String,
     },
-    // references the pet model to generate an array with all the renters pets.
-    pets: [
-        { 
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Pet',
-        },
-      ],
-      // references the review model to generate an array with all the renters reviews.
-      reviews: [
-        { 
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Review',
-        },
-      ]
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review'
+    }],
+    pets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pet'
+    }]
+
 });
 
 // encrypts password before save

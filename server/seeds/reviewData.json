@@ -1,7 +1,13 @@
-[
-  {
+[  
+  {    
     "landlord": "Wilsondale",
     "reviewContents": "They were amazing",
     "rating": 10
+  },
+  { 
+    "landlord": "Maplewood Apartments",   
+    "reviewContents": "Not a great experience",
+    "rating": 3 
   }
 ]
+
