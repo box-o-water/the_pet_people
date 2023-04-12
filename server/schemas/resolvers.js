@@ -3,29 +3,46 @@ const { Pet, Renter, Review } = require('../models');
 const resolvers = {
   Query: {
     // finds all renters
-    Renters: async () => {
-      return await Renter.find({})
+    renters: async () => {
+      return await Renter.find()
       .populate({
         path: 'pets',
-        select: 'petName breed age',
-        model: 'Pet',
+        model: 'pet',
       })
       .populate({
         path: 'reviews',
-        select: 'reviewContents',
-        model: 'Review',
+        model: 'review',
       });
     },
     // finds all pets
-    Pets: async () => {
+    pets: async () => {
       return await Pet.find({});
     },
     // finds all reviews
-    Reviews: async () => {
+    reviews: async () => {
       return await Review.find({});
     }
   },
 
+  Mutation: {
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const correctPw = await user.checkPassword(password);
+
+      if (!correctPw) {
+        throw new AuthenticationError('Incorrect credentials');
+      }
+
+      const token = signToken(user);
+
+      return { token, user };
+    }
+  }
 };
 
 module.exports = resolvers;

@@ -44,7 +44,7 @@ renterSchema.pre('save', async function (next) {
 });
 
 // compares passwords for login
-renterSchema.methods.isCorrectPassword = async function (password) {
+renterSchema.methods.checkPassword = async function (password) {
     return bcrypt.compare(password, this.password);
 };
 
