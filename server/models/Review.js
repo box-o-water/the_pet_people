@@ -1,7 +1,7 @@
-const { mongoose, model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const reviewSchema = new mongoose.Schema({
+const reviewSchema = new Schema({
     landlord:{
         type: String,
         required: true,

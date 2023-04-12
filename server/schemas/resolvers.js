@@ -1,4 +1,6 @@
+const { AuthenticationError } = require('apollo-server-express');
 const { Pet, Renter, Review } = require('../models');
+const { signToken } = require('../utils/auth');
 
 const resolvers = {
   Query: {
@@ -7,11 +9,11 @@ const resolvers = {
       return await Renter.find()
       .populate({
         path: 'pets',
-        model: 'pet',
+        model: 'Pet',
       })
       .populate({
         path: 'reviews',
-        model: 'review',
+        model: 'Review',
       });
     },
     // finds all pets
@@ -25,22 +27,30 @@ const resolvers = {
   },
 
   Mutation: {
+    // Renters are Users, but for future purposes we are calling them Renters
+    addRenter: async (parent, { username, email, password }) => {
+      const renter = await Renter.create({ username, email, password });
+      const token = signToken(renter);
+      return { token, renter };
+    },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+      const renter = await Renter.findOne({ email });
 
-      if (!user) {
+      if (!renter) {
+        console.log("wrong username");
         throw new AuthenticationError('Incorrect credentials');
       }
 
-      const correctPw = await user.checkPassword(password);
+      const correctPw = await renter.checkPassword(password);
 
       if (!correctPw) {
         throw new AuthenticationError('Incorrect credentials');
+        console.log("wrong password");
       }
+      console.log(renter)
+      const token = signToken(renter);
 
-      const token = signToken(user);
-
-      return { token, user };
+      return { token, renter };
     }
   }
 };

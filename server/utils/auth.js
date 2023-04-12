@@ -3,6 +3,9 @@
 const jwt = require('jsonwebtoken');
 const Renter = require('../models/Renter');
 
+const secret = 'mysecretssshhhhhhh';
+const expiration = '4h';
+
 const authMiddleware = async (req, res, next) => {
   try {
     // Get token from request header
@@ -25,4 +28,12 @@ const authMiddleware = async (req, res, next) => {
   }
 };
 
-module.exports = authMiddleware;
+
+const signToken = function ({ email, username, _id }) {
+    const payload = { email, username, _id };
+    return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+};
+
+
+
+module.exports = { authMiddleware, signToken };

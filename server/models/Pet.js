@@ -1,6 +1,6 @@
-const { mongoose, model } = require('mongoose');
+const { Schema, model } = require('mongoose');
 
-const petSchema = new mongoose.Schema({
+const petSchema = new Schema({
     animalType: {
         type: String,
         required: true

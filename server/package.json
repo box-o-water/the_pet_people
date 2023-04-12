@@ -4,23 +4,25 @@
     "description": "",
     "main": "server.js",
     "scripts": {
-      "start": "node server.js",
-      "seed": "node seeds/seed.js",
-      "test": "echo \"Error: no test specified\" && exit 1"
+        "start": "node server.js",
+        "seed": "node seeds/seed.js",
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "watch": "nodemon index.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-      "apollo-server-express": "^3.6.1",
-      "bcrypt": "^5.0.0",
-      "express": "^4.17.1",
-      "graphql": "^16.2.0",
-      "jsonwebtoken": "^8.5.1",
-      "mongoose": "^7.0.3",
-      "uuid": "^9.0.0"
+        "apollo-server-express": "^3.6.1",
+        "bcrypt": "^5.0.0",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "graphql": "^16.2.0",
+        "jsonwebtoken": "^8.5.1",
+        "mongoose": "^7.0.3",
+        "uuid": "^9.0.0"
     },
     "devDependencies": {
-    "nodemon": "^2.0.3"
-  }
-  }
+        "nodemon": "^2.0.3"
+    }
+}

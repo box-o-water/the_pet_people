@@ -29,6 +29,10 @@ const typeDefs = gql`
     age: Int
     isFixed: Boolean
   }
+  type Auth {
+    token: String!
+    renter: Renter!
+  }
 
   type Query {
     renters: [Renter]
@@ -39,7 +43,7 @@ const typeDefs = gql`
   type Mutation {
     addRenter(username: String!, email: String!, password: String!): Auth
     updateRenter(username: String, email: String, password: String): Renter
-    addReview(_id: ID, landlord: String!, reviewContents: String!, rating: INT)
+    addReview(_id: ID, landlord: String!, reviewContents: String!, rating: Int): Review
     login(email: String!, password: String!): Auth
   }
 `;

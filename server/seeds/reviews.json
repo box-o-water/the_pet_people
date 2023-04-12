@@ -1,0 +1,17 @@
+[
+    {
+    "landlord": "John Doe",
+    "reviewContents": "Amazing Tenant, well trained animals, and they cleaned up after them.",
+    "rating": 10
+    },
+    {
+    "landlord": "Jane Doe",
+    "reviewContents": "Terrible! Their animals destroyed the place.",
+    "rating": 1
+    },
+    {
+    "landlord": "Bob Smith",
+    "reviewContents": "They didn't make much noise, but the animals did leave a few scratch marks through out the apartment.",
+    "rating": 5
+    }
+]
