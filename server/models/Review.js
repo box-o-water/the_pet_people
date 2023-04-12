@@ -1,7 +1,7 @@
-const { Schema, model, mongoose } = require('mongoose');
+const { mongoose, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
 
-const reviewSchema = new Schema({
+const reviewSchema = new mongoose.Schema({
     landlord:{
         type: String,
         required: true,
@@ -21,11 +21,6 @@ const reviewSchema = new Schema({
         default: Date.now,
         get: (timestamp) => dateFormat(timestamp),
     },
-    renter: {
-        type:  mongoose.Schema.Types.String,
-        ref: "Renter",
-        required: true
-      }
 });
 
 

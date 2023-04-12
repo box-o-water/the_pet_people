@@ -1,11 +1,11 @@
-const { Schema, model, mongoose } = require('mongoose');
+const { mongoose, model } = require('mongoose');
 
-const petSchema = new Schema({
+const petSchema = new mongoose.Schema({
     animalType: {
         type: String,
         required: true
     },
-    name: {
+    petName: {
         type: String,
         required: true
     },
@@ -33,11 +33,6 @@ const petSchema = new Schema({
         type: Boolean,
         default: false
     },
-    renter: {
-        type:  mongoose.Schema.Types.String,
-        ref: "Renter",
-        required: true
-      }
 });
 
 const Pet = model('Pet', petSchema)

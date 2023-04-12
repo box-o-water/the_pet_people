@@ -2,14 +2,12 @@
   {    
     "landlord": "Wilsondale",
     "reviewContents": "They were amazing",
-    "rating": 10,
-    "renter": "John Doe"
+    "rating": 10
   },
   { 
     "landlord": "Maplewood Apartments",   
     "reviewContents": "Not a great experience",
-    "rating": 3,
-    "renter": "Jane"  
+    "rating": 3 
   }
 ]
 

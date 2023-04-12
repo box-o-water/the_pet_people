@@ -4,15 +4,16 @@
     "email": "johndoe@test.com",
     "password": "password",
     "location": "Virginia",
-    "reviews": [""],
-    "pets": [""]
+    "reviews": ["<review_id_1>"],
+    "pets": ["<pet_id_1>"]
   },
   {
     "username": "Jane",
     "email": "jane@test.com",
     "password": "password",
     "location": "New York",
-    "reviews": [""],
-    "pets": [""]
+    "reviews": ["<review_id_2>"],
+    "pets": ["<pet_id_2>"]
   }
 ]
+

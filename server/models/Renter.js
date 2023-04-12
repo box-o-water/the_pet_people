@@ -1,7 +1,7 @@
-const { Schema, model, mongoose } = require('mongoose');
+const {  model, mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 
-const renterSchema = new Schema({
+const renterSchema = new mongoose.Schema({
     username:{
         type: String,
         required: true,
@@ -23,6 +23,14 @@ const renterSchema = new Schema({
     location: {
         type: String,
     },
+    reviews: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Review'
+    }],
+    pets: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Pet'
+    }]
 
 });
 
