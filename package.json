@@ -2,6 +2,9 @@
   "name": "the_pet_people",
   "version": "0.1.0",
   "description": "",
+  "engines": {
+    "node": "16.18.1"
+  },
   "main": "server/server.js",
   "scripts": {
     "start": "node server/server.js",
