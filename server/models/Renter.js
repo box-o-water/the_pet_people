@@ -1,4 +1,4 @@
-const { model, mongoose } = require('mongoose');
+const {  model, mongoose } = require('mongoose');
 const bcrypt = require('bcrypt');
 
 const renterSchema = new mongoose.Schema({
