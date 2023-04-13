@@ -6,21 +6,18 @@
     "scripts": {
         "start": "node server.js",
         "seed": "node seeds/seed.js",
-        "test": "echo \"Error: no test specified\" && exit 1",
         "watch": "nodemon index.js"
     },
     "keywords": [],
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "apollo-server-express": "^3.6.1",
+        "apollo-server-express": "^2.15.0",
         "bcrypt": "^5.0.0",
-        "cors": "^2.8.5",
         "express": "^4.17.1",
-        "graphql": "^16.2.0",
-        "jsonwebtoken": "^8.5.1",
-        "mongoose": "^7.0.3",
-        "uuid": "^9.0.0"
+        "graphql": "^15.5.0",
+        "jsonwebtoken": "^9.0.0",
+        "mongoose": "^7.0.2"
     },
     "devDependencies": {
         "nodemon": "^2.0.3"

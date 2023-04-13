@@ -1,39 +1,72 @@
 // authMiddleware.js
 
-const jwt = require('jsonwebtoken');
-const Renter = require('../models/Renter');
+const jwt = require("jsonwebtoken");
+const Renter = require("../models/Renter");
 
-const secret = 'mysecretssshhhhhhh';
-const expiration = '4h';
+const secret = "mysecretssshhhhhhh";
+const expiration = "4h";
 
-const authMiddleware = async (req, res, next) => {
-  try {
-    // Get token from request header
-    const token = req.header('Authorization').replace('Bearer ', '');
-    // Verify token
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    // Find renter by ID and token
-    const renter = await Renter.findOne({ _id: decoded._id, 'tokens.token': token });
+module.exports = {
+  // function for our authenticated routes
+  authMiddleware: function ({ req }) {
+    let token = req.body.token || req.query.token || req.headers.authorization;
 
-    if (!renter) {
-      throw new Error();
+    // ["Bearer", "<tokenvalue>"]
+    if (req.headers.authorization) {
+      token = token.split(" ").pop().trim();
     }
 
-    // Add user and token to request object for later use
-    req.renter = renter;
-    req.token = token;
-    next();
-  } catch (e) {
-    res.status(401).send({ error: 'Please authenticate.' });
-  }
-};
+    if (!token) {
+      return req;
+      // return res.status(400).json({ message: "You have no token!" });
+    }
 
+    // verify token and get user data out of it
+    try {
+      const { data } = jwt.verify(token, secret, { maxAge: expiration });
+      req.user = data;
+    } catch {
+      console.log("Invalid token");
+      return req;
+      // return res.status(400).json({ message: "invalid token!" });
+    }
 
-const signToken = function ({ email, username, _id }) {
-    const payload = { email, username, _id };
+    return req;
+    // send to next endpoint
+    // next();
+  },
+  signToken: function ({ username, email, _id }) {
+    const payload = { username, email, _id };
+
     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+  },
 };
 
+// const authMiddleware = async (req, res, next) => {
+//   try {
+//     // Get token from request header
+//     const token = req.header('Authorization').replace('Bearer ', '');
+//     // Verify token
+//     const decoded = jwt.verify(token, process.env.JWT_SECRET);
+//     // Find renter by ID and token
+//     const renter = await Renter.findOne({ _id: decoded._id, 'tokens.token': token });
 
+//     if (!renter) {
+//       throw new Error();
+//     }
 
-module.exports = { authMiddleware, signToken };
+//     // Add user and token to request object for later use
+//     req.renter = renter;
+//     req.token = token;
+//     next();
+//   } catch (e) {
+//     res.status(401).send({ error: 'Please authenticate.' });
+//   }
+// };
+
+// const signToken = function ({ email, username, _id }) {
+//     const payload = { email, username, _id };
+//     return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
+// };
+
+// module.exports = { authMiddleware, signToken };

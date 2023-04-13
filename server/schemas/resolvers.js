@@ -1,29 +1,40 @@
-const { AuthenticationError } = require('apollo-server-express');
-const { Pet, Renter, Review } = require('../models');
-const { signToken } = require('../utils/auth');
+const { AuthenticationError } = require("apollo-server-express");
+// const { Pet, Renter, Review } = require('../models');
+const { Renter } = require("../models");
+const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // finds all renters
-    renters: async () => {
-      return await Renter.find()
-      .populate({
-        path: 'pets',
-        model: 'Pet',
-      })
-      .populate({
-        path: 'reviews',
-        model: 'Review',
-      });
+    // // finds all renters
+    // renters: async () => {
+    //   return await Renter.find()
+    //     .populate({
+    //       path: "pets",
+    //       model: "Pet",
+    //     })
+    //     .populate({
+    //       path: "reviews",
+    //       model: "Review",
+    //     });
+    // },
+    // // finds all pets
+    // pets: async () => {
+    //   return await Pet.find({});
+    // },
+    // // finds all reviews
+    // reviews: async () => {
+    //   return await Review.find({});
+    // },
+    me: async (parent, args, context) => {
+      if (context.user) {
+        const userData = await User.findOne({ _id: context.user._id }).select(
+          "-__v -password"
+        );
+
+        return userData;
+      }
+      throw new AuthenticationError("You need to be logged in!");
     },
-    // finds all pets
-    pets: async () => {
-      return await Pet.find({});
-    },
-    // finds all reviews
-    reviews: async () => {
-      return await Review.find({});
-    }
   },
 
   Mutation: {
@@ -38,21 +49,21 @@ const resolvers = {
 
       if (!renter) {
         console.log("wrong username");
-        throw new AuthenticationError('Incorrect credentials');
+        throw new AuthenticationError("Incorrect credentials");
       }
 
       const correctPw = await renter.checkPassword(password);
 
       if (!correctPw) {
-        throw new AuthenticationError('Incorrect credentials');
+        throw new AuthenticationError("Incorrect credentials");
         console.log("wrong password");
       }
-      console.log(renter)
+      console.log(renter);
       const token = signToken(renter);
 
       return { token, renter };
-    }
-  }
+    },
+  },
 };
 
 module.exports = resolvers;
