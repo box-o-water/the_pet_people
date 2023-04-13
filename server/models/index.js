@@ -1,5 +1,5 @@
-const Pet = require('./Pet');
-const Renter = require('./Renter');
+const Pet = require("./Pet");
+const User = require("./User");
 const Review = require("./Review");
 
-module.exports = { Pet, Renter, Review };
+module.exports = { Pet, User, Review };

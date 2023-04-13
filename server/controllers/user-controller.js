@@ -1,12 +1,12 @@
 // import user model
-const { Renter } = require("../models");
+const { User } = require("../models");
 // import sign token function from auth
 const { signToken } = require("../utils/auth");
 
 module.exports = {
   // get a single user by either their id or their username
   async getSingleUser({ user = null, params }, res) {
-    const foundUser = await Renter.findOne({
+    const foundUser = await User.findOne({
       $or: [
         { _id: user ? user._id : params.id },
         { username: params.username },
@@ -23,7 +23,7 @@ module.exports = {
   },
   // create a user, sign a token, and send it back (to client/src/components/SignUpForm.js)
   async createUser({ body }, res) {
-    const user = await Renter.create(body);
+    const user = await User.create(body);
 
     if (!user) {
       return res.status(400).json({ message: "Something is wrong!" });
@@ -34,7 +34,7 @@ module.exports = {
   // login a user, sign a token, and send it back (to client/src/components/LoginForm.js)
   // {body} is destructured req.body
   async login({ body }, res) {
-    const user = await Renter.findOne({
+    const user = await User.findOne({
       $or: [{ username: body.username }, { email: body.email }],
     });
     if (!user) {
