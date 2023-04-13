@@ -1,10 +1,24 @@
 const { gql } = require("apollo-server-express");
 
 const typeDefs = gql`
+  type Pet {
+    _id: ID
+    petName: String
+    animalType: String
+    breed: String
+    gender: String
+    size: String
+    img: String
+    age: Int
+    isFixed: Boolean
+  }
   type Renter {
     _id: ID!
     username: String!
     email: String!
+    img: String
+    location: String
+    pets: [Pet]
   }
 
   type Auth {
@@ -14,10 +28,13 @@ const typeDefs = gql`
 
   type Query {
     me: Renter
+    renters: [Renter]
   }
 
   type Mutation {
     addRenter(username: String!, email: String!, password: String!): Auth
+    updateRenter(username: String, email: String, password: String, img: String, location: String): Auth
+    addPet(petName: String!, animalType: String!, breed: String, gender: String, size: String, img: String, age: Int, isFixed: Boolean): Auth
     login(email: String!, password: String!): Auth
   }
 `;
@@ -47,16 +64,7 @@ module.exports = typeDefs;
 //   rating: Int
 // }
 
-// type Pet {
-//   _id: ID
-//   petName: String
-//   animalType: String
-//   breed: String
-//   size: String
-//   img: String
-//   age: Int
-//   isFixed: Boolean
-// }
+
 
 // pets: [Pet]
 // reviews: [Review]
