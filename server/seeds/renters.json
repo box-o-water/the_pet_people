@@ -1,0 +1,25 @@
+[
+    {
+    "username": "johndoe",
+    "email": "johndoe@example.com",
+    "password": "password",
+    "img": "https://via.placeholder.com/150",
+    "location": "New York, NY"
+    },
+    {
+    "username": "janedoe",
+    "email": "janedoe@example.com",
+    "password": "password",
+    "img": "https://via.placeholder.com/150",
+    "location": "San Francisco, CA"
+    },
+    {
+    "username": "bobsmith",
+    "email": "bobsmith@example.com",
+    "password": "password",
+    "img": "https://via.placeholder.com/150",
+    "location": "Chicago, IL"
+    }
+]
+
+  

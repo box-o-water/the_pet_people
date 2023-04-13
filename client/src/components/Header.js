@@ -15,6 +15,9 @@ function Header() {
           <li>
             <NavLink to="/login">login</NavLink>
           </li>
+          <li>
+            <NavLink to="/signup">sign up</NavLink>
+          </li>
         </ul>
       </nav>
     </header>
