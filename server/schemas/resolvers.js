@@ -1,13 +1,13 @@
 const { AuthenticationError } = require("apollo-server-express");
-// const { Pet, Renter, Review } = require('../models');
-const { Renter } = require("../models");
+// const { Pet, User, Review } = require('../models');
+const { User } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // // finds all renters
-    // renters: async () => {
-    //   return await Renter.find()
+    // // finds all users
+    // users: async () => {
+    //   return await User.find()
     //     .populate({
     //       path: "pets",
     //       model: "Pet",
@@ -38,30 +38,31 @@ const resolvers = {
   },
 
   Mutation: {
-    // Renters are Users, but for future purposes we are calling them Renters
-    addRenter: async (parent, { username, email, password }) => {
-      const renter = await Renter.create({ username, email, password });
-      const token = signToken(renter);
-      return { token, renter };
+    // users are Users, but for future purposes we are calling them users
+    addUser: async (parent, { username, email, password }) => {
+      const user = await User.create({ username, email, password });
+      const token = signToken(user);
+      return { token, user };
     },
-    login: async (parent, { email, password }) => {
-      const renter = await Renter.findOne({ email });
 
-      if (!renter) {
+    login: async (parent, { email, password }) => {
+      const user = await User.findOne({ email });
+
+      if (!user) {
         console.log("wrong username");
         throw new AuthenticationError("Incorrect credentials");
       }
 
-      const correctPw = await renter.checkPassword(password);
+      const correctPw = await user.checkPassword(password);
 
       if (!correctPw) {
         throw new AuthenticationError("Incorrect credentials");
         console.log("wrong password");
       }
-      console.log(renter);
-      const token = signToken(renter);
+      console.log(user);
+      const token = signToken(user);
 
-      return { token, renter };
+      return { token, user };
     },
   },
 };

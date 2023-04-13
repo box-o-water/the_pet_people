@@ -1,7 +1,7 @@
 const { model, Schema } = require("mongoose");
 const bcrypt = require("bcrypt");
 
-const renterSchema = new Schema({
+const userSchema = new Schema({
   username: {
     type: String,
     required: true,
@@ -39,7 +39,7 @@ const renterSchema = new Schema({
 });
 
 // encrypts password before save
-renterSchema.pre("save", async function (next) {
+userSchema.pre("save", async function (next) {
   if (this.isNew || this.isModified("password")) {
     const saltRounds = 10;
     this.password = await bcrypt.hash(this.password, saltRounds);
@@ -48,10 +48,10 @@ renterSchema.pre("save", async function (next) {
 });
 
 // compares passwords for login
-renterSchema.methods.checkPassword = async function (password) {
+userSchema.methods.checkPassword = async function (password) {
   return bcrypt.compare(password, this.password);
 };
 
-const Renter = model("Renter", renterSchema);
+const User = model("User", userSchema);
 
-module.exports = Renter;
+module.exports = User;
