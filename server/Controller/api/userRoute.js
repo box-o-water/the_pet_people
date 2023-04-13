@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const user = require('../../server/models/Renter');
+const user = require('../../models/Renter');
 
 module.exports = (app) => {
 
