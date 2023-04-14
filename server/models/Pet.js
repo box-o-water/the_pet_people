@@ -15,12 +15,9 @@ const petSchema = new Schema({
     },
     gender: {
         type: String,
-        enum: ['female', 'male', 'other'],
-        required: true
     },
     size: {
         type: String,
-        required: true
     },
     img: {
         type: String,
