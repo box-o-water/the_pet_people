@@ -47,7 +47,7 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/saved" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
             <Route
               path="*"
               element={<h1 className="display-2">Wrong page!</h1>}
