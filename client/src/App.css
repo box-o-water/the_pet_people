@@ -38,11 +38,12 @@
 }
 
 .homepage {
-  justify-content: space-around;
+  
   color: #61dafb;
-  display:flexbox;
+  display: flex;
   padding: 2% aqua;
   background-color:bisque;
+  align-content: center;
 }
 #Avail_users {
   display: inline-flex;
@@ -53,6 +54,7 @@
   border-spacing: 2px;
   border-width: 5px;
   width: 40%;
+  display: flex-start;
 }
 #Avail_pets {
   display: inline-flex;
@@ -63,5 +65,7 @@
   border-spacing: 2px;
   border-width: 5px;
   width: 40%;
+  align-content: flex-end;
+  display: flex-start;
 }
 
