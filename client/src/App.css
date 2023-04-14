@@ -38,14 +38,30 @@
 }
 
 .homepage {
-  justify-content: center;
+  justify-content: space-around;
   color: #61dafb;
+  display:flexbox;
+  padding: 2% aqua;
+  background-color:bisque;
 }
 #Avail_users {
-  width: 50%;
-  background-color: aquamarine;
+  display: inline-flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  background-color: whitesmoke;
+  border: 3px dotted #fbae61;
+  border-spacing: 2px;
+  border-width: 5px;
+  width: 40%;
 }
 #Avail_pets {
-  width: 50%;
-  color: #61dafb;
+  display: inline-flex;
+  flex-flow: column nowrap;
+  align-items: stretch;
+  background-color: gray;
+  border: 3px dotted black;
+  border-spacing: 2px;
+  border-width: 5px;
+  width: 40%;
 }
+
