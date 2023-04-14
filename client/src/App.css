@@ -36,3 +36,16 @@
     transform: rotate(360deg);
   }
 }
+
+.homepage {
+  justify-content: center;
+  color: #61dafb;
+}
+#Avail_users {
+  width: 50%;
+  background-color: aquamarine;
+}
+#Avail_pets {
+  width: 50%;
+  color: #61dafb;
+}
