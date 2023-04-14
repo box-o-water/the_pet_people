@@ -172,33 +172,45 @@ const resolvers = {
       }
     },
     // adds a review to a user
-    addReview: async (parent, { landlord, reviewContents, rating, userId }) => {
+    addReview: async (parent, { landlord, reviewContents, rating, userReviewed }) => {
       try {
+        // find the user being reviewed
+        const user = await User.findOne({ username: userReviewed} )
+        if (!user) {
+          console.log('User does not exist');
+          return null;
+        }
         // Create a new Review document
         const newReview = new Review({
           landlord,
           reviewContents,
           rating,
-          userId
+          userReviewed
         });
-    
         // Save the new Review document to the database
         const savedReview = await newReview.save();
     
         // Update the user's reviews array with the new Review ID
         const updatedUser = await User.findByIdAndUpdate(
-          userId,
+          { _id: user._id },
           { $push: { reviews: savedReview._id } },
           { new: true }
         );
     
-        return { review: savedReview, user: updatedUser };
+        return { 
+          
+            _id: savedReview._id,
+            landlord: savedReview.landlord,
+            rating: savedReview.rating,
+            reviewContents: savedReview.reviewContents,
+            userReviewed: userReviewed,
+        };
       } catch (error) {
         console.log(error);
       }
-    },
+    }
     
-    
+      //next mutation goes here 
 
   }
 };

@@ -72,3 +72,17 @@ mutation UpdatePet($isFixed: Boolean, $id: ID!, $petName: String, $animalType: S
   }
 }
 `;
+
+export const ADD_REVIEW = gql `
+mutation AddReview($landlord: String!, $reviewContents: String!, $rating: Int!, $userReviewed: String!) {
+  addReview(landlord: $landlord, reviewContents: $reviewContents, rating: $rating, userReviewed: $userReviewed) {
+    _id
+    landlord
+    reviewContents
+    createdAt
+    rating
+    userReviewed
+  }
+}
+`
+;

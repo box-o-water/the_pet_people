@@ -7,6 +7,7 @@ const typeDefs = gql`
     reviewContents: String!
     createdAt: String
     rating: Int!
+    userReviewed: String!
   }
   type Pet {
     _id: ID!
@@ -47,7 +48,7 @@ const typeDefs = gql`
     updateUser(username: String, password:String, email: String, img: String, location: String): User
     addPet(petName:String!, animalType: String!, breed: String!, gender: String, size: String!, img:String, age: Int!, isFixed: Boolean): User
     updatePet(_id: ID!, petName:String, animalType: String, breed: String, gender: String, size: String, img:String, age: Int, isFixed: Boolean): User
-    addReview(landlord: String!, reviewContents: String!, rating: Int! userId: String! ): User
+    addReview(landlord: String!, reviewContents: String!, rating: Int! userReviewed: String! ): Review
   }
 `;
 
