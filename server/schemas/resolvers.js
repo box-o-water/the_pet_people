@@ -1,13 +1,12 @@
 const { AuthenticationError } = require("apollo-server-express");
-// const { Pet, Renter, Review } = require('../models');
-const { Renter, Pet } = require("../models");
+const { User, Pet, Review } = require("../models");
 const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // // finds all renters
-    renters: async () => {
-      return await Renter.find()
+    // // finds all users
+    users: async () => {
+      return await User.find()
         .populate({
           path: "pets",
           model: "Pet",
@@ -17,7 +16,6 @@ const resolvers = {
           model: "Review",
         });
     },
-
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id }).select(
@@ -31,55 +29,82 @@ const resolvers = {
   },
 
   Mutation: {
-    // Renters are Users, but for future purposes we are calling them Renters
-    addRenter: async (parent, { username, email, password }) => {
-      const renter = await Renter.create({ username, email, password });
-      const token = signToken(renter);
-      return { token, renter };
-    },
-    login: async (parent, { email, password }) => {
-      const renter = await Renter.findOne({ email });
+    // users are Users, but for future purposes we are calling them users
+    addUser: async (parent, { username, email, password }) => {
+      try{
+        let user = await User.findOne({ username });
 
-      if (!renter) {
-        console.log("wrong username");
-        throw new AuthenticationError("Incorrect credentials");
-      }
-
-      const correctPw = await renter.checkPassword(password);
-
-      if (!correctPw) {
-        throw new AuthenticationError("Incorrect credentials");
-        console.log("wrong password");
-      }
-      console.log(renter);
-      const token = signToken(renter);
-
-      return { token, renter };
-    },
-    // updates the renters information
-    updateRenter: async (parent, { username, email, password, img, location }, context) => {
-      try {
-        const renter = await Renter.findById(context._id);
-    
-        if (!renter) {
-          throw new AuthenticationError('You must be logged in to update your profile.');
+        if (user) {
+          // If the username already exists, generate a new unique username
+          const randomNumber = Math.floor(Math.random() * 1000);
+          username = `${username}${randomNumber}`;
         }
-    
-        renter.username = username || renter.username;
-        renter.email = email || renter.email;
-        renter.password = password || renter.password
-        renter.img = img || renter.img;
-        renter.location = location || renter.location;
-    
-        await renter.save();
-    
-        const token = signToken(renter);
-    
-        return { token, renter };
+  
+        user = await User.create({ username, email, password });
+        const token = signToken(user);
+        return { token, user };
+
       } catch (error) {
         console.log(error);
       }
     },
+
+    login: async (parent, { email, password }) => {
+      try {
+        const user = await User.findOne({ email }).populate({
+          path: "pets",
+          model: "Pet",
+        })
+        .populate({
+          path: "reviews",
+          model: "Review",
+        });
+  
+        if (!user) {
+          console.log("wrong username");
+          throw new AuthenticationError("Incorrect credentials");
+        }
+  
+        const correctPw = await user.checkPassword(password);
+  
+        if (!correctPw) {
+          throw new AuthenticationError("Incorrect credentials");
+          console.log("wrong password");
+        }
+        console.log(user);
+        const token = signToken(user);
+  
+        return { token, user };
+
+      } catch (error){
+        console.log(error)
+      }
+    },
+    // updates the Users information
+    updateUser: async (parent, { username, email, password, img, location }, context) => {
+      try {
+        const user = await User.findById(context._id);
+    
+        if (!user) {
+          throw new AuthenticationError('You must be logged in to update your profile.');
+        }
+    
+        user.username = username || user.username;
+        user.email = email || user.email;
+        user.password = password || user.password
+        user.img = img || user.img;
+        user.location = location || user.location;
+    
+        await user.save();
+    
+        const token = signToken(user);
+    
+        return { token, user };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // adds a pet to the database
     addPet: async (parent, { petName, animalType, breed, gender, size, img, age, isFixed }, context) => {
       try {
         // Check if user is authenticated
@@ -103,17 +128,77 @@ const resolvers = {
         const savedPet = await newPet.save();
     
         // Update the owner's pets array with the new Pet ID
-        const updatedRenter = await Renter.findOneAndUpdate(
+        const updatedUser = await User.findOneAndUpdate(
           { username: context.user.username },
           { $push: { pets: savedPet._id } },
           { new: true }
         );
     
-        return { token: signToken(updatedRenter), renter: updatedRenter };
+        return { token: signToken(updatedUser), user: updatedUser };
       } catch (error) {
         console.log(error);
       }
     },
+    // updates pet that already exists 
+    updatePet: async (parent, { _id, petName, animalType, breed, gender, size, img, age, isFixed }, context) => {
+      try {
+        const user = await User.findById(context._id)
+    
+        if (!user) {
+          throw new AuthenticationError('You must be logged in to update your pet.');
+        }
+    
+        const pet = await Pet.findById(_id);
+    
+        if (!pet) {
+          throw new UserInputError('Pet not found.');
+        }
+    
+        pet.petName = petName || pet.petName;
+        pet.animalType = animalType || pet.animalType;
+        pet.breed = breed || pet.breed;
+        pet.gender = gender || pet.gender;
+        pet.size = size || pet.size;
+        pet.img = img || pet.img;
+        pet.age = age || pet.age;
+        pet.isFixed = isFixed || pet.isFixed;
+    
+        // Save the updated Pet document to the database
+        const updatedPet = await pet.save();
+    
+        return { pet: updatedPet, user: user};
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    // adds a review to a user
+    addReview: async (parent, { landlord, reviewContents, rating, userId }) => {
+      try {
+        // Create a new Review document
+        const newReview = new Review({
+          landlord,
+          reviewContents,
+          rating,
+          userId
+        });
+    
+        // Save the new Review document to the database
+        const savedReview = await newReview.save();
+    
+        // Update the user's reviews array with the new Review ID
+        const updatedUser = await User.findByIdAndUpdate(
+          userId,
+          { $push: { reviews: savedReview._id } },
+          { new: true }
+        );
+    
+        return { review: savedReview, user: updatedUser };
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    
+    
 
   }
 };

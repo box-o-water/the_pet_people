@@ -6,8 +6,6 @@ const db = require("./config/connection");
 const { typeDefs, resolvers } = require("./schemas");
 const { authMiddleware } = require("./utils/auth.js");
 
-const jwt = require('jsonwebtoken')
-
 const PORT = process.env.PORT || 3001;
 const app = express();
 

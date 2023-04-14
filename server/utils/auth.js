@@ -1,7 +1,7 @@
 // authMiddleware.js
 
 const jwt = require("jsonwebtoken");
-const Renter = require("../models/Renter");
+const User = require("../models/User");
 
 const secret = "mysecretssshhhhhhh";
 const expiration = "4h";
@@ -48,15 +48,15 @@ module.exports = {
 //     const token = req.header('Authorization').replace('Bearer ', '');
 //     // Verify token
 //     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-//     // Find renter by ID and token
-//     const renter = await Renter.findOne({ _id: decoded._id, 'tokens.token': token });
+//     // Find user by ID and token
+//     const user = await User.findOne({ _id: decoded._id, 'tokens.token': token });
 
-//     if (!renter) {
+//     if (!user) {
 //       throw new Error();
 //     }
 
 //     // Add user and token to request object for later use
-//     req.renter = renter;
+//     req.user = user;
 //     req.token = token;
 //     next();
 //   } catch (e) {

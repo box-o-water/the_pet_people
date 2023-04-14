@@ -1,70 +1,54 @@
 const { gql } = require("apollo-server-express");
-
+// this is where we define the rules for how apollo server will handle information
 const typeDefs = gql`
+  type Review {
+    _id: ID!
+    landlord: String!
+    reviewContents: String!
+    createdAt: String
+    rating: Int!
+  }
   type Pet {
-    _id: ID
-    petName: String
+    _id: ID!
     animalType: String
-    breed: String
+    petName: String!
+    breed: String!
     gender: String
     size: String
     img: String
     age: Int
     isFixed: Boolean
   }
-  type Renter {
+
+  type User {
     _id: ID!
     username: String!
     email: String!
+    password: String!
     img: String
     location: String
     pets: [Pet]
+    reviews: [Review]
   }
 
   type Auth {
     token: ID!
-    renter: Renter
+    user: User
   }
 
   type Query {
-    me: Renter
-    renters: [Renter]
+    users: [User]
+    me: User
   }
 
   type Mutation {
-    addRenter(username: String!, email: String!, password: String!): Auth
-    updateRenter(username: String, email: String, password: String, img: String, location: String): Auth
-    addPet(petName: String!, animalType: String!, breed: String, gender: String, size: String, img: String, age: Int, isFixed: Boolean): Auth
     login(email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!): Auth
+    updateUser(username: String, password:String, email: String, img: String, location: String): User
+    addPet(petName:String!, animalType: String!, breed: String!, gender: String, size: String!, img:String, age: Int!, isFixed: Boolean): User
+    updatePet(_id: ID!, petName:String, animalType: String, breed: String, gender: String, size: String, img:String, age: Int, isFixed: Boolean): User
+    addReview(landlord: String!, reviewContents: String!, rating: Int! userId: String! ): User
   }
 `;
 
 module.exports = typeDefs;
-
-// type Query {
-//   renters: [Renter]
-//   me: Renter
-//   reviews(username: String): [Review]
-//   pets(username: String): [Pet]
-// }
-
-// updateRenter(username: String, email: String, password: String): Renter
-// addReview(
-//   _id: ID
-//   landlord: String!
-//   reviewContents: String!
-//   rating: Int
-// ): Review
-
-// type Review {
-//   _id: ID
-//   landlord: String
-//   reviewContents: String
-//   createdAt: String
-//   rating: Int
-// }
-
-
-
-// pets: [Pet]
-// reviews: [Review]
