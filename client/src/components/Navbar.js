@@ -17,12 +17,10 @@ const AppNavbar = () => {
           <Navbar.Brand as={Link} to="/">
             The Pet People
           </Navbar.Brand>
-          <Navbar.Toggle aria-controls="navbar" />
+          {/* <Navbar.Toggle aria-controls="navbar" /> */}
           <Navbar.Collapse id="navbar" className="d-flex flex-row-reverse">
             <Nav className="ml-auto d-flex">
-              <Nav.Link as={Link} to="/">
-                Profile
-              </Nav.Link>
+             
               {/* if user is logged in show saved books and logout */}
               {Auth.loggedIn() ? (
                 <>

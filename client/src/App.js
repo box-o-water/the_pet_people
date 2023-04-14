@@ -12,8 +12,9 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Header from "./components/Header";
 import Homepage from "./components/Homepage";
 import Profile from "./components/Profile";
-// import Footer from "./components/Footer";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
+import Renters from "./components/Renters";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -47,13 +48,15 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Homepage />} />
-            <Route path="/saved" element={<Profile />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/renters" element={<Renters />} />
             <Route
               path="*"
               element={<h1 className="display-2">Wrong page!</h1>}
             />
           </Routes>
         </>
+        <Footer />
       </Router>{" "}
     </ApolloProvider>
   );
