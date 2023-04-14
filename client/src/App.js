@@ -12,7 +12,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Header from "./components/Header";
 import Homepage from "./components/Homepage";
 import Profile from "./components/Profile";
-// import Footer from "./components/Footer";
+import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 
 // Construct our main GraphQL API endpoint
@@ -54,6 +54,7 @@ function App() {
             />
           </Routes>
         </>
+        <Footer />
       </Router>{" "}
     </ApolloProvider>
   );

@@ -1,6 +1,7 @@
 import React from "react";
 
 
+
 function Profile() {
   return (
     <div>
@@ -11,7 +12,7 @@ function Profile() {
       <h2>pets:</h2>
       <p>pet1</p>
       <p>pet2</p>
-      <h2>reviews</h2>
+      <h2>reviews:</h2>
       <p>Review Title:</p>
       <p>review body</p>
     </div>
