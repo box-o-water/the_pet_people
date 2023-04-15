@@ -21,6 +21,7 @@ const Profile = () => {
 
   return (
     <div>
+    <a href="/update-profile"> Update Profile</a>
       <h2>profile</h2>
       <p>Name: {userData?.me.username}</p>
       <p>Email: {userData?.me.email}</p>

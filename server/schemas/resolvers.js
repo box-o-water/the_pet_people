@@ -91,7 +91,7 @@ const resolvers = {
     
         user.username = username || user.username;
         user.email = email || user.email;
-        user.password = password || user.password
+        user.password = password || user.password;
         user.img = img || user.img;
         user.location = location || user.location;
     

@@ -15,6 +15,7 @@ import Profile from "./components/Profile";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import Renters from "./components/Renters";
+import UpdateProfile from "./components/UpdateProfile";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -50,6 +51,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/renters" element={<Renters />} />
+            <Route path="/update-profile" element={<UpdateProfile />} />
             <Route
               path="*"
               element={<h1 className="display-2">Wrong page!</h1>}
