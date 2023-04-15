@@ -5,6 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { DELETE_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
+import Swal from 'sweetalert2';
 
 const Profile = () => {
   const [deleteUser] = useMutation(DELETE_USER);
@@ -23,12 +24,32 @@ const Profile = () => {
 
   const handleDeleteUser = async () => {
     try {
-      await deleteUser({
-        variables: { username: userData?.me.username },
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await deleteUser({
+            variables: { username: userData?.me.username },
+          });
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+          // adds delay to show confirmation message
+          setTimeout(() => {
+            Auth.logout();
+            window.location.href = "/";
+          }, 3000);
+        }
       });
-      
-      Auth.logout();
-      window.location.href = "/";
+
     } catch (err) {
       console.error(err);
     }
