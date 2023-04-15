@@ -69,6 +69,7 @@ const typeDefs = gql`
       age: String
       isFixed: Boolean
     ): Auth
+    deletePet(petId: ID!): User
     addReview(
       landlord: String!
       reviewContents: String!

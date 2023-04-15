@@ -188,6 +188,21 @@ const resolvers = {
         console.log(error);
       }
     },
+    deletePet: async (parent, { petId }, context) => {
+      try {
+        const deletedPet = await Pet.findByIdAndDelete(petId);
+    
+        // Remove the pet from the user's pets array
+        context.user.pets = context.user.pets.filter((pet) => pet.toString() !== petId);
+    
+        await context.user.save();
+    
+        return deletedPet;
+      } catch (err) {
+        console.error(err);
+        throw new Error("Failed to delete pet");
+      }
+    },
     // adds a review to a user
     addReview: async (parent, { landlord, reviewContents, rating, userReviewed }) => {
       try {

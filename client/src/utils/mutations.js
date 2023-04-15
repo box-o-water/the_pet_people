@@ -111,6 +111,13 @@ export const UPDATE_PET = gql`
     }
   }
 `;
+export const DELETE_PET = gql `
+mutation DeletePet($petId: ID!) {
+  deletePet(petId: $petId) {
+    location
+  }
+}
+`;
 
 export const ADD_REVIEW = gql`
   mutation AddReview(
