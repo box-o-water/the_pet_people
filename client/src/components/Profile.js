@@ -1,11 +1,13 @@
 import React from "react";
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
+import { DELETE_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const Profile = () => {
+  const [deleteUser] = useMutation(DELETE_USER);
   // use useQuery to get logged in user's data
   const { loading, data: userData } = useQuery(GET_ME);
 
@@ -19,6 +21,19 @@ const Profile = () => {
     return <h2>LOADING...</h2>;
   }
 
+  const handleDeleteUser = async () => {
+    try {
+      await deleteUser({
+        variables: { username: userData?.me.username },
+      });
+      
+      Auth.logout();
+      window.location.href = "/";
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  
   return (
     <div>
     <a href="/update-profile"> Update Profile</a>
@@ -41,25 +56,9 @@ const Profile = () => {
       <h2>reviews:</h2>
       <p>Review Title:</p>
       <p>review body</p>
+      <button onClick={handleDeleteUser}>Delete Account</button>
     </div>
   );
 };
-
-// function Profile() {
-//   return (
-//     <div>
-//       <h2>profile</h2>
-//       <img src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none" width="500" alt="cat lady"></img>
-//       <p>Name:</p>
-//       <p>Location (City, State):</p>
-//       <h2>pets:</h2>
-//       <p>pet1</p>
-//       <p>pet2</p>
-//       <h2>reviews:</h2>
-//       <p>Review Title:</p>
-//       <p>review body</p>
-//     </div>
-//   );
-// }
 
 export default Profile;

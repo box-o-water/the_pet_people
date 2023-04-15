@@ -77,6 +77,28 @@ const resolvers = {
         console.log(error)
       }
     },
+    // deletes user
+    deleteUser: async (parent, { username }) => {
+      try {
+        // Find the user to be deleted
+        const user = await User.findOne({ username });
+  
+        if (!user) {
+          throw new UserInputError('User not found.');
+        }
+  
+        // Remove the user's pets and reviews from the database
+        await Pet.deleteMany({ _id: { $in: user.pets } });
+        await Review.deleteMany({ _id: { $in: user.reviews } });
+  
+        // Delete the user document from the database
+        await User.deleteOne({ _id: user._id });
+  
+        return { message: 'User and associated data successfully deleted.' };
+      } catch (error) {
+        console.log(error);
+      }
+    },
     // updates the Users information
     updateUser: async (parent, {username, email, img, location }, context) => {
       try {
