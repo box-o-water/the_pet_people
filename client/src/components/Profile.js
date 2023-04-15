@@ -22,6 +22,10 @@ const Profile = () => {
   return (
     <div>
     <a href="/update-profile"> Update Profile</a>
+    <div>
+    <a href="/add-pet">Add Pet</a>
+    </div>
+
       <h2>profile</h2>
       <p>Name: {userData?.me.username}</p>
       <p>Email: {userData?.me.email}</p>
@@ -31,8 +35,10 @@ const Profile = () => {
         alt="cat lady"
       ></img>
       <p>Location (City, State):</p>
-      <h2>pets:</h2>
-      <p>pet1</p>
+      <h2>pets: </h2>
+      {userData?.me.pets && userData?.me.pets[0] && (
+        <p>pet1 {userData.me.pets[0].petName}</p>
+      )}
       <p>pet2</p>
       <h2>reviews:</h2>
       <p>Review Title:</p>

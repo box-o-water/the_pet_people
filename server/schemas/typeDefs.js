@@ -14,10 +14,9 @@ const typeDefs = gql`
     animalType: String
     petName: String!
     breed: String!
-    gender: String
     size: String
     img: String
-    age: Int
+    age: String
     isFixed: Boolean
   }
 
@@ -45,10 +44,38 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    updateUser(username: String, email: String, img: String, location: String): Auth
-    addPet(petName:String!, animalType: String!, breed: String!, gender: String, size: String!, img:String, age: Int!, isFixed: Boolean): Auth
-    updatePet(_id: ID!, petName:String, animalType: String, breed: String, gender: String, size: String, img:String, age: Int, isFixed: Boolean): Auth
-    addReview(landlord: String!, reviewContents: String!, rating: Int! userReviewed: String! ): Review
+    updateUser(
+      username: String
+      email: String
+      img: String
+      location: String
+    ): Auth
+    addPet(
+      petName: String
+      animalType: String
+      breed: String
+      size: String
+      img: String
+      age: String
+      isFixed: Boolean
+    ): Auth
+    updatePet(
+      _id: ID!
+      petName: String
+      animalType: String
+      breed: String
+      gender: String
+      size: String
+      img: String
+      age: String
+      isFixed: Boolean
+    ): Auth
+    addReview(
+      landlord: String!
+      reviewContents: String!
+      rating: Int!
+      userReviewed: String!
+    ): Review
   }
 `;
 
