@@ -102,22 +102,20 @@ const resolvers = {
     },
 
     // adds a pet to the database
-    addPet: async (parent, { petName, animalType, breed, size, img, age, isFixed }, context) => {
+    addPet: async (parent, { petName, animalType, breed, size, age}, context) => {
       try {
         // Check if user is authenticated
         if (!context.user._id) {
           throw new AuthenticationError('You must be logged in to add a pet.');
         }
-        console.log({ petName, animalType, breed, size, img, age, isFixed })
+        console.log({ petName, animalType, breed, size, age,})
         // Create a new Pet document
         const newPet = new Pet({
           petName,
           animalType,
           breed,
           size,
-          img,
           age,
-          isFixed
         });
     
         // Save the new Pet document to the database

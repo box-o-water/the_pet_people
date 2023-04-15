@@ -11,12 +11,12 @@ const typeDefs = gql`
   }
   type Pet {
     _id: ID!
-    animalType: String
+    animalType: String!
     petName: String!
     breed: String!
-    size: String
+    size: String!
     img: String
-    age: String
+    age: String!
     isFixed: Boolean
   }
 
@@ -54,11 +54,8 @@ const typeDefs = gql`
       petName: String!
       animalType: String!
       breed: String!
-      gender: String
       size: String!
-      img: String
-      age: Int!
-      isFixed: Boolean
+      age: String!
     ): Auth
     updatePet(
       _id: ID!
