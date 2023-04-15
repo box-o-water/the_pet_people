@@ -21,7 +21,7 @@ const Profile = () => {
 
   return (
     <div>
-    <a href="/update-profile"> Update Profile</a>
+      <a href="/update-profile">Update Profile</a>
       <h2>profile</h2>
       <p>Name: {userData?.me.username}</p>
       <p>Email: {userData?.me.email}</p>
@@ -30,7 +30,7 @@ const Profile = () => {
         width="150"
         alt="cat lady"
       ></img>
-      <p>Location (City, State):</p>
+      <p>Location (City, State): {userData?.me.location}</p>
       <h2>pets:</h2>
       <p>pet1</p>
       <p>pet2</p>

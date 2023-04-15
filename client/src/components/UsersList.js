@@ -20,6 +20,7 @@ const UsersList = () => {
             </h4>
             <div className="card-body bg-light p-2">
               <p>{user.email}</p>
+              <p>{user.location}</p>
             </div>
           </div>
         ))}
