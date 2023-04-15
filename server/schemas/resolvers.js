@@ -61,7 +61,6 @@ const resolvers = {
         });
   
         if (!user) {
-          console.log("wrong username");
           throw new AuthenticationError("Incorrect credentials");
         }
   
@@ -69,7 +68,6 @@ const resolvers = {
   
         if (!correctPw) {
           throw new AuthenticationError("Incorrect credentials");
-          console.log("wrong password");
         }
         console.log(user);
         const token = signToken(user);
@@ -81,29 +79,29 @@ const resolvers = {
       }
     },
     // updates the Users information
-    updateUser: async (parent, { username, email, password, img, location }, context) => {
+    updateUser: async (parent, {username, email, img, location }, context) => {
       try {
-        const user = await User.findById(context._id);
+
+        const user = await User.findById(context.user._id).select('-__v -password');
     
         if (!user) {
           throw new AuthenticationError('You must be logged in to update your profile.');
         }
-    
+        console.log(username)
         user.username = username || user.username;
         user.email = email || user.email;
-        user.password = password || user.password
         user.img = img || user.img;
         user.location = location || user.location;
+
+        const updatedUser = await user.save();
     
-        await user.save();
-    
-        const token = signToken(user);
-    
-        return { token, user };
+        return { token: signToken(updatedUser)
+        };
       } catch (error) {
         console.log(error);
       }
     },
+
     // adds a pet to the database
     addPet: async (parent, { petName, animalType, breed, gender, size, img, age, isFixed }, context) => {
       try {
@@ -134,7 +132,9 @@ const resolvers = {
           { new: true }
         );
     
-        return { token: signToken(updatedUser), user: updatedUser };
+        return { token: signToken(updatedUser),
+          //  user: updatedUser 
+          };
       } catch (error) {
         console.log(error);
       }

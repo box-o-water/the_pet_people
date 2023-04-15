@@ -45,10 +45,39 @@ const typeDefs = gql`
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
-    updateUser(username: String, password:String, email: String, img: String, location: String): User
-    addPet(petName:String!, animalType: String!, breed: String!, gender: String, size: String!, img:String, age: Int!, isFixed: Boolean): User
-    updatePet(_id: ID!, petName:String, animalType: String, breed: String, gender: String, size: String, img:String, age: Int, isFixed: Boolean): User
-    addReview(landlord: String!, reviewContents: String!, rating: Int! userReviewed: String! ): Review
+    updateUser(
+      username: String
+      email: String
+      img: String
+      location: String
+    ): Auth
+    addPet(
+      petName: String!
+      animalType: String!
+      breed: String!
+      gender: String
+      size: String!
+      img: String
+      age: Int!
+      isFixed: Boolean
+    ): Auth
+    updatePet(
+      _id: ID!
+      petName: String
+      animalType: String
+      breed: String
+      gender: String
+      size: String
+      img: String
+      age: Int
+      isFixed: Boolean
+    ): Auth
+    addReview(
+      landlord: String!
+      reviewContents: String!
+      rating: Int!
+      userReviewed: String!
+    ): Review
   }
 `;
 

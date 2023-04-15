@@ -64,20 +64,17 @@ export const UPDATE_USER = gql`
     $email: String
     $img: String
     $location: String
-    $password: String
   ) {
     updateUser(
       username: $username
       email: $email
       img: $img
       location: $location
-      password: $password
     ) {
-      _id
-      username
-      email
-      img
-      location
+      token
+      user {
+        username
+      }
     }
   }
 `;
