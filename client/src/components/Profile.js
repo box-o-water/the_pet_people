@@ -34,11 +34,9 @@ const Profile = () => {
         width="150"
         alt="cat lady"
       ></img>
-      <p>Location (City, State):</p>
-      <h2>pets: </h2>
-      {userData?.me.pets && userData?.me.pets[0] && (
-        <p>pet1 {userData.me.pets[0].petName}</p>
-      )}
+      <p>Location (City, State): {userData?.me.location}</p>
+      <h2>pets:</h2>
+      <p>pet1</p>
       <p>pet2</p>
       <h2>reviews:</h2>
       <p>Review Title:</p>

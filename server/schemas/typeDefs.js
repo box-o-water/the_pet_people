@@ -51,12 +51,13 @@ const typeDefs = gql`
       location: String
     ): Auth
     addPet(
-      petName: String
-      animalType: String
-      breed: String
-      size: String
+      petName: String!
+      animalType: String!
+      breed: String!
+      gender: String
+      size: String!
       img: String
-      age: String
+      age: Int!
       isFixed: Boolean
     ): Auth
     updatePet(
