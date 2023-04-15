@@ -81,29 +81,34 @@ const resolvers = {
       }
     },
     // updates the Users information
-    updateUser: async (parent, { username, email, password, img, location }, context) => {
+    updateUser: async (parent, { username, email, password, img, location }) => {
       try {
-        const user = await User.findById(context._id);
+        const user = await User.findOne({ username });
     
         if (!user) {
           throw new AuthenticationError('You must be logged in to update your profile.');
         }
     
-        user.username = username || user.username;
-        user.email = email || user.email;
-        user.password = password || user.password;
-        user.img = img || user.img;
-        user.location = location || user.location;
+        const updatedUser = await User.findOneAndUpdate(
+          { username: username },
+          { username, email, password, img, location },
+          { new: true }
+        );
     
-        await user.save();
+        const token = signToken(updatedUser);
     
-        const token = signToken(user);
-    
-        return { token, user };
+        return { token, 
+          username: updatedUser.username,
+          email: updatedUser.email,
+          password: updatedUser.password,
+          img: updatedUser.img,
+          location: updatedUser.location
+           };
       } catch (error) {
         console.log(error);
       }
     },
+
     // adds a pet to the database
     addPet: async (parent, { petName, animalType, breed, gender, size, img, age, isFixed }, context) => {
       try {
