@@ -23,15 +23,12 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_PET = gql`
-  mutation AddPet(
+  mutation addPet(
     $petName: String!
     $animalType: String!
     $breed: String!
     $size: String!
-    $age: Int!
-    $gender: String
-    $img: String
-    $isFixed: Boolean
+    $age: String!
   ) {
     addPet(
       petName: $petName
@@ -39,20 +36,10 @@ export const ADD_PET = gql`
       breed: $breed
       size: $size
       age: $age
-      gender: $gender
-      img: $img
-      isFixed: $isFixed
     ) {
-      pets {
-        _id
-        animalType
-        petName
-        breed
-        gender
-        size
-        img
-        age
-        isFixed
+      token
+      user {
+        username
       }
     }
   }
@@ -89,7 +76,7 @@ export const UPDATE_PET = gql`
     $gender: String
     $size: String
     $img: String
-    $age: Int
+    $age: String
   ) {
     updatePet(
       isFixed: $isFixed

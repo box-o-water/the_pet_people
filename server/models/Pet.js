@@ -13,9 +13,6 @@ const petSchema = new Schema({
         type: String,
         required: true
     },
-    gender: {
-        type: String,
-    },
     size: {
         type: String,
     },
@@ -23,7 +20,7 @@ const petSchema = new Schema({
         type: String,
     },
     age: {
-        type: Number,
+        type: Date,
         required: true
     },
     isFixed: {
