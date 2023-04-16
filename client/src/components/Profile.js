@@ -104,8 +104,7 @@ const Profile = () => {
             <div key={pet._id} className="card mb-3">
               <h4 className="card-header bg-primary text-light p-2 m-0">
                 {pet.petName}
-                <button onClick={() => handleDeletePet(pet._id)}>Delete Animal</button>
-
+                <button onClick={() => handleDeletePet(pet._id)}>Delete Pet</button>
               </h4>
               <div className="card-body bg-light p-2">
                 <p>{pet.animalType}</p>
