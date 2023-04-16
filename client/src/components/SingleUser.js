@@ -6,14 +6,14 @@ import { useQuery } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
 
 const SingleUser = () => {
-  let { username } = useParams();
+  let { id } = useParams();
 
   // use useQuery to get logged in user's data
-  const { loading, data: userData } = useQuery(QUERY_USER, {
-    variables: { username: username },
+  const { loading, data } = useQuery(QUERY_USER, {
+    variables: { _id: id },
   });
-  const pets = userData?.me.pets || [];
-  console.log(userData);
+
+  const pets = data?.user.pets || [];
 
   if (loading) {
     return <h2>LOADING...</h2>;
@@ -27,14 +27,14 @@ const SingleUser = () => {
       </div>
 
       <h2>profile</h2>
-      <p>Name: {userData?.user.username}</p>
-      <p>Email: {userData?.user.email}</p>
+      <p>Name: {data?.user[0].username}</p>
+      <p>Email: {data?.user[0].email}</p>
       <img
         src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none"
         width="150"
         alt="cat lady"
       ></img>
-      <p>Location (City, State): {userData?.user.location}</p>
+      <p>Location (City, State): {data?.user[0].location}</p>
       <div>
         <h3>pets are people, too</h3>
         {pets &&

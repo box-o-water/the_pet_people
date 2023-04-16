@@ -53,7 +53,7 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/renters" element={<Renters />} />
-            <Route path="/renter/:username" element={<Renter />} />
+            <Route path="/renter/:id" element={<Renter />} />
             <Route path="/update-profile" element={<UpdateProfile />} />
             <Route path="/add-pet" element={<AddPet />} />
             <Route

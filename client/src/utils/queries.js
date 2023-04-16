@@ -30,26 +30,29 @@ export const GET_ME = gql`
 `;
 
 export const QUERY_USER = gql`
-  query singleUser($username: String) {
-    users(username: $username) {
+  query singleUser($_id: String) {
+    user(_id: $_id) {
+      _id
       username
       email
       img
       location
       pets {
+        _id
         age
         animalType
         breed
         img
-        isFixed
         petName
         size
       }
       reviews {
+        _id
         createdAt
         landlord
         rating
         reviewContents
+        userReviewed
       }
     }
   }
