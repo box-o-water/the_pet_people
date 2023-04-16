@@ -65,7 +65,7 @@ const UpdateProfile = () => {
           img,
           location,
         },
-      }, {userData});
+      });
 
       Auth.getProfile(data.token);
     } catch (err) {
