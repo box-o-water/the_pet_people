@@ -3,16 +3,16 @@ import React from "react";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
-import { DELETE_USER } from "../utils/mutations";
+import { DELETE_USER, DELETE_PET } from "../utils/mutations";
 import Auth from "../utils/auth";
 import Swal from 'sweetalert2';
 
 const Profile = () => {
+  const [deletePet] = useMutation(DELETE_PET);
   const [deleteUser] = useMutation(DELETE_USER);
   // use useQuery to get logged in user's data
   const { loading, data: userData } = useQuery(GET_ME);
   const pets = userData?.me.pets || [];
-
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   if (!token) {
@@ -22,12 +22,36 @@ const Profile = () => {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-
-  const handleDeleteUser = async () => {
+  const handleDeletePet = async (petId) => {
     try {
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          await deletePet({
+            variables: { petId: petId },
+          });
+          
+        window.location.reload();
+          
+        }
+      });
+    } catch (error){
+      console.error(error);
+
+    }
+  }
+  const handleDeleteUser = async () => {
+    try {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "All your information will disappear!",
         icon: 'warning',
         showCancelButton: true,
         confirmButtonColor: '#3085d6',
@@ -51,8 +75,8 @@ const Profile = () => {
         }
       });
 
-    } catch (err) {
-      console.error(err);
+    } catch (error) {
+      console.error(error);
     }
   };
   
@@ -76,9 +100,12 @@ const Profile = () => {
         <h3>pets are people, too</h3>
         {pets &&
           pets.map((pet) => (
+
             <div key={pet._id} className="card mb-3">
               <h4 className="card-header bg-primary text-light p-2 m-0">
                 {pet.petName}
+                <button onClick={() => handleDeletePet(pet._id)}>Delete Animal</button>
+
               </h4>
               <div className="card-body bg-light p-2">
                 <p>{pet.animalType}</p>

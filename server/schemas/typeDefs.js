@@ -7,7 +7,7 @@ const typeDefs = gql`
     reviewContents: String!
     createdAt: String
     rating: Int!
-    userReviewed: String!
+    userReviewed: String
   }
 
   type Pet {

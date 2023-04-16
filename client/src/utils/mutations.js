@@ -23,7 +23,7 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_PET = gql`
-  mutation addPet(
+  mutation Mutation(
     $petName: String!
     $animalType: String!
     $breed: String!
@@ -66,12 +66,12 @@ export const UPDATE_USER = gql`
   }
 `;
 
-export const DELETE_USER = gql `
-mutation Mutation($username: String!) {
-  deleteUser(username: $username) {
-    location
+export const DELETE_USER = gql`
+  mutation Mutation($username: String!) {
+    deleteUser(username: $username) {
+      location
+    }
   }
-}
 `;
 
 export const UPDATE_PET = gql`
@@ -111,12 +111,12 @@ export const UPDATE_PET = gql`
     }
   }
 `;
-export const DELETE_PET = gql `
-mutation DeletePet($petId: ID!) {
-  deletePet(petId: $petId) {
-    location
+export const DELETE_PET = gql`
+  mutation DeletePet($petId: ID!) {
+    deletePet(petId: $petId) {
+      location
+    }
   }
-}
 `;
 
 export const ADD_REVIEW = gql`

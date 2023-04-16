@@ -157,10 +157,11 @@ const resolvers = {
           { $push: { pets: savedPet._id } },
           { new: true }
         );
+        
 
         return {
           token: signToken(updatedUser),
-          //  user: updatedUser
+           user: updatedUser
         };
       } catch (error) {
         console.log(error);
@@ -180,7 +181,7 @@ const resolvers = {
             "You must be logged in to update your pet."
           );
         }
-
+        console.log(animalType)
         const pet = await Pet.findById(_id);
 
         if (!pet) {
@@ -205,12 +206,9 @@ const resolvers = {
     },
     deletePet: async (parent, { petId }, context) => {
       try {
+        console.log(petId)
         const deletedPet = await Pet.findByIdAndDelete(petId);
-    
         // Remove the pet from the user's pets array
-        context.user.pets = context.user.pets.filter((pet) => pet.toString() !== petId);
-    
-        await context.user.save();
     
         return deletedPet;
       } catch (err) {
@@ -235,7 +233,6 @@ const resolvers = {
           landlord,
           reviewContents,
           rating,
-          userReviewed,
         });
         // Save the new Review document to the database
         const savedReview = await newReview.save();
@@ -252,7 +249,6 @@ const resolvers = {
           landlord: savedReview.landlord,
           rating: savedReview.rating,
           reviewContents: savedReview.reviewContents,
-          userReviewed: userReviewed,
         };
       } catch (error) {
         console.log(error);
