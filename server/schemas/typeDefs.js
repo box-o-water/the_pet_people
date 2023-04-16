@@ -60,7 +60,7 @@ const typeDefs = gql`
       size: String!
       age: String!
     ): Auth
-    editPet(
+    updatePet(
       _id: String!
       petName: String
       animalType: String

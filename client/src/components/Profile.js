@@ -14,9 +14,9 @@ const Profile = () => {
   const [deleteUser] = useMutation(DELETE_USER);
 
   // use useQuery to get logged in user's data
-  const { loading, data: userData } = useQuery(GET_ME);
-  const pets = userData?.me.pets || [];
-  const reviews = userData?.me.reviews || [];
+  const { loading, data } = useQuery(GET_ME);
+  const pets = data?.me.pets || [];
+  const reviews = data?.me.reviews || [];
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   const [showEditForm, setShowEditForm] = useState(false);
@@ -28,13 +28,7 @@ const Profile = () => {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-  const handleEditPet = async (petID) => {
-    try{
 
-    } catch (error){
-
-    }
-  }
   const handleDeletePet = async (petId) => {
     try {
       Swal.fire({
@@ -71,7 +65,7 @@ const Profile = () => {
       }).then(async (result) => {
         if (result.isConfirmed) {
           await deleteUser({
-            variables: { username: userData?.me.username },
+            variables: { username: data?.me.username },
           });
           Swal.fire("Deleted!", "Your file has been deleted.", "success");
           // adds delay to show confirmation message
@@ -99,14 +93,14 @@ const Profile = () => {
       </div>
 
       <h2>profile</h2>
-      <p>Name: {userData?.me.username}</p>
-      <p>Email: {userData?.me.email}</p>
+      <p>Name: {data?.me.username}</p>
+      <p>Email: {data?.me.email}</p>
       <img
         src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none"
         width="150"
         alt="cat lady"
       ></img>
-      <p>Location (City, State): {userData?.me.location}</p>
+      <p>Location (City, State): {data?.me.location}</p>
       <div>
         <h3>pets are people, too</h3>
         {pets &&
@@ -125,7 +119,7 @@ const Profile = () => {
 
               </div>
               {showEditForm && (
-                <EditPet pet={pet} handleEditPet={handleEditPet} toggleEditForm={toggleEditForm}  />
+                <EditPet pet={pet} toggleEditForm={toggleEditForm}  />
               )}
             </div>
           ))}

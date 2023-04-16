@@ -20,7 +20,7 @@ const UpdateProfile = () => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
   const [updateUser] = useMutation(UPDATE_USER);
-  const { loading, data: userData } = useQuery(GET_ME);
+  const { loading, data } = useQuery(GET_ME);
   // check if user is authenticated
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -82,13 +82,13 @@ const UpdateProfile = () => {
 
     event.persist();
     // on submit send user to their profile
-    window.location.href = '/profile';
+    window.location.href = "/profile";
   };
 
   return (
     <>
       <p>
-        Hey {userData?.me.username} What would you like to update about your
+        Hey {data?.me.username} What would you like to update about your
         profile!
       </p>
       {/* This is needed for the validation functionality above */}

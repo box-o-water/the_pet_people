@@ -47,7 +47,7 @@ const AddPet = () => {
       const breed = petFormData.breed;
       const size = petFormData.size;
       const age = petFormData.age;
-      console.log(animalType)
+
       const { data } = await addPet(
         {
           variables: {

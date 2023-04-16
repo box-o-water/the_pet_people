@@ -3,14 +3,14 @@ import { useMutation, useQuery } from "@apollo/client";
 import { Form, Button, Alert } from "react-bootstrap";
 
 import Auth from "../utils/auth";
-import { EDIT_PET } from "../utils/mutations";
+import { UPDATE_PET } from "../utils/mutations";
 import { GET_ME } from "../utils/queries";
 
-const EditPetForm = ({ pet, handleEditPet, toggleEditForm }) => {
+const EditPetForm = ({ pet, toggleEditForm }) => {
   const [showAlert, setShowAlert] = useState(false);
 
   // mutations, and queries
-  const [editPet] = useMutation(EDIT_PET);
+  const [editPet] = useMutation(UPDATE_PET);
   const { loading } = useQuery(GET_ME);
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -43,10 +43,11 @@ const EditPetForm = ({ pet, handleEditPet, toggleEditForm }) => {
           breed,
           size,
           age,
-          _id: pet._id.toString(),
+          id: pet._id.toString(),
         },
       },
     );
+      
     toggleEditForm();
   };
   if (loading) {
