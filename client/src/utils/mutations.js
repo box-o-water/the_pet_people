@@ -66,6 +66,14 @@ export const UPDATE_USER = gql`
   }
 `;
 
+export const DELETE_USER = gql `
+mutation Mutation($username: String!) {
+  deleteUser(username: $username) {
+    location
+  }
+}
+`;
+
 export const UPDATE_PET = gql`
   mutation UpdatePet(
     $isFixed: Boolean

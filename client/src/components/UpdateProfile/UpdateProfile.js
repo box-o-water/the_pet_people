@@ -1,21 +1,36 @@
 import React, { useState } from "react";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useMutation } from "@apollo/client";
-import { ADD_USER } from "../utils/mutations";
-import Auth from "../utils/auth";
+import { useMutation, useQuery } from "@apollo/client";
+import { UPDATE_USER } from "../../utils/mutations";
+import { GET_ME } from "../../utils/queries";
 
-const SignupForm = () => {
+import Auth from "../../utils/auth";
+
+const UpdateProfile = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({
     username: "",
     email: "",
     password: "",
+    img: "",
+    location: "",
   });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-  const [addUser] = useMutation(ADD_USER);
+  const [updateUser] = useMutation(UPDATE_USER);
+  const { loading, data: userData } = useQuery(GET_ME);
+  // check if user is authenticated
+  const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
+
+  if (!token) {
+    return <p>You must be logged in to update your profile.</p>;
+  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -28,14 +43,26 @@ const SignupForm = () => {
     // check if form has everything (as per react-bootstrap docs)
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
-      event.preventDefault();
+      event.persist();
       event.stopPropagation();
     }
 
     try {
-      const { data } = await addUser({ variables: userFormData });
+      const username = userFormData.username;
+      const email = userFormData.email;
+      const img = userFormData.img;
+      const location = userFormData.location;
 
-      Auth.login(data.addUser.token);
+      const { data } = await updateUser({
+        variables: {
+          username,
+          email,
+          img,
+          location,
+        },
+      }, {userData});
+
+      Auth.getProfile(data.token);
     } catch (err) {
       console.error(err);
       setShowAlert(true);
@@ -45,11 +72,21 @@ const SignupForm = () => {
       username: "",
       email: "",
       password: "",
+      img: "",
+      location: "",
     });
+
+    event.persist();
+    // on submit send user to their profile
+    window.location.href = '/profile';
   };
 
   return (
     <>
+      <p>
+        Hey {userData?.me.username} What would you like to update about your
+        profile!
+      </p>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
@@ -59,7 +96,7 @@ const SignupForm = () => {
           show={showAlert}
           variant="danger"
         >
-          Something went wrong with your signup!
+          Something went wrong with updating your profile!
         </Alert>
 
         <Form.Group className="mb-3">
@@ -70,11 +107,7 @@ const SignupForm = () => {
             name="username"
             onChange={handleInputChange}
             value={userFormData.username}
-            required
           />
-          <Form.Control.Feedback type="invalid">
-            Username is required!
-          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="mb-3">
@@ -85,38 +118,34 @@ const SignupForm = () => {
             name="email"
             onChange={handleInputChange}
             value={userFormData.email}
-            required
           />
-          <Form.Control.Feedback type="invalid">
-            Email is required!
-          </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Label htmlFor="img">Profile Image</Form.Label>
           <Form.Control
-            type="password"
-            placeholder="Your password"
-            name="password"
+            type="file"
+            placeholder="Only City and state"
+            name="image"
             onChange={handleInputChange}
-            value={userFormData.password}
-            required
+            value={userFormData.img}
           />
-          <Form.Control.Feedback type="invalid">
-            Password is required!
-          </Form.Control.Feedback>
         </Form.Group>
-        <Button
-          disabled={
-            !(
-              userFormData.username &&
-              userFormData.email &&
-              userFormData.password
-            )
-          }
-          type="submit"
-          variant="success"
-        >
+
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="location">
+            Where are you looking to move to. (only city and state){" "}
+          </Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Only City and state"
+            name="location"
+            onChange={handleInputChange}
+            value={userFormData.location}
+          />
+        </Form.Group>
+
+        <Button type="submit" variant="success">
           Submit
         </Button>
       </Form>
@@ -124,4 +153,4 @@ const SignupForm = () => {
   );
 };
 
-export default SignupForm;
+export default UpdateProfile;

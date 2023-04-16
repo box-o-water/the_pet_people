@@ -52,6 +52,7 @@ const typeDefs = gql`
       img: String
       location: String
     ): Auth
+    deleteUser(username: String!): User
     addPet(
       petName: String!
       animalType: String!
