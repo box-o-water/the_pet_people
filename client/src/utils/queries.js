@@ -20,6 +20,32 @@ export const GET_ME = gql`
   }
 `;
 
+export const QUERY_USER = gql`
+  query singleUser($username: String) {
+    users(username: $username) {
+      username
+      email
+      img
+      location
+      pets {
+        age
+        animalType
+        breed
+        img
+        isFixed
+        petName
+        size
+      }
+      reviews {
+        createdAt
+        landlord
+        rating
+        reviewContents
+      }
+    }
+  }
+`;
+
 export const QUERY_USERS = gql`
   query Query {
     users {

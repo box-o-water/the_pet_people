@@ -16,6 +16,10 @@ const resolvers = {
           model: "Review",
         });
     },
+    user: async (parent, { username }) => {
+      const params = username ? { username } : {};
+      return User.find(params);
+    },
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
