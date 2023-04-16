@@ -18,7 +18,7 @@ const UsersList = () => {
         users.map((user) => (
           <div key={user.username} className="card mb-3">
             <h4 className="card-header bg-primary text-light p-2 m-0">
-              <Link to={{ pathname: `/user/${user.username}` }}>
+              <Link to={{ pathname: `/renter/${user.username}` }}>
                 {user.username}
               </Link>
             </h4>
