@@ -21,6 +21,9 @@ const reviewSchema = new Schema({
         default: Date.now,
         get: (timestamp) => dateFormat(timestamp),
     },
+    userReviewed: {
+        type: String
+    }
 });
 
 

@@ -9,12 +9,21 @@ export const GET_ME = gql`
       location
       img
       pets {
-        age
+        _id
         animalType
-        breed
-        img
         petName
+        breed
         size
+        img
+        age
+      }
+      reviews {
+        _id
+        landlord
+        reviewContents
+        createdAt
+        rating
+        userReviewed
       }
     }
   }
@@ -23,6 +32,7 @@ export const GET_ME = gql`
 export const QUERY_USERS = gql`
   query Query {
     users {
+      _id
       username
       email
       img
