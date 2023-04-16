@@ -1,20 +1,29 @@
-import React from "react";
+import React, { useState} from "react";
+import EditPet from "./EditPet"
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
-import { DELETE_USER, DELETE_PET } from "../utils/mutations";
+import { DELETE_USER, DELETE_PET, UPDATE_PET } from "../utils/mutations";
+import dayjs from 'dayjs';
 import Auth from "../utils/auth";
 import Swal from "sweetalert2";
 
 const Profile = () => {
+  const { loading, data } = useQuery(GET_ME);
   const [deletePet] = useMutation(DELETE_PET);
   const [deleteUser] = useMutation(DELETE_USER);
+  const [editPet] = useMutation(UPDATE_PET, {
+    refetchQueries: [{ query: GET_ME }]
+  });
+
   // use useQuery to get logged in user's data
-  const { loading, data } = useQuery(GET_ME);
+
   const pets = data?.me.pets || [];
   const reviews = data?.me.reviews || [];
   const token = Auth.loggedIn() ? Auth.getToken() : null;
+
+  const [showEditForm, setShowEditForm] = useState(false);
 
   if (!token) {
     return false;
@@ -23,6 +32,7 @@ const Profile = () => {
   if (loading) {
     return <h2>LOADING...</h2>;
   }
+
   const handleDeletePet = async (petId) => {
     try {
       Swal.fire({
@@ -73,12 +83,17 @@ const Profile = () => {
       console.error(error);
     }
   };
+  
+  const toggleEditForm = () => {
+    setShowEditForm(!showEditForm);
+  };
 
+  
   return (
     <div>
       <a href="/update-profile"> Update Profile</a>
       <div>
-        <a href="/add-pet">Add Pet</a>
+      <a href="/add-pet"> Add Pet</a>
       </div>
 
       <h2>profile</h2>
@@ -97,15 +112,19 @@ const Profile = () => {
             <div key={pet._id} className="card mb-3">
               <h4 className="card-header bg-primary text-light p-2 m-0">
                 {pet.petName}
-                <button onClick={() => handleDeletePet(pet._id)}>
-                  Delete Pet
-                </button>
+                <button onClick={() => handleDeletePet(pet._id)}>Delete Pet</button>
+                <button onClick={toggleEditForm}>Edit Pet</button>
               </h4>
               <div className="card-body bg-light p-2">
                 <p>{pet.animalType}</p>
                 <p>{pet.breed}</p>
                 <p>{pet.size}</p>
+                <p>{dayjs(pet.age).format('DD MMM YYYY')}</p>
+
               </div>
+              {showEditForm && (
+                <EditPet pet={pet} toggleEditForm={toggleEditForm} editPet={editPet}/>
+              )}
             </div>
           ))}
       </div>

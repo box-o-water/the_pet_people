@@ -15,7 +15,7 @@ import Profile from "./components/Profile";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import UpdateProfile from "./components/UpdateProfile";
-import AddPet from "./components/AddPet";
+import AddPet from "./components/AddPet"
 import Renters from "./components/UsersList";
 import Renter from "./components/SingleUser";
 

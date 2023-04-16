@@ -1,90 +1,66 @@
 import React, { useState } from "react";
+import { useQuery } from "@apollo/client";
 import { Form, Button, Alert } from "react-bootstrap";
-import { useMutation, useQuery } from "@apollo/client";
-import { ADD_PET } from "../utils/mutations";
-import { GET_ME } from "../utils/queries";
 
 import Auth from "../utils/auth";
+// import { UPDATE_PET } from "../utils/mutations";
+import { GET_ME } from "../utils/queries";
 
-const AddPet = () => {
-  // set initial form state
-  const [petFormData, setPetFormData] = useState({
-    petName: "",
-    animalType: "",
-    breed: "",
-    age: "",
-  });
-  // set state for form validation
-  const [validated] = useState(false);
-  // set state for alert
+const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
   const [showAlert, setShowAlert] = useState(false);
 
   // mutations, and queries
-  const [addPet] = useMutation(ADD_PET);
-  const { loading, data: userData } = useQuery(GET_ME);
-  // check if user is authenticated
+  const { loading } = useQuery(GET_ME);
+
+
+
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
+  const [formData, setFormData] = useState({
+    petName: pet.petName,
+    animalType: pet.animalType,
+    breed: pet.breed,
+    size: pet.size,
+  });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setPetFormData({ ...petFormData, [name]: value });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
+    const petName = formData.petName;
+    const animalType = formData.animalType;
+    const breed = formData.breed;
+    const size = formData.size;
+    const age = formData.age;
 
-    // check if form has everything (as per react-bootstrap docs)
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.persist();
-      event.stopPropagation();
-    }
 
-    try {
-      const petName = petFormData.petName;
-      const animalType = petFormData.animalType;
-      const breed = petFormData.breed;
-      const size = petFormData.size;
-      const age = petFormData.age;
-
-      const { data } = await addPet(
-        {
-          variables: {
-            petName,
-            animalType,
-            breed,
-            size,
-            age,
-          },
+    await editPet(
+      {
+        variables: {
+          petName,
+          animalType,
+          breed,
+          size,
+          age,
+          id: pet._id.toString(),
         },
-        { userData }
-      );
-
-      Auth.getProfile(data.token);
-    } catch (err) {
-      console.error(err);
-      setShowAlert(true);
-      return;
-    }
-
-    event.persist();
-    // on submit send user to their profile
-    window.location.href = "/profile";
+      });
+      
+      toggleEditForm();
   };
 
   if (loading) {
     return <h2>LOADING...</h2>;
   }
-
   if (!token) {
     return <p>You must be logged in to update your profile.</p>;
   }
   return (
-    <>
-      <p>Hey {userData?.me.username}, You got a new animal, That's Amazing!</p>
-      {/* This is needed for the validation functionality above */}
-      <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
+    <div>
+      <Form onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
         <Alert
           dismissible
@@ -103,8 +79,7 @@ const AddPet = () => {
             placeholder="Your petName"
             name="petName"
             onChange={handleInputChange}
-            value={petFormData.petName}
-            required
+            value={formData.petName}
           />
         </Form.Group>
 
@@ -118,8 +93,7 @@ const AddPet = () => {
             placeholder="Enter animal type"
             name="animalType"
             onChange={handleInputChange}
-            value={petFormData.animalType}
-            required
+            value={formData.animalType}
           />
         </Form.Group>
 
@@ -130,8 +104,7 @@ const AddPet = () => {
             placeholder="Animal breed here"
             name="breed"
             onChange={handleInputChange}
-            value={petFormData.breed}
-            required
+            value={formData.breed}
           />
         </Form.Group>
 
@@ -141,8 +114,7 @@ const AddPet = () => {
             type="text"
             name="size"
             onChange={handleInputChange}
-            value={petFormData.size}
-            required
+            value={formData.size}
           >
             <option value="">-- What size is your animal --</option>
             <option value="Extra-Small">Extra-Small (under 5 pounds)</option>
@@ -160,21 +132,17 @@ const AddPet = () => {
             max={new Date().getFullYear()}
             name="age"
             onChange={handleInputChange}
-            value={petFormData.age}
-            required
-            isInvalid={!petFormData.age}
+            value={formData.age}
           />
-          <Form.Control.Feedback type="invalid">
-            Please enter a valid year.
-          </Form.Control.Feedback>
+
         </Form.Group>
 
-        <Button type="submit" variant="success">
+        <Button type="submit" variant="success" onClick={handleFormSubmit}>
           Submit
         </Button>
       </Form>
-    </>
+    </div>
   );
 };
 
-export default AddPet;
+export default EditPetForm;

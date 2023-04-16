@@ -1,4 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
+const { UserInputError } = require("apollo-server-errors");
 const { User, Pet, Review } = require("../models");
 const { signToken } = require("../utils/auth");
 
@@ -124,8 +125,8 @@ const resolvers = {
       }
     },
 
-    // update a users information
-    updateUser: async (parent, { username, email, img, location }, context) => {
+    // updates the Users information
+    updateUser: async (parent, { username, email, location }, context) => {
       try {
         const user = await User.findById(context.user._id).select(
           "-__v -password"
@@ -151,11 +152,7 @@ const resolvers = {
     },
 
     // add a pet to the user
-    addPet: async (
-      parent,
-      { petName, animalType, breed, size, age },
-      context
-    ) => {
+    addPet: async (parent, { petName, animalType, breed, size, age }, context) => {
       try {
         // Check if user is authenticated
         if (!context.user._id) {
@@ -193,18 +190,20 @@ const resolvers = {
     // update a pet that already exists
     updatePet: async (
       parent,
-      { _id, petName, animalType, breed, size, img, age, isFixed },
+      { petName, animalType, breed, size, age, _id },
       context
     ) => {
       try {
-        const user = await User.findById(context._id);
+        const userId = context.user._id;
+        console.log({_id});
+        const user = await User.findById(userId);
 
         if (!user) {
           throw new AuthenticationError(
             "You must be logged in to update your pet."
           );
         }
-        console.log(animalType);
+
         const pet = await Pet.findById(_id);
 
         if (!pet) {
@@ -215,14 +214,12 @@ const resolvers = {
         pet.animalType = animalType || pet.animalType;
         pet.breed = breed || pet.breed;
         pet.size = size || pet.size;
-        pet.img = img || pet.img;
         pet.age = age || pet.age;
-        pet.isFixed = isFixed || pet.isFixed;
 
         // Save the updated Pet document to the database
         const updatedPet = await pet.save();
 
-        return { pet: updatedPet, user: user };
+        return;
       } catch (error) {
         console.log(error);
       }
