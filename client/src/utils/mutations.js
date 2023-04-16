@@ -76,24 +76,22 @@ export const DELETE_USER = gql`
 
 export const EDIT_PET = gql`
   mutation EditPet(
-    $id: ID!
     $petName: String
     $animalType: String
     $breed: String
-    $gender: String
     $size: String
     $img: String
     $age: String
+    $id: String!
   ) {
     editPet(
-      _id: $id
       petName: $petName
       animalType: $animalType
       breed: $breed
-      gender: $gender
       size: $size
       img: $img
       age: $age
+      _id: $id
     ) {
       _id
     }

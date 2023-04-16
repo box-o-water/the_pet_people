@@ -186,21 +186,12 @@ const resolvers = {
     // updates pet that already exists
     editPet: async (
       parent,
-      { id, petName, animalType, breed, size, img, age, isFixed },
+      { petName, animalType, breed, size, age, _id },
       context
     ) => {
       try {
         const userId = context.user._id;
-        console.log({
-          id,
-          petName,
-          animalType,
-          breed,
-          size,
-          img,
-          age,
-          isFixed,
-        });
+        console.log({_id});
         const user = await User.findById(userId);
 
         if (!user) {
@@ -209,7 +200,7 @@ const resolvers = {
           );
         }
 
-        const pet = await Pet.findById(id);
+        const pet = await Pet.findById(_id);
 
         if (!pet) {
           throw new UserInputError("Pet not found.");

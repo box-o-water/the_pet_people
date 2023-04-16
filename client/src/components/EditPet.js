@@ -34,17 +34,16 @@ const EditPetForm = ({ pet, handleEditPet, toggleEditForm }) => {
     const breed = formData.breed;
     const size = formData.size;
     const age = formData.age;
-    const id = pet._id;
-    console.log(id)
+    console.log(pet._id.toString())
     await editPet(
       {
         variables: {
-          id,
           petName,
           animalType,
           breed,
           size,
           age,
+          _id: pet._id.toString(),
         },
       },
     );
