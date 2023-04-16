@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 // import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 
 import { useQuery } from "@apollo/client";
@@ -8,6 +9,7 @@ const UsersList = () => {
   const { data } = useQuery(QUERY_USERS);
 
   const users = data?.users || [];
+  console.log(users);
 
   return (
     <div>
@@ -16,7 +18,9 @@ const UsersList = () => {
         users.map((user) => (
           <div key={user._id} className="card mb-3">
             <h4 className="card-header bg-primary text-light p-2 m-0">
-              {user.username}
+              <Link to={{ pathname: `/renter/${user._id}` }}>
+                {user.username}
+              </Link>
             </h4>
             <div className="card-body bg-light p-2">
               <p>{user.email}</p>

@@ -16,8 +16,8 @@ import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import UpdateProfile from "./components/UpdateProfile";
 import AddPet from "./components/AddPet"
-import EditPet from "./components/EditPet"
 import Renters from "./components/UsersList";
+import Renter from "./components/SingleUser";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
@@ -53,9 +53,9 @@ function App() {
             <Route path="/" element={<Homepage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/renters" element={<Renters />} />
+            <Route path="/renter/:id" element={<Renter />} />
             <Route path="/update-profile" element={<UpdateProfile />} />
             <Route path="/add-pet" element={<AddPet />} />
-            <Route path="/edit-pet" element={<EditPet />} />
             <Route
               path="*"
               element={<h1 className="display-2">Wrong page!</h1>}

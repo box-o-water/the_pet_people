@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState} from "react";
+import EditPet from "./EditPet"
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -10,10 +11,13 @@ import Swal from 'sweetalert2';
 const Profile = () => {
   const [deletePet] = useMutation(DELETE_PET);
   const [deleteUser] = useMutation(DELETE_USER);
+
   // use useQuery to get logged in user's data
   const { loading, data: userData } = useQuery(GET_ME);
   const pets = userData?.me.pets || [];
   const token = Auth.loggedIn() ? Auth.getToken() : null;
+  console.log(userData)
+  const [showEditForm, setShowEditForm] = useState(false);
 
   if (!token) {
     return false;
@@ -21,6 +25,13 @@ const Profile = () => {
 
   if (loading) {
     return <h2>LOADING...</h2>;
+  }
+  const handleEditPet = async (petID) => {
+    try{
+
+    } catch (error){
+
+    }
   }
   const handleDeletePet = async (petId) => {
     try {
@@ -80,11 +91,16 @@ const Profile = () => {
     }
   };
   
+  const toggleEditForm = () => {
+    setShowEditForm(!showEditForm);
+  };
+
+  
   return (
     <div>
       <a href="/update-profile"> Update Profile</a>
       <div>
-        <a href="/add-pet">Add Pet</a>
+      <a href="/add-pet"> Add Pet</a>
       </div>
 
       <h2>profile</h2>
@@ -101,16 +117,20 @@ const Profile = () => {
         {pets &&
           pets.map((pet) => (
 
-            <div key={pet._id} className="card mb-3">
+            <div className="card mb-3">
               <h4 className="card-header bg-primary text-light p-2 m-0">
                 {pet.petName}
                 <button onClick={() => handleDeletePet(pet._id)}>Delete Pet</button>
+                <button onClick={toggleEditForm}>Edit Pet</button>
               </h4>
               <div className="card-body bg-light p-2">
                 <p>{pet.animalType}</p>
                 <p>{pet.breed}</p>
                 <p>{pet.size}</p>
               </div>
+              {showEditForm && (
+                <EditPet pet={pet} handleEditPet={handleEditPet} toggleEditForm={toggleEditForm} />
+              )}
             </div>
           ))}
       </div>

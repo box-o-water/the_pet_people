@@ -16,6 +16,10 @@ const resolvers = {
           model: "Review",
         });
     },
+    user: async (parent, { _id }) => {
+      const params = _id ? { _id } : {};
+      return User.find(params);
+    },
     me: async (parent, args, context) => {
       if (context.user) {
         const userData = await User.findOne({ _id: context.user._id })
@@ -84,19 +88,19 @@ const resolvers = {
       try {
         // Find the user to be deleted
         const user = await User.findOne({ username });
-  
+
         if (!user) {
-          throw new UserInputError('User not found.');
+          throw new UserInputError("User not found.");
         }
-  
+
         // Remove the user's pets and reviews from the database
         await Pet.deleteMany({ _id: { $in: user.pets } });
         await Review.deleteMany({ _id: { $in: user.reviews } });
-  
+
         // Delete the user document from the database
         await User.deleteOne({ _id: user._id });
-  
-        return { message: 'User and associated data successfully deleted.' };
+
+        return { message: "User and associated data successfully deleted." };
       } catch (error) {
         console.log(error);
       }
@@ -157,11 +161,10 @@ const resolvers = {
           { $push: { pets: savedPet._id } },
           { new: true }
         );
-        
 
         return {
           token: signToken(updatedUser),
-           user: updatedUser
+          user: updatedUser,
         };
       } catch (error) {
         console.log(error);
@@ -181,7 +184,7 @@ const resolvers = {
             "You must be logged in to update your pet."
           );
         }
-        console.log(animalType)
+        console.log(animalType);
         const pet = await Pet.findById(_id);
 
         if (!pet) {
@@ -206,10 +209,10 @@ const resolvers = {
     },
     deletePet: async (parent, { petId }, context) => {
       try {
-        console.log(petId)
+        console.log(petId);
         const deletedPet = await Pet.findByIdAndDelete(petId);
         // Remove the pet from the user's pets array
-    
+
         return deletedPet;
       } catch (err) {
         console.error(err);
