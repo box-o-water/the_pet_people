@@ -9,6 +9,7 @@ const typeDefs = gql`
     rating: Int!
     userReviewed: String!
   }
+
   type Pet {
     _id: ID!
     animalType: String!
