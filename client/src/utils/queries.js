@@ -8,6 +8,14 @@ export const GET_ME = gql`
       email
       location
       img
+      pets {
+        age
+        animalType
+        breed
+        img
+        petName
+        size
+      }
     }
   }
 `;
