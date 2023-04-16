@@ -4,17 +4,21 @@ import EditPet from "./EditPet"
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
-import { DELETE_USER, DELETE_PET } from "../utils/mutations";
+import { DELETE_USER, DELETE_PET, UPDATE_PET } from "../utils/mutations";
 import dayjs from 'dayjs';
 import Auth from "../utils/auth";
 import Swal from "sweetalert2";
 
 const Profile = () => {
+  const { loading, data } = useQuery(GET_ME);
   const [deletePet] = useMutation(DELETE_PET);
   const [deleteUser] = useMutation(DELETE_USER);
+  const [editPet] = useMutation(UPDATE_PET, {
+    refetchQueries: [{ query: GET_ME }]
+  });
 
   // use useQuery to get logged in user's data
-  const { loading, data } = useQuery(GET_ME);
+
   const pets = data?.me.pets || [];
   const reviews = data?.me.reviews || [];
   const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -119,7 +123,7 @@ const Profile = () => {
 
               </div>
               {showEditForm && (
-                <EditPet pet={pet} toggleEditForm={toggleEditForm}  />
+                <EditPet pet={pet} toggleEditForm={toggleEditForm} editPet={editPet}/>
               )}
             </div>
           ))}

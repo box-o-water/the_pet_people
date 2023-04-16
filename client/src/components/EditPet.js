@@ -1,17 +1,18 @@
 import React, { useState } from "react";
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { Form, Button, Alert } from "react-bootstrap";
 
 import Auth from "../utils/auth";
-import { UPDATE_PET } from "../utils/mutations";
+// import { UPDATE_PET } from "../utils/mutations";
 import { GET_ME } from "../utils/queries";
 
-const EditPetForm = ({ pet, toggleEditForm }) => {
+const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
   const [showAlert, setShowAlert] = useState(false);
 
   // mutations, and queries
-  const [editPet] = useMutation(UPDATE_PET);
   const { loading } = useQuery(GET_ME);
+
+
 
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -34,7 +35,8 @@ const EditPetForm = ({ pet, toggleEditForm }) => {
     const breed = formData.breed;
     const size = formData.size;
     const age = formData.age;
-    console.log(pet._id.toString())
+
+
     await editPet(
       {
         variables: {
@@ -45,11 +47,11 @@ const EditPetForm = ({ pet, toggleEditForm }) => {
           age,
           id: pet._id.toString(),
         },
-      },
-    );
+      });
       
-    toggleEditForm();
+      toggleEditForm();
   };
+
   if (loading) {
     return <h2>LOADING...</h2>;
   }
@@ -135,7 +137,7 @@ const EditPetForm = ({ pet, toggleEditForm }) => {
 
         </Form.Group>
 
-        <Button type="submit" variant="success">
+        <Button type="submit" variant="success" onClick={handleFormSubmit}>
           Submit
         </Button>
       </Form>

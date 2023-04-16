@@ -219,7 +219,7 @@ const resolvers = {
         // Save the updated Pet document to the database
         const updatedPet = await pet.save();
 
-        return { pet: updatedPet, user: user };
+        return;
       } catch (error) {
         console.log(error);
       }
