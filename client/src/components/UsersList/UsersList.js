@@ -1,8 +1,7 @@
 import React from "react";
 // import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
-
 import { useQuery } from "@apollo/client";
-import { QUERY_USERS } from "../utils/queries";
+import { QUERY_USERS } from "../../utils/queries";
 
 const UsersList = () => {
   const { data } = useQuery(QUERY_USERS);
@@ -11,7 +10,9 @@ const UsersList = () => {
 
   return (
     <div>
+      <section>
       <h3>renters are people, too</h3>
+      </section>
       {users &&
         users.map((user) => (
           <div key={user._id} className="card mb-3">
