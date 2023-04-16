@@ -52,6 +52,7 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/renters" element={<Renters />} />
             <Route path="/update-profile" element={<UpdateProfile />} />
+            <Route path="/add-pet" element={<AddPet />} />
             <Route
               path="*"
               element={<h1 className="display-2">Wrong page!</h1>}

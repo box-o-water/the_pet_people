@@ -69,13 +69,34 @@ const resolvers = {
         if (!correctPw) {
           throw new AuthenticationError("Incorrect credentials");
         }
-        console.log(user);
         const token = signToken(user);
   
         return { token, user };
 
       } catch (error){
         console.log(error)
+      }
+    },
+    // deletes user
+    deleteUser: async (parent, { username }) => {
+      try {
+        // Find the user to be deleted
+        const user = await User.findOne({ username });
+  
+        if (!user) {
+          throw new UserInputError('User not found.');
+        }
+  
+        // Remove the user's pets and reviews from the database
+        await Pet.deleteMany({ _id: { $in: user.pets } });
+        await Review.deleteMany({ _id: { $in: user.reviews } });
+  
+        // Delete the user document from the database
+        await User.deleteOne({ _id: user._id });
+  
+        return { message: 'User and associated data successfully deleted.' };
+      } catch (error) {
+        console.log(error);
       }
     },
     // updates the Users information
@@ -87,7 +108,7 @@ const resolvers = {
         if (!user) {
           throw new AuthenticationError('You must be logged in to update your profile.');
         }
-        console.log(username)
+
         user.username = username || user.username;
         user.email = email || user.email;
         user.img = img || user.img;
@@ -103,23 +124,20 @@ const resolvers = {
     },
 
     // adds a pet to the database
-    addPet: async (parent, { petName, animalType, breed, gender, size, img, age, isFixed }, context) => {
+    addPet: async (parent, { petName, animalType, breed, size, age}, context) => {
       try {
         // Check if user is authenticated
-        if (!context.user) {
+        if (!context.user._id) {
           throw new AuthenticationError('You must be logged in to add a pet.');
         }
-    
+        console.log({ petName, animalType, breed, size, age,})
         // Create a new Pet document
         const newPet = new Pet({
           petName,
           animalType,
           breed,
-          gender,
           size,
-          img,
           age,
-          isFixed
         });
     
         // Save the new Pet document to the database
@@ -140,7 +158,7 @@ const resolvers = {
       }
     },
     // updates pet that already exists 
-    updatePet: async (parent, { _id, petName, animalType, breed, gender, size, img, age, isFixed }, context) => {
+    updatePet: async (parent, { _id, petName, animalType, breed, size, img, age, isFixed }, context) => {
       try {
         const user = await User.findById(context._id)
     
@@ -157,7 +175,6 @@ const resolvers = {
         pet.petName = petName || pet.petName;
         pet.animalType = animalType || pet.animalType;
         pet.breed = breed || pet.breed;
-        pet.gender = gender || pet.gender;
         pet.size = size || pet.size;
         pet.img = img || pet.img;
         pet.age = age || pet.age;
