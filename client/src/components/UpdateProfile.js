@@ -31,7 +31,12 @@ const UpdateProfile = () => {
   if (!token) {
     return <p>You must be logged in to update your profile.</p>;
   }
-
+  const handleImageChange = (event) => {
+    setUserFormData({
+      ...userFormData,
+      image: event.target.files[0]
+    });
+  };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
@@ -66,6 +71,7 @@ const UpdateProfile = () => {
     } catch (err) {
       console.error(err);
       setShowAlert(true);
+      return;
     }
 
     setUserFormData({
@@ -121,16 +127,15 @@ const UpdateProfile = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        {/* <Form.Group className="mb-3">
           <Form.Label htmlFor="img">Profile Image</Form.Label>
           <Form.Control
             type="file"
-            placeholder="Only City and state"
             name="image"
-            onChange={handleInputChange}
-            value={userFormData.img}
+            accept="image/*"
+            onChange={handleImageChange}
           />
-        </Form.Group>
+        </Form.Group> */}
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="location">

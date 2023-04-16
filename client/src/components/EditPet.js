@@ -80,7 +80,7 @@ const AddPet = () => {
 
   return (
     <>
-      <p>Hey {userData?.me.username}, You got a new animal, That's Amazing!</p>
+      <p>Hey {userData?.me.username}, Need to change something about your pet, no Problem!</p>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
