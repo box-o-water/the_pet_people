@@ -19,7 +19,15 @@ const resolvers = {
     },
     user: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
-      return User.find(params);
+      return await User.find(params)
+        .populate({
+          path: "pets",
+          model: "Pet",
+        })
+        .populate({
+          path: "reviews",
+          model: "Review",
+        });
     },
     me: async (parent, args, context) => {
       if (context.user) {
@@ -28,6 +36,10 @@ const resolvers = {
           .populate({
             path: "pets",
             model: "Pet",
+          })
+          .populate({
+            path: "reviews",
+            model: "Review",
           });
 
         return userData;
