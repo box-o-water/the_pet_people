@@ -5,7 +5,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { DELETE_USER, DELETE_PET } from "../utils/mutations";
 import Auth from "../utils/auth";
-import Swal from 'sweetalert2';
+import Swal from "sweetalert2";
 
 const Profile = () => {
   const [deletePet] = useMutation(DELETE_PET);
@@ -13,6 +13,7 @@ const Profile = () => {
   // use useQuery to get logged in user's data
   const { loading, data: userData } = useQuery(GET_ME);
   const pets = userData?.me.pets || [];
+  const reviews = userData?.me.reviews || [];
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   if (!token) {
@@ -25,48 +26,42 @@ const Profile = () => {
   const handleDeletePet = async (petId) => {
     try {
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "You won't be able to revert this!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
           await deletePet({
             variables: { petId: petId },
           });
-          
-        window.location.reload();
-          
+
+          window.location.reload();
         }
       });
-    } catch (error){
+    } catch (error) {
       console.error(error);
-
     }
-  }
+  };
   const handleDeleteUser = async () => {
     try {
       Swal.fire({
-        title: 'Are you sure?',
+        title: "Are you sure?",
         text: "All your information will disappear!",
-        icon: 'warning',
+        icon: "warning",
         showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
       }).then(async (result) => {
         if (result.isConfirmed) {
           await deleteUser({
             variables: { username: userData?.me.username },
           });
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
+          Swal.fire("Deleted!", "Your file has been deleted.", "success");
           // adds delay to show confirmation message
           setTimeout(() => {
             Auth.logout();
@@ -74,12 +69,11 @@ const Profile = () => {
           }, 3000);
         }
       });
-
     } catch (error) {
       console.error(error);
     }
   };
-  
+
   return (
     <div>
       <a href="/update-profile"> Update Profile</a>
@@ -100,11 +94,12 @@ const Profile = () => {
         <h3>pets are people, too</h3>
         {pets &&
           pets.map((pet) => (
-
             <div key={pet._id} className="card mb-3">
               <h4 className="card-header bg-primary text-light p-2 m-0">
                 {pet.petName}
-                <button onClick={() => handleDeletePet(pet._id)}>Delete Pet</button>
+                <button onClick={() => handleDeletePet(pet._id)}>
+                  Delete Pet
+                </button>
               </h4>
               <div className="card-body bg-light p-2">
                 <p>{pet.animalType}</p>
@@ -114,9 +109,22 @@ const Profile = () => {
             </div>
           ))}
       </div>
-      <h2>reviews:</h2>
-      <p>Review Title:</p>
-      <p>review body</p>
+      <div>
+        <h3>reviews from people, about people</h3>
+        {reviews &&
+          reviews.map((review) => (
+            <div key={review._id} className="card mb-3">
+              <h4 className="card-header bg-primary text-light p-2 m-0">
+                {review.landlord}
+              </h4>
+              <div className="card-body bg-light p-2">
+                <p>{review.createdAt}</p>
+                <p>{review.reviewContents}</p>
+                <p>{review.rating}</p>
+              </div>
+            </div>
+          ))}
+      </div>
       <button onClick={handleDeleteUser}>Delete Account</button>
     </div>
   );
