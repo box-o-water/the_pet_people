@@ -60,7 +60,7 @@ const typeDefs = gql`
       size: String!
       age: String!
     ): Auth
-    updatePet(
+    editPet(
       _id: ID!
       petName: String
       animalType: String
@@ -70,7 +70,7 @@ const typeDefs = gql`
       img: String
       age: String
       isFixed: Boolean
-    ): Auth
+    ): User
     deletePet(petId: ID!): User
     addReview(
       landlord: String!

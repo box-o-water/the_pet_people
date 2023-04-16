@@ -8,7 +8,7 @@ import Auth from "../utils/auth";
 
 const AddPet = () => {
   // set initial form state
-  const [userFormData, setUserFormData] = useState({
+  const [petFormData, setPetFormData] = useState({
     petName: "",
     animalType: "",
     breed: "",
@@ -18,22 +18,17 @@ const AddPet = () => {
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
+
+  // mutations, and queries
   const [addPet] = useMutation(ADD_PET);
   const { loading, data: userData } = useQuery(GET_ME);
   // check if user is authenticated
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
-  if (loading) {
-    return <h2>LOADING...</h2>;
-  }
-
-  if (!token) {
-    return <p>You must be logged in to update your profile.</p>;
-  }
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    setPetFormData({ ...petFormData, [name]: value });
   };
 
   const handleFormSubmit = async (event) => {
@@ -47,11 +42,11 @@ const AddPet = () => {
     }
 
     try {
-      const petName = userFormData.petName;
-      const animalType = userFormData.animalType;
-      const breed = userFormData.breed;
-      const size = userFormData.size;
-      const age = userFormData.age;
+      const petName = petFormData.petName;
+      const animalType = petFormData.animalType;
+      const breed = petFormData.breed;
+      const size = petFormData.size;
+      const age = petFormData.age;
       console.log(animalType)
       const { data } = await addPet(
         {
@@ -78,6 +73,13 @@ const AddPet = () => {
     window.location.href = "/profile";
   };
 
+  if (loading) {
+    return <h2>LOADING...</h2>;
+  }
+
+  if (!token) {
+    return <p>You must be logged in to update your profile.</p>;
+  }
   return (
     <>
       <p>Hey {userData?.me.username}, You got a new animal, That's Amazing!</p>
@@ -101,7 +103,7 @@ const AddPet = () => {
             placeholder="Your petName"
             name="petName"
             onChange={handleInputChange}
-            value={userFormData.petName}
+            value={petFormData.petName}
             required
           />
         </Form.Group>
@@ -116,7 +118,7 @@ const AddPet = () => {
             placeholder="Enter animal type"
             name="animalType"
             onChange={handleInputChange}
-            value={userFormData.animalType}
+            value={petFormData.animalType}
             required
           />
         </Form.Group>
@@ -128,7 +130,7 @@ const AddPet = () => {
             placeholder="Animal breed here"
             name="breed"
             onChange={handleInputChange}
-            value={userFormData.breed}
+            value={petFormData.breed}
             required
           />
         </Form.Group>
@@ -139,7 +141,7 @@ const AddPet = () => {
             type="text"
             name="size"
             onChange={handleInputChange}
-            value={userFormData.size}
+            value={petFormData.size}
             required
           >
             <option value="">-- What size is your animal --</option>
@@ -158,9 +160,9 @@ const AddPet = () => {
             max={new Date().getFullYear()}
             name="age"
             onChange={handleInputChange}
-            value={userFormData.age}
+            value={petFormData.age}
             required
-            isInvalid={!userFormData.age}
+            isInvalid={!petFormData.age}
           />
           <Form.Control.Feedback type="invalid">
             Please enter a valid year.

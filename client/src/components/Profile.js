@@ -5,6 +5,7 @@ import EditPet from "./EditPet"
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { DELETE_USER, DELETE_PET } from "../utils/mutations";
+import dayjs from 'dayjs';
 import Auth from "../utils/auth";
 import Swal from 'sweetalert2';
 
@@ -16,7 +17,7 @@ const Profile = () => {
   const { loading, data: userData } = useQuery(GET_ME);
   const pets = userData?.me.pets || [];
   const token = Auth.loggedIn() ? Auth.getToken() : null;
-  console.log(userData)
+
   const [showEditForm, setShowEditForm] = useState(false);
 
   if (!token) {
@@ -117,7 +118,7 @@ const Profile = () => {
         {pets &&
           pets.map((pet) => (
 
-            <div className="card mb-3">
+            <div key={pet._id} className="card mb-3">
               <h4 className="card-header bg-primary text-light p-2 m-0">
                 {pet.petName}
                 <button onClick={() => handleDeletePet(pet._id)}>Delete Pet</button>
@@ -127,9 +128,11 @@ const Profile = () => {
                 <p>{pet.animalType}</p>
                 <p>{pet.breed}</p>
                 <p>{pet.size}</p>
+                <p>{dayjs(pet.age).format('DD MMM YYYY')}</p>
+
               </div>
               {showEditForm && (
-                <EditPet pet={pet} handleEditPet={handleEditPet} toggleEditForm={toggleEditForm} />
+                <EditPet pet={pet} handleEditPet={handleEditPet} toggleEditForm={toggleEditForm}  />
               )}
             </div>
           ))}

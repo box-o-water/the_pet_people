@@ -1,4 +1,5 @@
 const { AuthenticationError } = require("apollo-server-express");
+const { UserInputError } = require("apollo-server-errors");
 const { User, Pet, Review } = require("../models");
 const { signToken } = require("../utils/auth");
 
@@ -106,7 +107,7 @@ const resolvers = {
       }
     },
     // updates the Users information
-    updateUser: async (parent, { username, email, img, location }, context) => {
+    updateUser: async (parent, { username, email, location }, context) => {
       try {
         const user = await User.findById(context.user._id).select(
           "-__v -password"
@@ -171,21 +172,32 @@ const resolvers = {
       }
     },
     // updates pet that already exists
-    updatePet: async (
+    editPet: async (
       parent,
-      { _id, petName, animalType, breed, size, img, age, isFixed },
+      { id, petName, animalType, breed, size, img, age, isFixed },
       context
     ) => {
       try {
-        const user = await User.findById(context._id);
+        const userId = context.user._id;
+        console.log({
+          id,
+          petName,
+          animalType,
+          breed,
+          size,
+          img,
+          age,
+          isFixed,
+        });
+        const user = await User.findById(userId);
 
         if (!user) {
           throw new AuthenticationError(
             "You must be logged in to update your pet."
           );
         }
-        console.log(animalType);
-        const pet = await Pet.findById(_id);
+
+        const pet = await Pet.findById(id);
 
         if (!pet) {
           throw new UserInputError("Pet not found.");
