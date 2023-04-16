@@ -13,7 +13,8 @@ const SingleUser = () => {
     variables: { _id: id },
   });
 
-  const pets = data?.user.pets || [];
+  const pets = data?.user[0].pets || [];
+  const reviews = data?.user[0].reviews || [];
 
   if (loading) {
     return <h2>LOADING...</h2>;
@@ -50,9 +51,22 @@ const SingleUser = () => {
             </div>
           ))}
       </div>
-      <h2>reviews:</h2>
-      <p>Review Title:</p>
-      <p>review body</p>
+      <div>
+        <h3>reviews from people, about people</h3>
+        {reviews &&
+          reviews.map((review) => (
+            <div key={review._id} className="card mb-3">
+              <h4 className="card-header bg-primary text-light p-2 m-0">
+                {review.landlord}
+              </h4>
+              <div className="card-body bg-light p-2">
+                <p>{review.createdAt}</p>
+                <p>{review.reviewContents}</p>
+                <p>{review.rating}</p>
+              </div>
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
