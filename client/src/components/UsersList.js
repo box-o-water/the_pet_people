@@ -9,7 +9,6 @@ const UsersList = () => {
   const { data } = useQuery(QUERY_USERS);
 
   const users = data?.users || [];
-  console.log(users);
 
   return (
     <div>
