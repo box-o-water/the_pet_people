@@ -18,9 +18,12 @@ const resolvers = {
     },
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id }).select(
-          "-__v -password"
-        );
+        const userData = await User.findOne({ _id: context.user._id })
+          .select("-__v -password")
+          .populate({
+            path: "pets",
+            model: "Pet",
+          });
 
         return userData;
       }
@@ -31,7 +34,7 @@ const resolvers = {
   Mutation: {
     // users are Users, but for future purposes we are calling them users
     addUser: async (parent, { username, email, password }) => {
-      try{
+      try {
         let user = await User.findOne({ username });
 
         if (user) {
@@ -39,11 +42,10 @@ const resolvers = {
           const randomNumber = Math.floor(Math.random() * 1000);
           username = `${username}${randomNumber}`;
         }
-  
+
         user = await User.create({ username, email, password });
         const token = signToken(user);
         return { token, user };
-
       } catch (error) {
         console.log(error);
       }
@@ -51,30 +53,30 @@ const resolvers = {
 
     login: async (parent, { email, password }) => {
       try {
-        const user = await User.findOne({ email }).populate({
-          path: "pets",
-          model: "Pet",
-        })
-        .populate({
-          path: "reviews",
-          model: "Review",
-        });
-  
+        const user = await User.findOne({ email })
+          .populate({
+            path: "pets",
+            model: "Pet",
+          })
+          .populate({
+            path: "reviews",
+            model: "Review",
+          });
+
         if (!user) {
           throw new AuthenticationError("Incorrect credentials");
         }
-  
+
         const correctPw = await user.checkPassword(password);
-  
+
         if (!correctPw) {
           throw new AuthenticationError("Incorrect credentials");
         }
         const token = signToken(user);
-  
-        return { token, user };
 
-      } catch (error){
-        console.log(error)
+        return { token, user };
+      } catch (error) {
+        console.log(error);
       }
     },
     // deletes user
@@ -100,13 +102,16 @@ const resolvers = {
       }
     },
     // updates the Users information
-    updateUser: async (parent, {username, email, img, location }, context) => {
+    updateUser: async (parent, { username, email, img, location }, context) => {
       try {
+        const user = await User.findById(context.user._id).select(
+          "-__v -password"
+        );
 
-        const user = await User.findById(context.user._id).select('-__v -password');
-    
         if (!user) {
-          throw new AuthenticationError('You must be logged in to update your profile.');
+          throw new AuthenticationError(
+            "You must be logged in to update your profile."
+          );
         }
 
         user.username = username || user.username;
@@ -115,22 +120,25 @@ const resolvers = {
         user.location = location || user.location;
 
         const updatedUser = await user.save();
-    
-        return { token: signToken(updatedUser)
-        };
+
+        return { token: signToken(updatedUser) };
       } catch (error) {
         console.log(error);
       }
     },
 
     // adds a pet to the database
-    addPet: async (parent, { petName, animalType, breed, size, age}, context) => {
+    addPet: async (
+      parent,
+      { petName, animalType, breed, size, age },
+      context
+    ) => {
       try {
         // Check if user is authenticated
         if (!context.user._id) {
-          throw new AuthenticationError('You must be logged in to add a pet.');
+          throw new AuthenticationError("You must be logged in to add a pet.");
         }
-        console.log({ petName, animalType, breed, size, age,})
+        console.log({ petName, animalType, breed, size, age });
         // Create a new Pet document
         const newPet = new Pet({
           petName,
@@ -139,39 +147,46 @@ const resolvers = {
           size,
           age,
         });
-    
+
         // Save the new Pet document to the database
         const savedPet = await newPet.save();
-    
+
         // Update the owner's pets array with the new Pet ID
         const updatedUser = await User.findOneAndUpdate(
           { username: context.user.username },
           { $push: { pets: savedPet._id } },
           { new: true }
         );
-    
-        return { token: signToken(updatedUser),
-          //  user: updatedUser 
-          };
+
+        return {
+          token: signToken(updatedUser),
+          //  user: updatedUser
+        };
       } catch (error) {
         console.log(error);
       }
     },
-    // updates pet that already exists 
-    updatePet: async (parent, { _id, petName, animalType, breed, size, img, age, isFixed }, context) => {
+    // updates pet that already exists
+    updatePet: async (
+      parent,
+      { _id, petName, animalType, breed, size, img, age, isFixed },
+      context
+    ) => {
       try {
-        const user = await User.findById(context._id)
-    
+        const user = await User.findById(context._id);
+
         if (!user) {
-          throw new AuthenticationError('You must be logged in to update your pet.');
+          throw new AuthenticationError(
+            "You must be logged in to update your pet."
+          );
         }
-    
+
         const pet = await Pet.findById(_id);
-    
+
         if (!pet) {
-          throw new UserInputError('Pet not found.');
+          throw new UserInputError("Pet not found.");
         }
-    
+
         pet.petName = petName || pet.petName;
         pet.animalType = animalType || pet.animalType;
         pet.breed = breed || pet.breed;
@@ -179,11 +194,11 @@ const resolvers = {
         pet.img = img || pet.img;
         pet.age = age || pet.age;
         pet.isFixed = isFixed || pet.isFixed;
-    
+
         // Save the updated Pet document to the database
         const updatedPet = await pet.save();
-    
-        return { pet: updatedPet, user: user};
+
+        return { pet: updatedPet, user: user };
       } catch (error) {
         console.log(error);
       }
@@ -204,12 +219,15 @@ const resolvers = {
       }
     },
     // adds a review to a user
-    addReview: async (parent, { landlord, reviewContents, rating, userReviewed }) => {
+    addReview: async (
+      parent,
+      { landlord, reviewContents, rating, userReviewed }
+    ) => {
       try {
         // find the user being reviewed
-        const user = await User.findOne({ username: userReviewed} )
+        const user = await User.findOne({ username: userReviewed });
         if (!user) {
-          console.log('User does not exist');
+          console.log("User does not exist");
           return null;
         }
         // Create a new Review document
@@ -217,33 +235,31 @@ const resolvers = {
           landlord,
           reviewContents,
           rating,
-          userReviewed
+          userReviewed,
         });
         // Save the new Review document to the database
         const savedReview = await newReview.save();
-    
+
         // Update the user's reviews array with the new Review ID
         const updatedUser = await User.findByIdAndUpdate(
           { _id: user._id },
           { $push: { reviews: savedReview._id } },
           { new: true }
         );
-    
-        return { 
-          
-            _id: savedReview._id,
-            landlord: savedReview.landlord,
-            rating: savedReview.rating,
-            reviewContents: savedReview.reviewContents,
-            userReviewed: userReviewed,
+
+        return {
+          _id: savedReview._id,
+          landlord: savedReview.landlord,
+          rating: savedReview.rating,
+          reviewContents: savedReview.reviewContents,
+          userReviewed: userReviewed,
         };
       } catch (error) {
         console.log(error);
       }
-    }
-    
-      //next mutation goes here 
+    },
 
-  }
+    //next mutation goes here
+  },
 };
 module.exports = resolvers;
