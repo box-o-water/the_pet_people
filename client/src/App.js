@@ -16,6 +16,7 @@ import Footer from "./components/Footer/Footer";
 import Navbar from "./components/Navbar/Navbar";
 import UpdateProfile from "./components/UpdateProfile/UpdateProfile";
 import Renters from "./components/UsersList/UsersList";
+import AddPet from "./components/AddPet.js";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({
