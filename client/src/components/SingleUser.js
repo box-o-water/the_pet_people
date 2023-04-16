@@ -22,12 +22,6 @@ const SingleUser = () => {
 
   return (
     <div>
-      <a href="/update-profile"> Update Profile</a>
-      <div>
-        <a href="/add-pet">Add Pet</a>
-      </div>
-
-      <h2>profile</h2>
       <p>Name: {data?.user[0].username}</p>
       <p>Email: {data?.user[0].email}</p>
       <img

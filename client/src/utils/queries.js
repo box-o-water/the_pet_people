@@ -58,8 +58,9 @@ export const QUERY_USER = gql`
   }
 `;
 
+// TODO query Query? or users
 export const QUERY_USERS = gql`
-  query Query {
+  query users {
     users {
       _id
       username
