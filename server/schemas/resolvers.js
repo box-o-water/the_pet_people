@@ -4,7 +4,7 @@ const { signToken } = require("../utils/auth");
 
 const resolvers = {
   Query: {
-    // // finds all users
+    // find all users
     users: async () => {
       return await User.find()
         .populate({
@@ -16,6 +16,8 @@ const resolvers = {
           model: "Review",
         });
     },
+
+    // find a single user by id
     user: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
       return await User.find(params)
@@ -28,9 +30,11 @@ const resolvers = {
           model: "Review",
         });
     },
+
+    // find the logged-in user
     me: async (parent, args, context) => {
       if (context.user) {
-        const userData = await User.findOne({ _id: context.user._id })
+        const data = await User.findOne({ _id: context.user._id })
           .select("-__v -password")
           .populate({
             path: "pets",
@@ -41,14 +45,14 @@ const resolvers = {
             model: "Review",
           });
 
-        return userData;
+        return data;
       }
       throw new AuthenticationError("You need to be logged in!");
     },
   },
 
   Mutation: {
-    // users are Users, but for future purposes we are calling them users
+    // add a user
     addUser: async (parent, { username, email, password }) => {
       try {
         let user = await User.findOne({ username });
@@ -67,6 +71,7 @@ const resolvers = {
       }
     },
 
+    // log in a user
     login: async (parent, { email, password }) => {
       try {
         const user = await User.findOne({ email })
@@ -95,7 +100,8 @@ const resolvers = {
         console.log(error);
       }
     },
-    // deletes user
+
+    // delete a user
     deleteUser: async (parent, { username }) => {
       try {
         // Find the user to be deleted
@@ -117,7 +123,8 @@ const resolvers = {
         console.log(error);
       }
     },
-    // updates the Users information
+
+    // update a users information
     updateUser: async (parent, { username, email, img, location }, context) => {
       try {
         const user = await User.findById(context.user._id).select(
@@ -143,7 +150,7 @@ const resolvers = {
       }
     },
 
-    // adds a pet to the database
+    // add a pet to the user
     addPet: async (
       parent,
       { petName, animalType, breed, size, age },
@@ -182,7 +189,8 @@ const resolvers = {
         console.log(error);
       }
     },
-    // updates pet that already exists
+
+    // update a pet that already exists
     updatePet: async (
       parent,
       { _id, petName, animalType, breed, size, img, age, isFixed },
@@ -219,6 +227,8 @@ const resolvers = {
         console.log(error);
       }
     },
+
+    // delete a pet
     deletePet: async (parent, { petId }, context) => {
       try {
         console.log(petId);
@@ -231,7 +241,8 @@ const resolvers = {
         throw new Error("Failed to delete pet");
       }
     },
-    // adds a review to a user
+
+    // add a review to a user
     addReview: async (
       parent,
       { landlord, reviewContents, rating, userReviewed }
@@ -269,8 +280,6 @@ const resolvers = {
         console.log(error);
       }
     },
-
-    //next mutation goes here
   },
 };
 module.exports = resolvers;
