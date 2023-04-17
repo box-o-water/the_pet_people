@@ -82,7 +82,8 @@ const AddReview = (userData) => {
 
   return (
     <>
-      <p>you can write your review here:</p>
+    <div className="m-3">
+      <p className="font-semibold">you can write your review here:</p>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
@@ -95,7 +96,7 @@ const AddReview = (userData) => {
           make sure to fill out all the inputs in this form correctly.
         </Alert>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3 font-semibold">
           <Form.Label htmlFor="landlord">landlord's name</Form.Label>
           <Form.Control
             type="text"
@@ -107,7 +108,7 @@ const AddReview = (userData) => {
           />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group className="mb-3 font-semibold">
           <Form.Label htmlFor="reviewContents">
             what do you have to say about this renter?
           </Form.Label>
@@ -128,7 +129,7 @@ const AddReview = (userData) => {
             )}
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="mb-3 font-semibold">
           <Form.Label htmlFor="age">
             from 1 - 10 how would you rate this renter?
           </Form.Label>
@@ -161,6 +162,7 @@ const AddReview = (userData) => {
           submit
         </button>
       </Form>
+      </div>
     </>
   );
 };

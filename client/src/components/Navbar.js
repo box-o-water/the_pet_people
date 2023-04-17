@@ -21,20 +21,20 @@ const AppNavbar = () => {
         <div>
           {Auth.loggedIn() ? (
             <div className="flex">
-              <a href="/profile" className="mr-4 border-b-2 border-rose-400">
+              <a href="/profile" className="mr-4 border-b-2 border-rose-400 hover:text-cyan-200">
                 your profile
               </a>
               <a
                 href="/"
                 onClick={Auth.logout}
-                className="border-b-2 border-rose-400"
+                className="border-b-2 border-rose-400 hover:text-cyan-200"
               >
                 logout
               </a>
             </div>
           ) : (
             <button
-              className="font-bold text-lg border-b-2 border-rose-400 hover:text-cyan-200"
+              className="font-bold text-lg border-b-2 border-rose-400 hover:text-cyan-0"
               onClick={() => setShowModal(true)}
             >
               login/sign-up

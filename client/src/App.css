@@ -1,29 +1,3 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
 .App-link {
   color: #61dafb;
 }
@@ -35,37 +9,5 @@
   to {
     transform: rotate(360deg);
   }
-}
-
-.homepage {
-  
-  color: #61dafb;
-  display: flex;
-  padding: 2% aqua;
-  background-color:bisque;
-  align-content: center;
-}
-#Avail_users {
-  display: inline-flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-  background-color: whitesmoke;
-  border: 3px dotted #fbae61;
-  border-spacing: 2px;
-  border-width: 5px;
-  width: 40%;
-  display: flex-start;
-}
-#Avail_pets {
-  display: inline-flex;
-  flex-flow: column nowrap;
-  align-items: stretch;
-  background-color: gray;
-  border: 3px dotted black;
-  border-spacing: 2px;
-  border-width: 5px;
-  width: 40%;
-  align-content: flex-end;
-  display: flex-start;
 }
 
