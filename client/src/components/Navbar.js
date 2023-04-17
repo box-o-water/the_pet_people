@@ -14,26 +14,30 @@ const AppNavbar = () => {
     <>
       <nav className="bg-gray-900 text-white flex justify-between p-6">
         <div>
-          <Link to="/" className="font-bold text-lg">
-            The Pet People
+          <Link to="/" className="font-bold text-lg border-b-2 border-rose-400">
+            the pet people
           </Link>
         </div>
         <div>
           {Auth.loggedIn() ? (
             <div className="flex">
-              <Link to="/profile" className="mr-4">
-                See Your Profile
+              <Link to="/profile" className="mr-4 border-b-2 border-rose-400">
+                your profile
               </Link>
-              <Link to="/" onClick={Auth.logout}>
-                Logout
+              <Link
+                to="/"
+                onClick={Auth.logout}
+                className="border-b-2 border-rose-400"
+              >
+                logout
               </Link>
             </div>
           ) : (
             <button
-              className="bg-green-500 hover:bg-green-600 rounded-md px-3 py-1"
+              className="bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50"
               onClick={() => setShowModal(true)}
             >
-              Login/Sign Up
+              login/sign-up
             </button>
           )}
         </div>
@@ -56,22 +60,22 @@ const AppNavbar = () => {
               <div className="mt-4">
                 {showLogin ? (
                   <p>
-                    Don't have an account?{" "}
+                    don't have an account?{" "}
                     <button
-                      className="text-green-500 hover:underline"
+                      className="text-rose-700 hover:underline"
                       onClick={() => setShowLogin(false)}
                     >
-                      Sign Up
+                      sign up
                     </button>
                   </p>
                 ) : (
                   <p>
-                    Already have an account?{" "}
+                    already have an account?{" "}
                     <button
-                      className="text-green-500 hover:underline"
+                      className="text-rose-700 hover:underline"
                       onClick={() => setShowLogin(true)}
                     >
-                      Login
+                      login
                     </button>
                   </p>
                 )}

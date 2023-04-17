@@ -1,11 +1,14 @@
-import React, { useState} from "react";
-import EditPet from "./EditPet"
+import React, { useState } from "react";
+import EditPet from "./EditPet";
+
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { DELETE_USER, DELETE_PET, UPDATE_PET } from "../utils/mutations";
-import dayjs from 'dayjs';
+
+import dayjs from "dayjs";
+
 import Auth from "../utils/auth";
 import Swal from "sweetalert2";
 
@@ -14,7 +17,7 @@ const Profile = () => {
   const [deletePet] = useMutation(DELETE_PET);
   const [deleteUser] = useMutation(DELETE_USER);
   const [editPet] = useMutation(UPDATE_PET, {
-    refetchQueries: [{ query: GET_ME }]
+    refetchQueries: [{ query: GET_ME }],
   });
 
   // use useQuery to get logged in user's data
@@ -83,47 +86,84 @@ const Profile = () => {
       console.error(error);
     }
   };
-  
+
   const toggleEditForm = () => {
     setShowEditForm(!showEditForm);
   };
 
-  
   return (
-    <div>
-      <a href="/update-profile"> Update Profile</a>
-      <div>
-      <a href="/add-pet"> Add Pet</a>
+    <div className="bg-cyan-50">
+      <div className="bg-gray-700 text-white flex justify-between pl-3">
+        <div className="flex w-3/12 p-2">
+          <h2 className="text-lg">hello, {data?.me.username}!</h2>
+        </div>
+        <nav className="flex w-9/12 justify-end p-2">
+          <a className="mr-4 border-b-2 border-rose-300" href="/update-profile">
+            update profile
+          </a>
+          <a className="mr-2 border-b-2 border-rose-300" href="/add-pet">
+            add pet
+          </a>
+        </nav>
       </div>
-
-      <h2>profile</h2>
-      <p>Name: {data?.me.username}</p>
-      <p>Email: {data?.me.email}</p>
+      <div class="max-w-sm w-full lg:max-w-full lg:flex">
+  <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('/img/card-left.jpg')" title="Woman holding a mug">
+  </div>
+  <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+    <div class="mb-8">
+      <p class="text-sm text-gray-600 flex items-center">
+        Members only
+      </p>
+      <div class="text-gray-900 font-bold text-xl mb-2">Can coffee make you a better developer?</div>
+      <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
+    </div>
+    <div class="flex items-center">
+      <img class="w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar of Jonathan Reinink"/>
+      <div class="text-sm">
+        <p class="text-gray-900 leading-none">Jonathan Reinink</p>
+        <p class="text-gray-600">Aug 18</p>
+      </div>
+    </div>
+  </div>
+</div>
+      <p>email: {data?.me.email}</p>
       <img
         src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none"
         width="150"
         alt="cat lady"
       ></img>
-      <p>Location (City, State): {data?.me.location}</p>
+      <p>location (city, state): {data?.me.location}</p>
       <div>
         <h3>pets are people, too</h3>
         {pets &&
           pets.map((pet) => (
-            <div key={pet._id} className="card mb-3">
-              <h4 className="card-header bg-primary text-light p-2 m-0">
-                {pet.petName}
-                <button onClick={() => handleDeletePet(pet._id)}>Delete Pet</button>
-                <button onClick={toggleEditForm}>Edit Pet</button>
-              </h4>
-              <div className="card-body bg-light p-2">
+            <div
+              key={pet._id}
+              className="max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
+            >
+              <div className="flex bg-slate-200">
+                <h4 className="font-bold text-xl mb-2 flex w-3/12 pl-4 pt-2">{pet.petName}</h4>
+                <div className="flex w-9/12 justify-end p-2">
+                  <button className="mr-4 border-b-2 border-rose-300"
+                  onClick={() => handleDeletePet(pet._id)}>
+                    delete pet
+                  </button>
+                  <button className="mr-4 border-b-2 border-rose-300"
+                  onClick={toggleEditForm}>edit pet</button>
+                </div>
+              </div>
+              <div className="pl-4 pb-4 pr-4">
                 <p>{pet.animalType}</p>
                 <p>{pet.breed}</p>
                 <p>{pet.size}</p>
-                <p>{dayjs(pet.age).format('DD MMM YYYY')}</p>
-
+                <p>{dayjs(pet.age).format("DD MMM YYYY")}</p>
               </div>
               {showEditForm && (
-                <EditPet pet={pet} toggleEditForm={toggleEditForm} editPet={editPet}/>
+                <EditPet
+                  pet={pet}
+                  toggleEditForm={toggleEditForm}
+                  editPet={editPet}
+                />
               )}
             </div>
           ))}
