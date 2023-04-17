@@ -12,7 +12,12 @@ db.once("open", async () => {
   await Pet.deleteMany({});
 
   // bulk create each model
-  const users = await User.insertMany(renterData);
+  const users = [];
+  for (const renter of renterData) {
+    const user = new User(renter);
+    await user.save();
+    users.push(user);
+  }
   const reviews = await Review.insertMany(reviewData);
   const pets = await Pet.insertMany(petData);
 

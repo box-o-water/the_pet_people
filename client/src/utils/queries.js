@@ -1,20 +1,67 @@
 import { gql } from "@apollo/client";
 
 export const GET_ME = gql`
-  query me {
+  query Me {
     me {
       _id
       username
       email
-      location
       img
+      location
+      pets {
+        _id
+        animalType
+        petName
+        breed
+        size
+        img
+        age
+      }
+      reviews {
+        _id
+        landlord
+        reviewContents
+        createdAt
+        rating
+      }
     }
   }
 `;
 
+export const QUERY_USER = gql`
+  query singleUser($_id: String) {
+    user(_id: $_id) {
+      _id
+      username
+      email
+      img
+      location
+      pets {
+        _id
+        age
+        animalType
+        breed
+        img
+        petName
+        size
+      }
+      reviews {
+        _id
+        createdAt
+        landlord
+        rating
+        reviewContents
+        userReviewed
+      }
+    }
+  }
+`;
+
+// TODO query Query? or users
 export const QUERY_USERS = gql`
-  query Query {
+  query users {
     users {
+      _id
       username
       email
       img

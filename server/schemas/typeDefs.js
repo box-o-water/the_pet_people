@@ -7,8 +7,9 @@ const typeDefs = gql`
     reviewContents: String!
     createdAt: String
     rating: Int!
-    userReviewed: String!
+    userReviewed: String
   }
+
   type Pet {
     _id: ID!
     animalType: String!
@@ -38,6 +39,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User]
+    user(_id: String): [User]
     me: User
   }
 
@@ -59,16 +61,16 @@ const typeDefs = gql`
       age: String!
     ): Auth
     updatePet(
-      _id: ID!
+      _id: String!
       petName: String
       animalType: String
       breed: String
-      gender: String
       size: String
       img: String
       age: String
       isFixed: Boolean
-    ): Auth
+    ): User
+    deletePet(petId: ID!): User
     addReview(
       landlord: String!
       reviewContents: String!
