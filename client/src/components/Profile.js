@@ -8,6 +8,7 @@ import { GET_ME } from "../utils/queries";
 import { DELETE_USER, DELETE_PET, UPDATE_PET } from "../utils/mutations";
 
 import dayjs from "dayjs";
+import corgi_butt from "../components/Homepage/assets/corgi_butt.png";
 
 import Auth from "../utils/auth";
 import Swal from "sweetalert2";
@@ -108,7 +109,7 @@ const Profile = () => {
       </div>
       <p>email: {data?.me.email}</p>
       <img
-        src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none"
+        src={ corgi_butt }
         width="150"
         alt="cat lady"
       ></img>
