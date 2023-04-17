@@ -17,7 +17,6 @@ const resolvers = {
           model: "Review",
         });
     },
-
     // find a single user by id
     user: async (parent, { _id }) => {
       const params = _id ? { _id } : {};

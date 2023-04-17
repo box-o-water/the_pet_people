@@ -20,7 +20,7 @@ const UpdateProfile = () => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
   const [updateUser] = useMutation(UPDATE_USER);
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, data: userData } = useQuery(GET_ME);
   // check if user is authenticated
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -55,12 +55,14 @@ const UpdateProfile = () => {
     try {
       const username = userFormData.username;
       const email = userFormData.email;
+      const img = userFormData.img;
       const location = userFormData.location;
 
       const { data } = await updateUser({
         variables: {
           username,
           email,
+          img,
           location,
         },
       });
@@ -82,13 +84,13 @@ const UpdateProfile = () => {
 
     event.persist();
     // on submit send user to their profile
-    window.location.href = "/profile";
+    window.location.href = '/profile';
   };
 
   return (
     <>
       <p>
-        Hey {data?.me.username} What would you like to update about your
+        Hey {userData?.me.username} What would you like to update about your
         profile!
       </p>
       {/* This is needed for the validation functionality above */}
@@ -103,9 +105,29 @@ const UpdateProfile = () => {
           Something went wrong with updating your profile!
         </Alert>
 
-
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Your username"
+            name="username"
+            onChange={handleInputChange}
+            value={userFormData.username}
+          />
+        </Form.Group>
 
         <Form.Group className="mb-3">
+          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Control
+            type="email"
+            placeholder="Your email address"
+            name="email"
+            onChange={handleInputChange}
+            value={userFormData.email}
+          />
+        </Form.Group>
+
+        {/* <Form.Group className="mb-3">
           <Form.Label htmlFor="img">Profile Image</Form.Label>
           <Form.Control
             type="file"
@@ -113,7 +135,7 @@ const UpdateProfile = () => {
             accept="image/*"
             onChange={handleImageChange}
           />
-        </Form.Group>
+        </Form.Group> */}
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="location">
