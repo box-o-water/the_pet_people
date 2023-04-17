@@ -60,22 +60,22 @@ const AppNavbar = () => {
               <div className="mt-4">
                 {showLogin ? (
                   <p>
-                    Don't have an account?{" "}
+                    don't have an account?{" "}
                     <button
-                      className="text-green-500 hover:underline"
+                      className="text-rose-700 hover:underline"
                       onClick={() => setShowLogin(false)}
                     >
-                      Sign Up
+                      sign up
                     </button>
                   </p>
                 ) : (
                   <p>
-                    Already have an account?{" "}
+                    already have an account?{" "}
                     <button
-                      className="text-green-500 hover:underline"
+                      className="text-rose-700 hover:underline"
                       onClick={() => setShowLogin(true)}
                     >
-                      Login
+                      login
                     </button>
                   </p>
                 )}
