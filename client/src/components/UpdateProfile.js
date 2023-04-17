@@ -31,12 +31,7 @@ const UpdateProfile = () => {
   if (!token) {
     return <p>You must be logged in to update your profile.</p>;
   }
-  // const handleImageChange = (event) => {
-  //   setUserFormData({
-  //     ...userFormData,
-  //     image: event.target.files[0]
-  //   });
-  // };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
@@ -80,8 +75,8 @@ const UpdateProfile = () => {
     });
 
     event.persist();
-    // on submit send user to their profile
-    window.location.href = '/profile';
+    // on submit reloads page
+    window.location.reload();
   };
 
   return (

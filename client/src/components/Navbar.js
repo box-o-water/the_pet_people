@@ -14,7 +14,7 @@ const AppNavbar = () => {
     <>
       <nav className="bg-gray-900 text-white flex justify-between p-6">
         <div>
-          <Link to="/" className="font-bold text-lg border-b-2 border-rose-400">
+          <Link to="/" className="font-bold text-lg border-b-2 border-rose-400 hover:text-cyan-200">
             the pet people
           </Link>
         </div>
@@ -34,7 +34,7 @@ const AppNavbar = () => {
             </div>
           ) : (
             <button
-              className="bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50"
+              className="font-bold text-lg border-b-2 border-rose-400 hover:text-cyan-200"
               onClick={() => setShowModal(true)}
             >
               login/sign-up

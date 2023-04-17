@@ -69,8 +69,8 @@ const AddPet = () => {
     }
 
     event.persist();
-    // on submit send user to their profile
-    window.location.href = "/profile";
+    // on submit reloads page
+    window.location.reload();
   };
 
   if (loading) {
@@ -153,7 +153,7 @@ const AddPet = () => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="age">Year:</Form.Label>
+          <Form.Label htmlFor="age">approx birthday</Form.Label>
           <Form.Control
             type="date"
             max={new Date().getFullYear()}
