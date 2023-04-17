@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { UPDATE_USER } from "../utils/mutations";
 import { GET_ME } from "../utils/queries";
@@ -132,9 +132,13 @@ const UpdateProfile = () => {
           />
         </Form.Group>
 
-        <Button type="submit" variant="success">
-          Submit
-        </Button>
+        <button 
+        type="submit" 
+        variant="success"
+        className="ml-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2"
+        >
+          submit
+        </button>
       </Form>
     </>
   );

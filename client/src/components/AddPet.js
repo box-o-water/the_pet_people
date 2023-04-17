@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import { useMutation, useQuery } from "@apollo/client";
 import { ADD_PET } from "../utils/mutations";
 import { GET_ME } from "../utils/queries";
@@ -78,11 +78,11 @@ const AddPet = () => {
   }
 
   if (!token) {
-    return <p>You must be logged in to update your profile.</p>;
+    return <p>you must be logged in to update your profile.</p>;
   }
   return (
     <>
-      <p>Hey {userData?.me.username}, You got a new animal, That's Amazing!</p>
+      <p>hey {userData?.me.username}, you got a new animal - that's amazing!</p>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
@@ -92,11 +92,11 @@ const AddPet = () => {
           show={showAlert}
           variant="danger"
         >
-          Make Sure to fill out all the inputs in this form. We're excited to meet your amazing friend.
+          make sure to fill out all the inputs in this form. we're excited to meet your amazing friend!
         </Alert>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="petName">What's Your Pet's Name</Form.Label>
+          <Form.Label htmlFor="petName">what's your pet's name?</Form.Label>
           <Form.Control
             type="text"
             placeholder="Your petName"
@@ -109,7 +109,7 @@ const AddPet = () => {
 
         <Form.Group>
           <Form.Label htmlFor="animalType">
-            What type of animal do you have (Cat, Dog, Bird, Lizard, snake,
+            what type of animal do you have? (cat, dog, bird, lizard, snake,
             etc...)
           </Form.Label>
           <Form.Control
@@ -164,13 +164,16 @@ const AddPet = () => {
             isInvalid={!petFormData.age}
           />
           <Form.Control.Feedback type="invalid">
-            Please enter a valid year.
+            please enter a valid year.
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button type="submit" variant="success">
-          Submit
-        </Button>
+        <button 
+        type="submit" 
+        variant="success"
+        className="ml-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2">
+          submit
+        </button>
       </Form>
     </>
   );
