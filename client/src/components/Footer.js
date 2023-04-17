@@ -3,7 +3,7 @@ import React from "react";
 function Footer() {
   return (
     <div>
-      <footer>
+      <footer className="flex justify-center items-center mb-4">
         <p>
           brought to you by{" "}
           <span className="text-cyan-700 border-b-2 border-rose-400">
