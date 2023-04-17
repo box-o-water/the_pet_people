@@ -16,7 +16,7 @@
   The final group project
 
   ## Installation 
-  yes
+  Run "npm i" in the console and then "npm run start" to have server start and display the app.
   
   ## Tests
   no
