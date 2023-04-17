@@ -29,7 +29,9 @@ const SingleUser = () => {
   return (
     <div className="bg-cyan-50">
       <div>
-        <h3 className="font-bold text-lg ml-6 mt-4 mr-4">pets are people, too</h3>
+        <h3 className="font-bold text-lg ml-6 mt-4 mr-4">
+          pets are people, too
+        </h3>
         <div className="max-w-sm w-full lg:max-w-full lg:flex ml-6 mt-4 mr-4 mb-4 shadow-lg">
           <img
             className=" h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
@@ -72,7 +74,7 @@ const SingleUser = () => {
             </div>
           ))}
       </div>
-      
+
       <div className="ml-4">
         <h3 className="font-bold text-lg ml-4">
           reviews from people, about people
@@ -97,8 +99,10 @@ const SingleUser = () => {
           ))}
       </div>
       <div>
-        <button className="ml-6 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2" 
-        onClick={toggleReviewAddForm}>
+        <button
+          className="ml-6 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2"
+          onClick={toggleReviewAddForm}
+        >
           add review
         </button>
         {showAddReviewForm && <AddReview data={data} />}
