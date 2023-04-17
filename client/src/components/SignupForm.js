@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
@@ -71,6 +71,7 @@ const SignupForm = () => {
             onChange={handleInputChange}
             value={userFormData.username}
             required
+            className="border-solid border-slate-300 border-2"
           />
           <Form.Control.Feedback type="invalid">
             username is required!
@@ -86,6 +87,7 @@ const SignupForm = () => {
             onChange={handleInputChange}
             value={userFormData.email}
             required
+            className="border-solid border-slate-300 border-2"
           />
           <Form.Control.Feedback type="invalid">
             email is required!
@@ -101,12 +103,13 @@ const SignupForm = () => {
             onChange={handleInputChange}
             value={userFormData.password}
             required
+            className="border-solid border-slate-300 border-2"
           />
           <Form.Control.Feedback type="invalid">
             password is required!
           </Form.Control.Feedback>
         </Form.Group>
-        <Button
+        <button 
           disabled={
             !(
               userFormData.username &&
@@ -115,10 +118,11 @@ const SignupForm = () => {
             )
           }
           type="submit"
-          variant="success"
+          variant ="success"
+          className="bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2"
         >
           submit
-        </Button>
+        </button>
       </Form>
     </>
   );
