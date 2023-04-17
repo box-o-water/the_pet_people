@@ -5,10 +5,8 @@
     "proxy": "http://localhost:3001",
     "dependencies": {
         "@apollo/client": "^3.7.10",
-        "@testing-library/jest-dom": "^5.11.4",
-        "@testing-library/react": "^11.1.0",
-        "@testing-library/user-event": "^12.1.10",
         "bootstrap": "^5.2.3",
+        "dayjs": "^1.11.7",
         "graphql": "^16.6.0",
         "jwt-decode": "^2.2.0",
         "react": "^16.13.1",
@@ -21,7 +19,6 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test",
         "eject": "react-scripts eject"
     },
     "eslintConfig": {
