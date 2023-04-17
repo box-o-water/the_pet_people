@@ -81,7 +81,7 @@ const Profile = () => {
           setTimeout(() => {
             Auth.logout();
             window.location.href = "/";
-          }, 3000);
+          }, 1000);
         }
       });
     } catch (error) {
