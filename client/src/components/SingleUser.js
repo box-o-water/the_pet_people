@@ -29,10 +29,12 @@ const SingleUser = () => {
   return (
     <div className="bg-cyan-50">
       <div>
-        <h3 className="font-bold text-lg ml-4">pets are people, too</h3>
-        <div className="max-w-sm w-full lg:max-w-full lg:flex m-2 shadow-lg">
+        <h3 className="font-bold text-lg ml-6 mt-4 mr-4">
+          pets are people, too
+        </h3>
+        <div className="max-w-sm w-full lg:max-w-full lg:flex ml-6 mt-4 mr-4 mb-4 shadow-lg">
           <img
-            className="h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
+            className=" h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
             src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none"
             width="150"
             alt="cat lady"
@@ -72,13 +74,8 @@ const SingleUser = () => {
             </div>
           ))}
       </div>
-      <div>
-        <button className="ml-4 text-lg" onClick={toggleReviewAddForm}>
-          add review
-        </button>
-        {showAddReviewForm && <AddReview data={data} />}
-      </div>
-      <div>
+
+      <div className="ml-4">
         <h3 className="font-bold text-lg ml-4">
           reviews from people, about people
         </h3>
@@ -86,7 +83,7 @@ const SingleUser = () => {
           reviews.map((review) => (
             <div
               key={review._id}
-              className="max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
+              className="ml-4 max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
             >
               <div className="flex bg-slate-200">
                 <h4 className="font-semibold text-xl mb-2 flex w-3/12 pl-4 pt-">
@@ -100,6 +97,15 @@ const SingleUser = () => {
               </div>
             </div>
           ))}
+      </div>
+      <div>
+        <button
+          className="ml-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2"
+          onClick={toggleReviewAddForm}
+        >
+          add review
+        </button>
+        {showAddReviewForm && <AddReview data={data} />}
       </div>
     </div>
   );

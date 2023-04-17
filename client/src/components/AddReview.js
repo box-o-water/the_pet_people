@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 import { useMutation } from "@apollo/client";
 import { ADD_REVIEW } from "../utils/mutations";
 
@@ -82,7 +82,7 @@ const AddReview = (userData) => {
 
   return (
     <>
-      <p>you can write your review here</p>
+      <p>you can write your review here:</p>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
@@ -92,11 +92,11 @@ const AddReview = (userData) => {
           show={showAlert}
           variant="danger"
         >
-          Make Sure to fill out all the inputs in this form correctly.
+          make sure to fill out all the inputs in this form correctly.
         </Alert>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="landlord">landlord's Name</Form.Label>
+          <Form.Label htmlFor="landlord">landlord's name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Your name/companies name"
@@ -109,7 +109,7 @@ const AddReview = (userData) => {
 
         <Form.Group>
           <Form.Label htmlFor="reviewContents">
-            What do you have to say about this renter?
+            what do you have to say about this renter?
           </Form.Label>
           <Form.Control
             type="text"
@@ -123,14 +123,14 @@ const AddReview = (userData) => {
           {reviewFormData.reviewContents &&
             reviewFormData.reviewContents.length < 10 && (
               <Form.Text className="text-danger">
-                Review contents must be at least 10 characters.
+                review contents must be at least 10 characters.
               </Form.Text>
             )}
         </Form.Group>
 
         <Form.Group className="mb-3">
           <Form.Label htmlFor="age">
-            from 1 - 10 how would you rate this renter
+            from 1 - 10 how would you rate this renter?
           </Form.Label>
           <Form.Control
             type="Number"
@@ -142,11 +142,11 @@ const AddReview = (userData) => {
             required
           />
           <Form.Control.Feedback type="invalid">
-            Please enter a valid rating.
+            please enter a valid rating.
           </Form.Control.Feedback>
         </Form.Group>
 
-        <Button
+        <button
           disabled={
             !(
               reviewFormData.rating &&
@@ -156,9 +156,10 @@ const AddReview = (userData) => {
           }
           type="submit"
           variant="success"
+          className="ml-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2"
         >
-          Submit
-        </Button>
+          submit
+        </button>
       </Form>
     </>
   );
