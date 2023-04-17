@@ -33,7 +33,7 @@ const resolvers = {
     },
 
     // find the logged-in user
-    // find the logged-in user
+
     me: async (parent, args, context) => {
       if (context.user) {
         const data = await User.findOne({ _id: context.user._id })
@@ -198,7 +198,7 @@ const resolvers = {
     ) => {
       try {
         const userId = context.user._id;
-        console.log({ _id });
+
         const user = await User.findById(userId);
 
         if (!user) {

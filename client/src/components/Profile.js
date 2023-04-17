@@ -1,11 +1,15 @@
+
 import React, { useState } from "react";
 import EditPet from "./EditPet";
+
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { DELETE_USER, DELETE_PET, UPDATE_PET } from "../utils/mutations";
+
 import dayjs from "dayjs";
+
 import Auth from "../utils/auth";
 import Swal from "sweetalert2";
 
@@ -14,7 +18,9 @@ const Profile = () => {
   const [deletePet] = useMutation(DELETE_PET);
   const [deleteUser] = useMutation(DELETE_USER);
   const [editPet] = useMutation(UPDATE_PET, {
+
     refetchQueries: [{ query: GET_ME }],
+
   });
 
   // use useQuery to get logged in user's data
@@ -134,6 +140,7 @@ const Profile = () => {
                   toggleEditForm={toggleEditForm}
                   editPet={editPet}
                 />
+
               )}
             </div>
           ))}
