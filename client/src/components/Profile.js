@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import EditPet from "./EditPet";
 
@@ -18,9 +17,7 @@ const Profile = () => {
   const [deletePet] = useMutation(DELETE_PET);
   const [deleteUser] = useMutation(DELETE_USER);
   const [editPet] = useMutation(UPDATE_PET, {
-
     refetchQueries: [{ query: GET_ME }],
-
   });
 
   // use useQuery to get logged in user's data
@@ -109,26 +106,33 @@ const Profile = () => {
           </a>
         </nav>
       </div>
-      <p>Email: {data?.me.email}</p>
+      <p>email: {data?.me.email}</p>
       <img
         src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none"
         width="150"
         alt="cat lady"
       ></img>
-      <p>Location (City, State): {data?.me.location}</p>
+      <p>location (city, state): {data?.me.location}</p>
       <div>
         <h3>pets are people, too</h3>
         {pets &&
           pets.map((pet) => (
-            <div key={pet._id} className="card mb-3">
-              <h4 className="card-header bg-primary text-light p-2 m-0">
-                {pet.petName}
-                <button onClick={() => handleDeletePet(pet._id)}>
-                  Delete Pet
-                </button>
-                <button onClick={toggleEditForm}>Edit Pet</button>
-              </h4>
-              <div className="card-body bg-light p-2">
+            <div
+              key={pet._id}
+              className="max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
+            >
+              <div className="flex bg-slate-200">
+                <h4 className="font-bold text-xl mb-2 flex w-3/12 pl-4 pt-2">{pet.petName}</h4>
+                <div className="flex w-9/12 justify-end p-2">
+                  <button className="mr-4 border-b-2 border-rose-300"
+                  onClick={() => handleDeletePet(pet._id)}>
+                    delete pet
+                  </button>
+                  <button className="mr-4 border-b-2 border-rose-300"
+                  onClick={toggleEditForm}>edit pet</button>
+                </div>
+              </div>
+              <div className="pl-4 pb-4 pr-4">
                 <p>{pet.animalType}</p>
                 <p>{pet.breed}</p>
                 <p>{pet.size}</p>
@@ -140,7 +144,6 @@ const Profile = () => {
                   toggleEditForm={toggleEditForm}
                   editPet={editPet}
                 />
-
               )}
             </div>
           ))}
