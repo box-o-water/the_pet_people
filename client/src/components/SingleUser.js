@@ -72,7 +72,7 @@ const SingleUser = () => {
         <h3 className="font-bold text-2xl pl-6 pt-4 pr-4">
           here are {data?.user[0].username}'s pets
         </h3>
-        <div className="grid md:grid-cols-2 content-center place-content-center">
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 content-center place-content-center">
           {pets &&
             pets.map((pet) => (
               <div
