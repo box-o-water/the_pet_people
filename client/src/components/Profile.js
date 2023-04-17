@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import EditPet from "./EditPet";
 import AddPet from "./AddPet";
-import UpdateProfile from "./UpdateProfile"
+import UpdateProfile from "./UpdateProfile";
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -30,7 +30,7 @@ const Profile = () => {
 
   const [showEditForm, setShowEditForm] = useState(false);
   const [showAddPetForm, setShowAddPetForm] = useState(false);
-  const [showEditProfileForm, setShowEditProfileForm] = useState(false)
+  const [showEditProfileForm, setShowEditProfileForm] = useState(false);
   if (!token) {
     return false;
   }
@@ -97,8 +97,8 @@ const Profile = () => {
     setShowAddPetForm(!showAddPetForm);
   };
   const toggleEditProfileForm = () => {
-    setShowEditProfileForm(!showEditProfileForm)
-  }
+    setShowEditProfileForm(!showEditProfileForm);
+  };
 
   return (
     <div className="bg-cyan-50">
@@ -107,7 +107,10 @@ const Profile = () => {
           <h2 className="text-lg">hello, {data?.me.username}!</h2>
         </div>
         <nav className="flex w-9/12 justify-end p-2">
-          <button className="mr-4 border-b-2 border-rose-300" onClick={toggleEditProfileForm}>
+          <button
+            className="mr-4 border-b-2 border-rose-300"
+            onClick={toggleEditProfileForm}
+          >
             update profile
           </button>
           <button
@@ -119,9 +122,7 @@ const Profile = () => {
         </nav>
       </div>
       <div>
-        {showAddPetForm && (
-          <AddPet toggleEditForm={toggleAddPetForm} />
-        )}
+        {showAddPetForm && <AddPet toggleEditForm={toggleAddPetForm} />}
         {showEditProfileForm && (
           <UpdateProfile toggleEditForm={toggleEditProfileForm} />
         )}
