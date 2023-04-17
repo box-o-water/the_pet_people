@@ -195,7 +195,7 @@ const Profile = () => {
           ))}
       </div>
       <div>
-        <h3 className="font-bold text-lg pl-4">
+        <h3 className="mt-4 font-bold text-lg pl-4">
           reviews from people, about people
         </h3>
         {reviews &&
@@ -213,7 +213,7 @@ const Profile = () => {
           ))}
       </div>
       <button
-        className="mr-4 border-b-2 border-rose-300 ml-4"
+        className="ml-4 mt-4 mr-4 mb-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2"
         onClick={handleDeleteUser}
       >
         delete account

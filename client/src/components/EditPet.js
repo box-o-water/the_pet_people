@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useQuery } from "@apollo/client";
-import { Form, Button, Alert } from "react-bootstrap";
+import { Form, Alert } from "react-bootstrap";
 
 import Auth from "../utils/auth";
 // import { UPDATE_PET } from "../utils/mutations";
@@ -56,7 +56,7 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
     return <h2>LOADING...</h2>;
   }
   if (!token) {
-    return <p>You must be logged in to update your profile.</p>;
+    return <p>you must be logged in to update your profile.</p>;
   }
   return (
     <div>
@@ -68,12 +68,12 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
           show={showAlert}
           variant="danger"
         >
-          Something went wrong while we were adding your adorable animal, we are
+          something went wrong while we were adding your adorable animal, we are
           currently working on fixing this.
         </Alert>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="petName">What's Your Pet's Name</Form.Label>
+          <Form.Label htmlFor="petName">what's your pet's name</Form.Label>
           <Form.Control
             type="text"
             placeholder="Your petName"
@@ -85,7 +85,7 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
 
         <Form.Group>
           <Form.Label htmlFor="animalType">
-            What type of animal do you have (Cat, Dog, Bird, Lizard, snake,
+            what type of animal do you have? (cat, dog, bird, lizard, snake,
             etc...)
           </Form.Label>
           <Form.Control
@@ -109,19 +109,19 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="location">Animal Size</Form.Label>
+          <Form.Label htmlFor="location">animal size</Form.Label>
           <Form.Select
             type="text"
             name="size"
             onChange={handleInputChange}
             value={formData.size}
           >
-            <option value="">-- What size is your animal --</option>
-            <option value="Extra-Small">Extra-Small (under 5 pounds)</option>
-            <option value="Small">Small (5-25 pounds)</option>
-            <option value="Medium">Medium (26-60 pounds)</option>
-            <option value="Large">Large (61-100 pounds)</option>
-            <option value="Extra-Large">Extra-Large (101 pounds+) </option>
+            <option value="">-- what size is your animal --</option>
+            <option value="Extra-Small">extra-small (under 5 pounds)</option>
+            <option value="Small">small (5-25 pounds)</option>
+            <option value="Medium">medium (26-60 pounds)</option>
+            <option value="Large">large (61-100 pounds)</option>
+            <option value="Extra-Large">extra-large (101 pounds+) </option>
           </Form.Select>
         </Form.Group>
 
@@ -137,9 +137,13 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
 
         </Form.Group>
 
-        <Button type="submit" variant="success" onClick={handleFormSubmit}>
-          Submit
-        </Button>
+        <button 
+        type="submit" 
+        variant="success" 
+        onClick={handleFormSubmit}
+        className="ml-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2">
+          submit
+        </button>
       </Form>
     </div>
   );
