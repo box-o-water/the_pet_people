@@ -261,18 +261,13 @@ const resolvers = {
         const savedReview = await newReview.save();
 
         // Update the user's reviews array with the new Review ID
-        const updatedUser = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
           { _id: user._id },
           { $push: { reviews: savedReview._id } },
           { new: true }
         );
 
-        return {
-          _id: savedReview._id,
-          landlord: savedReview.landlord,
-          rating: savedReview.rating,
-          reviewContents: savedReview.reviewContents,
-        };
+        return;
       } catch (error) {
         console.log(error);
       }
