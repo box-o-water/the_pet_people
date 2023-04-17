@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import { useParams } from "react-router-dom";
+import AddReview from "./AddReview"
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery } from "@apollo/client";
@@ -13,6 +14,11 @@ const SingleUser = () => {
     variables: { _id: id },
   });
 
+  const [showAddReviewForm, setShowAddReviewForm] = useState(false);
+
+  const toggleReviewAddForm = () => {
+    setShowAddReviewForm(!showAddReviewForm);
+  };
   const pets = data?.user[0].pets || [];
   const reviews = data?.user[0].reviews || [];
 
@@ -44,6 +50,12 @@ const SingleUser = () => {
               </div>
             </div>
           ))}
+      </div>
+      <div>
+      <button onClick={toggleReviewAddForm}>Add Review</button>
+      {showAddReviewForm && (
+                <AddReview data={data} />
+              )}
       </div>
       <div>
         <h3>reviews from people, about people</h3>

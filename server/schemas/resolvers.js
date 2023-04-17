@@ -17,7 +17,6 @@ const resolvers = {
           model: "Review",
         });
     },
-
     // find a single user by id
     user: async (parent, { _id }) => {
       const params = _id ? { _id } : {};
@@ -139,7 +138,6 @@ const resolvers = {
 
         user.username = username || user.username;
         user.email = email || user.email;
-        user.img = img || user.img;
         user.location = location || user.location;
 
         const updatedUser = await user.save();
@@ -250,6 +248,7 @@ const resolvers = {
       try {
         // find the user being reviewed
         const user = await User.findOne({ username: userReviewed });
+
         if (!user) {
           console.log("User does not exist");
           return null;
@@ -259,23 +258,19 @@ const resolvers = {
           landlord,
           reviewContents,
           rating,
+          userReviewed,
         });
         // Save the new Review document to the database
         const savedReview = await newReview.save();
 
         // Update the user's reviews array with the new Review ID
-        const updatedUser = await User.findByIdAndUpdate(
+        await User.findByIdAndUpdate(
           { _id: user._id },
           { $push: { reviews: savedReview._id } },
           { new: true }
         );
 
-        return {
-          _id: savedReview._id,
-          landlord: savedReview.landlord,
-          rating: savedReview.rating,
-          reviewContents: savedReview.reviewContents,
-        };
+        return savedReview;
       } catch (error) {
         console.log(error);
       }

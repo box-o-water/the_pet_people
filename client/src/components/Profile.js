@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditPet from "./EditPet";
-
+import AddPet from "./AddPet";
+import UpdateProfile from "./UpdateProfile"
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -8,7 +9,7 @@ import { GET_ME } from "../utils/queries";
 import { DELETE_USER, DELETE_PET, UPDATE_PET } from "../utils/mutations";
 
 import dayjs from "dayjs";
-import corgi_butt from "../components/Homepage/assets/corgi_butt.png";
+import corgi_butt from "../components/assets/corgi_butt.png";
 
 import Auth from "../utils/auth";
 import Swal from "sweetalert2";
@@ -28,7 +29,8 @@ const Profile = () => {
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   const [showEditForm, setShowEditForm] = useState(false);
-
+  const [showAddPetForm, setShowAddPetForm] = useState(false);
+  const [showEditProfileForm, setShowEditProfileForm] = useState(false)
   if (!token) {
     return false;
   }
@@ -91,6 +93,12 @@ const Profile = () => {
   const toggleEditForm = () => {
     setShowEditForm(!showEditForm);
   };
+  const toggleAddPetForm = () => {
+    setShowAddPetForm(!showAddPetForm);
+  };
+  const toggleEditProfileForm = () => {
+    setShowEditProfileForm(!showEditProfileForm)
+  }
 
   return (
     <div className="bg-cyan-50">
@@ -99,19 +107,31 @@ const Profile = () => {
           <h2 className="text-lg">hello, {data?.me.username}!</h2>
         </div>
         <nav className="flex w-9/12 justify-end p-2">
-          <a className="mr-4 border-b-2 border-rose-300" href="/update-profile">
+          <button className="mr-4 border-b-2 border-rose-300" onClick={toggleEditProfileForm}>
             update profile
-          </a>
-          <a className="mr-2 border-b-2 border-rose-300" href="/add-pet">
+          </button>
+          <button
+            className="mr-2 border-b-2 border-rose-300"
+            onClick={toggleAddPetForm}
+          >
             add pet
-          </a>
+          </button>
         </nav>
+      </div>
+      <div>
+        {showAddPetForm && (
+          <AddPet toggleEditForm={toggleAddPetForm} />
+        )}
+        {showEditProfileForm && (
+          <UpdateProfile toggleEditForm={toggleEditProfileForm} />
+        )}
       </div>
 
       <div className="max-w-sm w-full lg:max-w-full lg:flex m-2 shadow-lg">
         <img
           className="h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
-          src={ corgi_butt } alt="illustrated corgi butt"
+          src={corgi_butt}
+          alt="illustrated corgi butt"
         ></img>
         <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
           <div className="mb-8">
@@ -122,7 +142,9 @@ const Profile = () => {
 
             <p className="text-gray-700 text-base">email: {data?.me.email}</p>
 
-            <p className="text-gray-700 text-base">location (city, state): {data?.me.location}</p>
+            <p className="text-gray-700 text-base">
+              location (city, state): {data?.me.location}
+            </p>
           </div>
         </div>
       </div>
@@ -172,7 +194,9 @@ const Profile = () => {
           ))}
       </div>
       <div>
-        <h3 className="font-bold text-lg pl-4">reviews from people, about people</h3>
+        <h3 className="font-bold text-lg pl-4">
+          reviews from people, about people
+        </h3>
         {reviews &&
           reviews.map((review) => (
             <div key={review._id} className="card mb-3">
@@ -187,7 +211,12 @@ const Profile = () => {
             </div>
           ))}
       </div>
-      <button className="mr-4 border-b-2 border-rose-300 ml-4" onClick={handleDeleteUser}>delete account</button>
+      <button
+        className="mr-4 border-b-2 border-rose-300 ml-4"
+        onClick={handleDeleteUser}
+      >
+        delete account
+      </button>
     </div>
   );
 };

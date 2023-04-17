@@ -20,7 +20,7 @@ const UpdateProfile = () => {
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
   const [updateUser] = useMutation(UPDATE_USER);
-  const { loading, data } = useQuery(GET_ME);
+  const { loading, data: userData } = useQuery(GET_ME);
   // check if user is authenticated
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -31,12 +31,12 @@ const UpdateProfile = () => {
   if (!token) {
     return <p>You must be logged in to update your profile.</p>;
   }
-  const handleImageChange = (event) => {
-    setUserFormData({
-      ...userFormData,
-      image: event.target.files[0]
-    });
-  };
+  // const handleImageChange = (event) => {
+  //   setUserFormData({
+  //     ...userFormData,
+  //     image: event.target.files[0]
+  //   });
+  // };
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
@@ -76,19 +76,18 @@ const UpdateProfile = () => {
       username: "",
       email: "",
       password: "",
-      img: "",
       location: "",
     });
 
     event.persist();
     // on submit send user to their profile
-    window.location.href = "/profile";
+    window.location.href = '/profile';
   };
 
   return (
     <>
       <p>
-        Hey {data?.me.username} What would you like to update about your
+        Hey {userData?.me.username} What would you like to update about your
         profile!
       </p>
       {/* This is needed for the validation functionality above */}
@@ -103,15 +102,25 @@ const UpdateProfile = () => {
           Something went wrong with updating your profile!
         </Alert>
 
-
+        <Form.Group className="mb-3">
+          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Your username"
+            name="username"
+            onChange={handleInputChange}
+            value={userFormData.username}
+          />
+        </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="img">Profile Image</Form.Label>
+          <Form.Label htmlFor="email">Email</Form.Label>
           <Form.Control
-            type="file"
-            name="image"
-            accept="image/*"
-            onChange={handleImageChange}
+            type="email"
+            placeholder="Your email address"
+            name="email"
+            onChange={handleInputChange}
+            value={userFormData.email}
           />
         </Form.Group>
 
