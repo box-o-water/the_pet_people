@@ -69,8 +69,8 @@ const AddPet = () => {
     }
 
     event.persist();
-    // on submit send user to their profile
-    window.location.href = "/profile";
+    // on submit reloads page
+    window.location.reload();
   };
 
   if (loading) {
@@ -82,7 +82,8 @@ const AddPet = () => {
   }
   return (
     <>
-      <p>hey {userData?.me.username}, you got a new animal - that's amazing!</p>
+    <div className="m-4">
+      <p className="mb-2">hey {userData?.me.username}, you got a new animal - that's amazing!</p>
       {/* This is needed for the validation functionality above */}
       <Form noValidate validated={validated} onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
@@ -95,7 +96,7 @@ const AddPet = () => {
           make sure to fill out all the inputs in this form. we're excited to meet your amazing friend!
         </Alert>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="font-semibold">
           <Form.Label htmlFor="petName">what's your pet's name?</Form.Label>
           <Form.Control
             type="text"
@@ -107,7 +108,7 @@ const AddPet = () => {
           />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group className="font-semibold">
           <Form.Label htmlFor="animalType">
             what type of animal do you have? (cat, dog, bird, lizard, snake,
             etc...)
@@ -122,8 +123,8 @@ const AddPet = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="breed"></Form.Label>
+        <Form.Group className="font-semibold">
+          <Form.Label htmlFor="breed">animal breed</Form.Label>
           <Form.Control
             type="text"
             placeholder="Animal breed here"
@@ -134,8 +135,8 @@ const AddPet = () => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="location">Animal Size</Form.Label>
+        <Form.Group className="font-semibold">
+          <Form.Label htmlFor="location">animal Size</Form.Label>
           <Form.Select
             type="text"
             name="size"
@@ -152,8 +153,8 @@ const AddPet = () => {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="age">Year:</Form.Label>
+        <Form.Group className="font-semibold">
+          <Form.Label htmlFor="age">approx date of birth</Form.Label>
           <Form.Control
             type="date"
             max={new Date().getFullYear()}
@@ -175,6 +176,7 @@ const AddPet = () => {
           submit
         </button>
       </Form>
+      </div>
     </>
   );
 };

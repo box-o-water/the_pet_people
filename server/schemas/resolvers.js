@@ -171,10 +171,10 @@ const resolvers = {
 
         // Save the new Pet document to the database
         const savedPet = await newPet.save();
-
+        
         // Update the owner's pets array with the new Pet ID
         const updatedUser = await User.findOneAndUpdate(
-          { username: context.user.username },
+          { _id: context.user._id },
           { $push: { pets: savedPet._id } },
           { new: true }
         );

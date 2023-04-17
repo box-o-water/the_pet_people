@@ -59,7 +59,7 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
     return <p>you must be logged in to update your profile.</p>;
   }
   return (
-    <div>
+    <div className="m-3">
       <Form onSubmit={handleFormSubmit}>
         {/* show alert if server response is bad */}
         <Alert
@@ -72,8 +72,8 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
           currently working on fixing this.
         </Alert>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="petName">what's your pet's name</Form.Label>
+        <Form.Group className="font-semibold">
+          <Form.Label htmlFor="petName">did you change your pet's name?</Form.Label>
           <Form.Control
             type="text"
             placeholder="Your petName"
@@ -83,10 +83,9 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
           />
         </Form.Group>
 
-        <Form.Group>
+        <Form.Group className="font-semibold mt-2">
           <Form.Label htmlFor="animalType">
-            what type of animal do you have? (cat, dog, bird, lizard, snake,
-            etc...)
+         forget what type of animal your pet was?
           </Form.Label>
           <Form.Control
             type="text"
@@ -97,8 +96,8 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="breed"></Form.Label>
+        <Form.Group className="font-semibold mt-2">
+          <Form.Label htmlFor="breed">really you didn't know your pet's breed, that's okay i forget too.</Form.Label>
           <Form.Control
             type="text"
             placeholder="Animal breed here"
@@ -108,8 +107,8 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="location">animal size</Form.Label>
+        <Form.Group className="font-semibold mt-2">
+          <Form.Label htmlFor="location">is this a new diet or were you not able to resist the eyes?</Form.Label>
           <Form.Select
             type="text"
             name="size"
@@ -125,8 +124,8 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
           </Form.Select>
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="age">Year:</Form.Label>
+        <Form.Group className="font-semibold mt-2">
+          <Form.Label htmlFor="age">did your pet lie about their age? that's okay mine did too.</Form.Label>
           <Form.Control
             type="date"
             max={new Date().getFullYear()}
@@ -141,7 +140,7 @@ const EditPetForm = ({ pet, toggleEditForm, editPet}) => {
         type="submit" 
         variant="success" 
         onClick={handleFormSubmit}
-        className="ml-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2">
+        className="mt-4 w-full bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2">
           submit
         </button>
       </Form>

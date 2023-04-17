@@ -14,27 +14,27 @@ const AppNavbar = () => {
     <>
       <nav className="bg-gray-900 text-white flex justify-between p-6">
         <div>
-          <Link to="/" className="font-bold text-lg border-b-2 border-rose-400">
+          <Link to="/" className="font-bold text-lg border-b-2 border-rose-400 hover:text-cyan-200">
             the pet people
           </Link>
         </div>
         <div>
           {Auth.loggedIn() ? (
             <div className="flex">
-              <a href="/profile" className="mr-4 border-b-2 border-rose-400">
+              <a href="/profile" className="mr-4 border-b-2 border-rose-400 hover:text-cyan-200">
                 your profile
               </a>
               <a
                 href="/"
                 onClick={Auth.logout}
-                className="border-b-2 border-rose-400"
+                className="border-b-2 border-rose-400 hover:text-cyan-200"
               >
                 logout
               </a>
             </div>
           ) : (
             <button
-              className="bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50"
+              className="font-bold text-lg border-b-2 border-rose-400 hover:text-cyan-0"
               onClick={() => setShowModal(true)}
             >
               login/sign-up

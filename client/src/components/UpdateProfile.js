@@ -31,12 +31,7 @@ const UpdateProfile = () => {
   if (!token) {
     return <p>You must be logged in to update your profile.</p>;
   }
-  // const handleImageChange = (event) => {
-  //   setUserFormData({
-  //     ...userFormData,
-  //     image: event.target.files[0]
-  //   });
-  // };
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setUserFormData({ ...userFormData, [name]: value });
@@ -80,12 +75,13 @@ const UpdateProfile = () => {
     });
 
     event.persist();
-    // on submit send user to their profile
-    window.location.href = '/profile';
+    // on submit reloads page
+    window.location.reload();
   };
 
   return (
     <>
+    <div className="m-2">
       <p>
         Hey {userData?.me.username} What would you like to update about your
         profile!
@@ -102,35 +98,35 @@ const UpdateProfile = () => {
           Something went wrong with updating your profile!
         </Alert>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="username">Username</Form.Label>
+        <Form.Group  className="font-semibold">
+          <Form.Label htmlFor="username">new username:</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Your username"
+            placeholder="new username here"
             name="username"
             onChange={handleInputChange}
             value={userFormData.username}
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
-          <Form.Label htmlFor="email">Email</Form.Label>
+        <Form.Group  className="font-semibold">
+          <Form.Label htmlFor="email">change your email address</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Your email address"
+            placeholder="example@example.com"
             name="email"
             onChange={handleInputChange}
             value={userFormData.email}
           />
         </Form.Group>
 
-        <Form.Group className="mb-3">
+        <Form.Group className="font-semibold">
           <Form.Label htmlFor="location">
-            Where are you looking to move to. (only city and state){" "}
+            where are you looking to move to. (only city and state, please){" "}
           </Form.Label>
           <Form.Control
             type="text"
-            placeholder="Only City and state"
+            placeholder="only City and state, please"
             name="location"
             onChange={handleInputChange}
             value={userFormData.location}
@@ -145,6 +141,7 @@ const UpdateProfile = () => {
           submit
         </button>
       </Form>
+      </div>
     </>
   );
 };

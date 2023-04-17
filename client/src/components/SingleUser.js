@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import AddReview from "./AddReview";
-// import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
+import corgibutt from "./assets/corgi_butt.png";
 
 const SingleUser = () => {
   let { id } = useParams();
@@ -28,57 +28,77 @@ const SingleUser = () => {
 
   return (
     <div className="bg-cyan-50">
+      <div className="bg-gray-700 text-white flex justify-between pl-3">
+        <div className="flex w-3/12 p-2"></div>
+        <nav className="flex w-9/12 justify-end p-2">
+          <button
+            className="mr-4 border-b-2 border-rose-300"
+            onClick={toggleReviewAddForm}
+          >
+            add review
+          </button>
+        </nav>
+      </div>
       <div>
-        <h3 className="font-bold text-lg ml-6 mt-4 mr-4">
+        {showAddReviewForm && <AddReview data={data} />}
+        <h3 className="font-bold text-2xl pl-6 pt-4 pr-4">
           pets are people, too
         </h3>
-        <div className="max-w-sm w-full lg:max-w-full lg:flex ml-6 mt-4 mr-4 mb-4 shadow-lg">
-          <img
-            className=" h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
-            src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none"
-            width="150"
-            alt="cat lady"
-          ></img>
-          {/* <img
-          className="h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
-          src={corgi_butt}
-          alt="illustrated corgi butt"
-        ></img> */}
-          <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
-            <div className="mb-8">
-              <p className="text-sm text-gray-600 flex items-center"></p>
-              <div className="text-gray-900 font-bold text-xl mb-2">
-                {data?.user[0].username}
+        <div className="grid content-center place-content-center">
+          <div className="max-w-sm w-full lg:max-9/12 shadow-lg m-1 lg:flex lg:justify-center">
+            <img
+              className="h-fit lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+              src={corgibutt}
+              alt="illustrated corgi butt"
+            ></img>
+            <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
+              <div className="mb-8">
+                <p className="text-sm text-gray-600 flex items-center"></p>
+                <div className="text-gray-900 font-bold text-xl mb-2">
+                  {data?.user[0].username}
+                </div>
+                <p className="font-semibold">contact renter at:</p>
+                <p className="text-gray-700 text-base">
+                  email: {data?.user[0].email}
+                </p>
+                <p className="font-semibold">renter is looking to move to:</p>
+                <p className="text-gray-700 text-base">
+                  (city, state): {data?.user[0].location}
+                </p>
               </div>
-
-              <p className="text-gray-700 text-base">
-                email: {data?.user[0].email}
-              </p>
-
-              <p className="text-gray-700 text-base">
-                location (city, state): {data?.user[0].location}
-              </p>
             </div>
           </div>
         </div>
-        {pets &&
-          pets.map((pet) => (
-            <div key={pet._id} className="card mb-3">
-              <h4 className="card-header bg-primary text-light p-2 m-0">
-                {pet.petName}
-              </h4>
-              <div className="card-body bg-light p-2">
-                <p>{pet.breed}</p>
-                <p>{pet.size}</p>
-              </div>
-            </div>
-          ))}
-      </div>
-
-      <div className="ml-4">
-        <h3 className="font-bold text-lg ml-4">
-          reviews from people, about people
+        <h3 className="font-bold text-2xl pl-6 pt-4 pr-4">
+          here are {data?.user[0].username}'s pets
         </h3>
+        <div className="grid md:grid-cols-2 content-center place-content-center">
+          {pets &&
+            pets.map((pet) => (
+              <div
+                key={pet._id}
+                className="sm:w-56 md:w-96 rounded overflow-hidden shadow-lg m-2 bg-slate-50"
+              >
+                <div className="bg-slate-200">
+                  <h4 className=" font-semibold text-xl pl-4 pt-1">
+                    {pet.petName}
+                  </h4>
+                </div>
+
+                <div className="card-body bg-light p-2">
+                  <p>pet type: {pet.animalType}</p>
+                  <p>pet breed: {pet.breed}</p>
+                  <p>pet size: {pet.size}</p>
+                </div>
+              </div>
+            ))}
+        </div>
+      </div>
+      <h3 className="font-bold text-lg ml-4">
+        reviews from people, about people
+      </h3>
+
+      <div className="grid md:grid-cols-2 xl:grid-cols-3 content-center place-content-center">
         {reviews &&
           reviews.map((review) => (
             <div
@@ -86,27 +106,21 @@ const SingleUser = () => {
               className="ml-4 max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
             >
               <div className="flex bg-slate-200">
-                <h4 className="font-semibold text-xl mb-2 flex w-3/12 pl-4 pt-">
+                <h4 className="font-semibold text-xl mb-2 flex w-3/12 pl-4 pt-1">
                   {review.landlord}
                 </h4>
               </div>
-              <div className="pl-4 pb-4 pr-4">
-                <p>{review.createdAt}</p>
+              <div className="pl-4 pb-4 pr-4 ">
                 <p>{review.reviewContents}</p>
-                <p>rating (out of 10): {review.rating}</p>
+                <div className="block m-2">
+                  <p>posted on: {review.createdAt}</p>
+                  <p>rating (out of 10): {review.rating}</p>
+                </div>
               </div>
             </div>
           ))}
       </div>
-      <div>
-        <button
-          className="ml-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2"
-          onClick={toggleReviewAddForm}
-        >
-          add review
-        </button>
-        {showAddReviewForm && <AddReview data={data} />}
-      </div>
+      <div></div>
     </div>
   );
 };

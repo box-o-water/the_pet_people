@@ -8,8 +8,7 @@ import { useQuery, useMutation } from "@apollo/client";
 import { GET_ME } from "../utils/queries";
 import { DELETE_USER, DELETE_PET, UPDATE_PET } from "../utils/mutations";
 
-import dayjs from "dayjs";
-import corgi_butt from "../components/assets/corgi_butt.png";
+import corgi_butt from "./assets/corgi_butt.png";
 
 import Auth from "../utils/auth";
 import Swal from "sweetalert2";
@@ -108,16 +107,22 @@ const Profile = () => {
         </div>
         <nav className="flex w-9/12 justify-end p-2">
           <button
-            className="mr-4 border-b-2 border-rose-300"
+            className="mr-2 md:mr-4 border-b-2 border-rose-300 hover:text-cyan-200"
             onClick={toggleEditProfileForm}
           >
             update profile
           </button>
           <button
-            className="mr-2 border-b-2 border-rose-300"
+            className="mr-2 md:mr-4 border-b-2 border-rose-300 hover:text-cyan-200"
             onClick={toggleAddPetForm}
           >
             add pet
+          </button>
+          <button
+            className="mr-2 md:mr-4 border-b-2 border-rose-300 hover:text-cyan-200"
+            onClick={toggleEditForm}
+          >
+            edit pets
           </button>
         </nav>
       </div>
@@ -128,24 +133,28 @@ const Profile = () => {
         )}
       </div>
 
-      <div className="max-w-sm w-full lg:max-w-full lg:flex m-2 shadow-lg">
-        <img
-          className="h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
-          src={corgi_butt}
-          alt="illustrated corgi butt"
-        ></img>
-        <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
-          <div className="mb-8">
-            <p className="text-sm text-gray-600 flex items-center"></p>
-            <div className="text-gray-900 font-bold text-xl mb-2">
-              my profile
+      <div className="grid content-center place-content-center">
+        <div className="max-w-sm w-full lg:max-9/12 shadow-lg m-1 lg:flex lg:justify-center">
+          <img
+            className="h-fit lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+            src={corgi_butt}
+            alt="illustrated corgi butt"
+          ></img>
+          <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
+            <div className="mb-8">
+              <p className="text-sm text-gray-600 flex items-center"></p>
+              <div className="text-gray-900 font-bold text-xl mb-2">
+                my profile
+              </div>
+
+              <p className="text-gray-700 text-base">
+                your email: {data?.me.email}
+              </p>
+
+              <p className="text-gray-700 text-base">
+                location(city, state): {data?.me.location}
+              </p>
             </div>
-
-            <p className="text-gray-700 text-base">email: {data?.me.email}</p>
-
-            <p className="text-gray-700 text-base">
-              location (city, state): {data?.me.location}
-            </p>
           </div>
         </div>
       </div>
@@ -153,64 +162,68 @@ const Profile = () => {
       <div className="max-w-sm w-full lg:max-w-full lg:flex"></div>
       <div>
         <h3 className="font-bold text-lg pl-4">pets are people, too</h3>
-        {pets &&
-          pets.map((pet) => (
-            <div
-              key={pet._id}
-              className="max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
-            >
-              <div className="flex bg-slate-200">
-                <h4 className="font-bold text-xl mb-2 flex w-3/12 pl-4 pt-2">
-                  {pet.petName}
-                </h4>
-                <div className="flex w-9/12 justify-end p-2">
-                  <button
-                    className="mr-4 border-b-2 border-rose-300"
-                    onClick={() => handleDeletePet(pet._id)}
-                  >
-                    delete pet
-                  </button>
-                  <button
-                    className="mr-4 border-b-2 border-rose-300"
-                    onClick={toggleEditForm}
-                  >
-                    edit pet
-                  </button>
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 content-center place-content-center">
+          {pets &&
+            pets.map((pet) => (
+              <div
+                key={pet._id}
+                className="max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
+              >
+                <div className="flex bg-slate-200">
+                  <h4 className="font-bold text-xl mb-2 flex w-3/12 pl-4 pt-2">
+                    {pet.petName}
+                  </h4>
+                  <div className="flex w-9/12 justify-end p-2">
+                    <button
+                      className="mr-4 border-b-2 border-rose-300"
+                      onClick={() => handleDeletePet(pet._id)}
+                    >
+                      delete pet
+                    </button>
+                  </div>
                 </div>
+                <div className="pl-4 pb-4 pr-4">
+                  <p>animal type: {pet.animalType}</p>
+                  <p>breed: {pet.breed}</p>
+                  <p>size: {pet.size}</p>
+                </div>
+                {showEditForm && (
+                  <EditPet
+                    pet={pet}
+                    toggleEditForm={toggleEditForm}
+                    editPet={editPet}
+                  />
+                )}
               </div>
-              <div className="pl-4 pb-4 pr-4">
-                <p>{pet.animalType}</p>
-                <p>{pet.breed}</p>
-                <p>{pet.size}</p>
-                <p>{dayjs(pet.age).format("DD MMM YYYY")}</p>
-              </div>
-              {showEditForm && (
-                <EditPet
-                  pet={pet}
-                  toggleEditForm={toggleEditForm}
-                  editPet={editPet}
-                />
-              )}
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
       <div>
         <h3 className="mt-4 font-bold text-lg pl-4">
           reviews from people, about people
         </h3>
-        {reviews &&
-          reviews.map((review) => (
-            <div key={review._id} className="card mb-3">
-              <h4 className="card-header bg-primary text-light p-2 m-0">
-                {review.landlord}
-              </h4>
-              <div className="card-body bg-light p-2">
-                <p>{review.createdAt}</p>
-                <p>{review.reviewContents}</p>
-                <p>{review.rating}</p>
+        <div className="grid md:grid-cols-2 xl:grid-cols-3 content-center place-content-center">
+          {reviews &&
+            reviews.map((review) => (
+              <div
+                key={review._id}
+                className="ml-4 max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
+              >
+                <div className="flex bg-slate-200">
+                  <h4 className="font-semibold text-xl mb-2 flex w-3/12 pl-4 pt-1">
+                    {review.landlord}
+                  </h4>
+                </div>
+                <div className="pl-4 pb-4 pr-4 ">
+                  <p>{review.reviewContents}</p>
+                  <div className="block m-2">
+                    <p>posted on: {review.createdAt}</p>
+                    <p>rating (out of 10): {review.rating}</p>
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
+        </div>
       </div>
       <button
         className="ml-4 mt-4 mr-4 mb-4 bg-slate-50 hover:bg-cyan-700 rounded-md px-3 py-1 text-rose-600 hover:text-slate-50 border-solid border-slate-300 border-2"
