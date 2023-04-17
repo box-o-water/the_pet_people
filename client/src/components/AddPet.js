@@ -92,8 +92,7 @@ const AddPet = () => {
           show={showAlert}
           variant="danger"
         >
-          Something went wrong while we were adding your adorable animal, we are
-          currently working on fixing this.
+          Make Sure to fill out all the inputs in this form. We're excited to meet your amazing friend.
         </Alert>
 
         <Form.Group className="mb-3">

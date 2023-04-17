@@ -21,16 +21,16 @@ const AppNavbar = () => {
         <div>
           {Auth.loggedIn() ? (
             <div className="flex">
-              <Link to="/profile" className="mr-4 border-b-2 border-rose-400">
+              <a href="/profile" className="mr-4 border-b-2 border-rose-400">
                 your profile
-              </Link>
-              <Link
-                to="/"
+              </a>
+              <a
+                href="/"
                 onClick={Auth.logout}
                 className="border-b-2 border-rose-400"
               >
                 logout
-              </Link>
+              </a>
             </div>
           ) : (
             <button
@@ -46,7 +46,7 @@ const AppNavbar = () => {
         <div className="fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center z-10">
           <div className="bg-white p-6 rounded shadow-xl">
             <button
-              className="absolute top-0 right-0 mr-4 mt-4 text-gray-700 hover:text-gray-900"
+              className="absolute bold-text text-4xl top-0 right-0 mr-4 mt-4 text-rose-700 hover:text-gray-900"
               onClick={() => setShowModal(false)}
             >
               X
