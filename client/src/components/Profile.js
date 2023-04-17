@@ -107,15 +107,29 @@ const Profile = () => {
           </a>
         </nav>
       </div>
-      <p>email: {data?.me.email}</p>
-      <img
-        src={ corgi_butt }
-        width="150"
-        alt="cat lady"
-      ></img>
-      <p>location (city, state): {data?.me.location}</p>
+
+      <div className="max-w-sm w-full lg:max-w-full lg:flex m-2">
+        <img
+          className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
+          src={corgi_butt} alt="illustrated corgi butt"
+        ></img>
+        <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+          <div className="mb-8">
+            <p className="text-sm text-gray-600 flex items-center"></p>
+            <div className="text-gray-900 font-bold text-xl mb-2">
+              my profile
+            </div>
+
+            <p className="text-gray-700 text-base">email: {data?.me.email}</p>
+
+            <p className="text-gray-700 text-base">location (city, state): {data?.me.location}</p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-sm w-full lg:max-w-full lg:flex"></div>
       <div>
-        <h3>pets are people, too</h3>
+        <h3 className="font-bold text-lg pl-4">pets are people, too</h3>
         {pets &&
           pets.map((pet) => (
             <div
@@ -123,14 +137,22 @@ const Profile = () => {
               className="max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
             >
               <div className="flex bg-slate-200">
-                <h4 className="font-bold text-xl mb-2 flex w-3/12 pl-4 pt-2">{pet.petName}</h4>
+                <h4 className="font-bold text-xl mb-2 flex w-3/12 pl-4 pt-2">
+                  {pet.petName}
+                </h4>
                 <div className="flex w-9/12 justify-end p-2">
-                  <button className="mr-4 border-b-2 border-rose-300"
-                  onClick={() => handleDeletePet(pet._id)}>
+                  <button
+                    className="mr-4 border-b-2 border-rose-300"
+                    onClick={() => handleDeletePet(pet._id)}
+                  >
                     delete pet
                   </button>
-                  <button className="mr-4 border-b-2 border-rose-300"
-                  onClick={toggleEditForm}>edit pet</button>
+                  <button
+                    className="mr-4 border-b-2 border-rose-300"
+                    onClick={toggleEditForm}
+                  >
+                    edit pet
+                  </button>
                 </div>
               </div>
               <div className="pl-4 pb-4 pr-4">
@@ -150,7 +172,7 @@ const Profile = () => {
           ))}
       </div>
       <div>
-        <h3>reviews from people, about people</h3>
+        <h3 className="font-bold text-lg pl-4">reviews from people, about people</h3>
         {reviews &&
           reviews.map((review) => (
             <div key={review._id} className="card mb-3">
