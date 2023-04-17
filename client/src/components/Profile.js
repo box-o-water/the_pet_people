@@ -108,12 +108,12 @@ const Profile = () => {
         </nav>
       </div>
 
-      <div className="max-w-sm w-full lg:max-w-full lg:flex m-2">
+      <div className="max-w-sm w-full lg:max-w-full lg:flex m-2 shadow-lg">
         <img
-          className="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden"
-          src={corgi_butt} alt="illustrated corgi butt"
+          className="h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
+          src={ corgi_butt } alt="illustrated corgi butt"
         ></img>
-        <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
+        <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
           <div className="mb-8">
             <p className="text-sm text-gray-600 flex items-center"></p>
             <div className="text-gray-900 font-bold text-xl mb-2">
@@ -187,7 +187,7 @@ const Profile = () => {
             </div>
           ))}
       </div>
-      <button onClick={handleDeleteUser}>Delete Account</button>
+      <button className="mr-4 border-b-2 border-rose-300 ml-4" onClick={handleDeleteUser}>delete account</button>
     </div>
   );
 };
