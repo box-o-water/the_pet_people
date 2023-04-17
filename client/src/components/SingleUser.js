@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import AddReview from "./AddReview"
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
-import { useMutation, useQuery } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { QUERY_USER } from "../utils/queries";
-import { ADD_REVIEW } from "../utils/mutations";
 
 const SingleUser = () => {
   let { id } = useParams();
@@ -14,9 +13,7 @@ const SingleUser = () => {
   const { loading, data } = useQuery(QUERY_USER, {
     variables: { _id: id },
   });
-  const [addReview] = useMutation(ADD_REVIEW, {
-    refetchQueries: [{QUERY_USER}]
-  })
+
   const [showAddReviewForm, setShowAddReviewForm] = useState(false);
 
   const toggleReviewAddForm = () => {
@@ -57,7 +54,7 @@ const SingleUser = () => {
       <div>
       <button onClick={toggleReviewAddForm}>Add Review</button>
       {showAddReviewForm && (
-                <AddReview />
+                <AddReview data={data} />
               )}
       </div>
       <div>

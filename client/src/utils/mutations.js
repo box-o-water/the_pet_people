@@ -117,11 +117,6 @@ export const ADD_REVIEW = gql`
       userReviewed: $userReviewed
     ) {
       _id
-      landlord
-      reviewContents
-      createdAt
-      rating
-      userReviewed
     }
   }
 `;

@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import EditPet from "./EditPet";
-
+import AddPet from "./AddPet";
+import UpdateProfile from "./UpdateProfile"
 // import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import { useQuery, useMutation } from "@apollo/client";
@@ -8,6 +9,7 @@ import { GET_ME } from "../utils/queries";
 import { DELETE_USER, DELETE_PET, UPDATE_PET } from "../utils/mutations";
 
 import dayjs from "dayjs";
+import corgi_butt from "../components/assets/corgi_butt.png";
 
 import Auth from "../utils/auth";
 import Swal from "sweetalert2";
@@ -27,7 +29,8 @@ const Profile = () => {
   const token = Auth.loggedIn() ? Auth.getToken() : null;
 
   const [showEditForm, setShowEditForm] = useState(false);
-
+  const [showAddPetForm, setShowAddPetForm] = useState(false);
+  const [showEditProfileForm, setShowEditProfileForm] = useState(false)
   if (!token) {
     return false;
   }
@@ -90,6 +93,12 @@ const Profile = () => {
   const toggleEditForm = () => {
     setShowEditForm(!showEditForm);
   };
+  const toggleAddPetForm = () => {
+    setShowAddPetForm(!showAddPetForm);
+  };
+  const toggleEditProfileForm = () => {
+    setShowEditProfileForm(!showEditProfileForm)
+  }
 
   return (
     <div className="bg-cyan-50">
@@ -98,43 +107,51 @@ const Profile = () => {
           <h2 className="text-lg">hello, {data?.me.username}!</h2>
         </div>
         <nav className="flex w-9/12 justify-end p-2">
-          <a className="mr-4 border-b-2 border-rose-300" href="/update-profile">
+          <button className="mr-4 border-b-2 border-rose-300" onClick={toggleEditProfileForm}>
             update profile
-          </a>
-          <a className="mr-2 border-b-2 border-rose-300" href="/add-pet">
+          </button>
+          <button
+            className="mr-2 border-b-2 border-rose-300"
+            onClick={toggleAddPetForm}
+          >
             add pet
-          </a>
+          </button>
         </nav>
       </div>
-      <div class="max-w-sm w-full lg:max-w-full lg:flex">
-  <div class="h-48 lg:h-auto lg:w-48 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden" style="background-image: url('/img/card-left.jpg')" title="Woman holding a mug">
-  </div>
-  <div class="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal">
-    <div class="mb-8">
-      <p class="text-sm text-gray-600 flex items-center">
-        Members only
-      </p>
-      <div class="text-gray-900 font-bold text-xl mb-2">Can coffee make you a better developer?</div>
-      <p class="text-gray-700 text-base">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptatibus quia, nulla! Maiores et perferendis eaque, exercitationem praesentium nihil.</p>
-    </div>
-    <div class="flex items-center">
-      <img class="w-10 h-10 rounded-full mr-4" src="/img/jonathan.jpg" alt="Avatar of Jonathan Reinink"/>
-      <div class="text-sm">
-        <p class="text-gray-900 leading-none">Jonathan Reinink</p>
-        <p class="text-gray-600">Aug 18</p>
-      </div>
-    </div>
-  </div>
-</div>
-      <p>email: {data?.me.email}</p>
-      <img
-        src="https://i.guim.co.uk/img/media/e4ae055cd7e0b946e216e2a43a97fcf085c364e6/463_41_2032_1219/master/2032.jpg?width=645&quality=45&dpr=2&s=none"
-        width="150"
-        alt="cat lady"
-      ></img>
-      <p>location (city, state): {data?.me.location}</p>
       <div>
-        <h3>pets are people, too</h3>
+        {showAddPetForm && (
+          <AddPet toggleEditForm={toggleAddPetForm} />
+        )}
+        {showEditProfileForm && (
+          <UpdateProfile toggleEditForm={toggleEditProfileForm} />
+        )}
+      </div>
+
+      <div className="max-w-sm w-full lg:max-w-full lg:flex m-2 shadow-lg">
+        <img
+          className="h-44 lg:h-auto lg:w-44 flex-none bg-cover rounded-t lg:rounded-t-none lg:rounded-l text-center overflow-hidden border-solid border-slate-300"
+          src={corgi_butt}
+          alt="illustrated corgi butt"
+        ></img>
+        <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col justify-between leading-normal w-full">
+          <div className="mb-8">
+            <p className="text-sm text-gray-600 flex items-center"></p>
+            <div className="text-gray-900 font-bold text-xl mb-2">
+              my profile
+            </div>
+
+            <p className="text-gray-700 text-base">email: {data?.me.email}</p>
+
+            <p className="text-gray-700 text-base">
+              location (city, state): {data?.me.location}
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div className="max-w-sm w-full lg:max-w-full lg:flex"></div>
+      <div>
+        <h3 className="font-bold text-lg pl-4">pets are people, too</h3>
         {pets &&
           pets.map((pet) => (
             <div
@@ -142,14 +159,22 @@ const Profile = () => {
               className="max-w-sm rounded overflow-hidden shadow-lg m-2 bg-slate-50"
             >
               <div className="flex bg-slate-200">
-                <h4 className="font-bold text-xl mb-2 flex w-3/12 pl-4 pt-2">{pet.petName}</h4>
+                <h4 className="font-bold text-xl mb-2 flex w-3/12 pl-4 pt-2">
+                  {pet.petName}
+                </h4>
                 <div className="flex w-9/12 justify-end p-2">
-                  <button className="mr-4 border-b-2 border-rose-300"
-                  onClick={() => handleDeletePet(pet._id)}>
+                  <button
+                    className="mr-4 border-b-2 border-rose-300"
+                    onClick={() => handleDeletePet(pet._id)}
+                  >
                     delete pet
                   </button>
-                  <button className="mr-4 border-b-2 border-rose-300"
-                  onClick={toggleEditForm}>edit pet</button>
+                  <button
+                    className="mr-4 border-b-2 border-rose-300"
+                    onClick={toggleEditForm}
+                  >
+                    edit pet
+                  </button>
                 </div>
               </div>
               <div className="pl-4 pb-4 pr-4">
@@ -169,7 +194,9 @@ const Profile = () => {
           ))}
       </div>
       <div>
-        <h3>reviews from people, about people</h3>
+        <h3 className="font-bold text-lg pl-4">
+          reviews from people, about people
+        </h3>
         {reviews &&
           reviews.map((review) => (
             <div key={review._id} className="card mb-3">
@@ -184,7 +211,12 @@ const Profile = () => {
             </div>
           ))}
       </div>
-      <button onClick={handleDeleteUser}>Delete Account</button>
+      <button
+        className="mr-4 border-b-2 border-rose-300 ml-4"
+        onClick={handleDeleteUser}
+      >
+        delete account
+      </button>
     </div>
   );
 };
