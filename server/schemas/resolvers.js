@@ -33,6 +33,7 @@ const resolvers = {
     },
 
     // find the logged-in user
+
     me: async (parent, args, context) => {
       if (context.user) {
         const data = await User.findOne({ _id: context.user._id })
@@ -45,10 +46,8 @@ const resolvers = {
             path: "reviews",
             model: "Review",
           });
-
         return data;
       }
-      throw new AuthenticationError("You need to be logged in!");
     },
   },
 
@@ -152,7 +151,11 @@ const resolvers = {
     },
 
     // add a pet to the user
-    addPet: async (parent, { petName, animalType, breed, size, age }, context) => {
+    addPet: async (
+      parent,
+      { petName, animalType, breed, size, age },
+      context
+    ) => {
       try {
         // Check if user is authenticated
         if (!context.user._id) {
@@ -195,7 +198,7 @@ const resolvers = {
     ) => {
       try {
         const userId = context.user._id;
-        console.log({_id});
+
         const user = await User.findById(userId);
 
         if (!user) {

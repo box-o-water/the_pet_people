@@ -63,47 +63,47 @@ const SignupForm = () => {
         </Alert>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="username">Username</Form.Label>
+          <Form.Label htmlFor="username">username</Form.Label>
           <Form.Control
             type="text"
-            placeholder="Your username"
+            placeholder="enter your username"
             name="username"
             onChange={handleInputChange}
             value={userFormData.username}
             required
           />
           <Form.Control.Feedback type="invalid">
-            Username is required!
+            username is required!
           </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="email">Email</Form.Label>
+          <Form.Label htmlFor="email">email</Form.Label>
           <Form.Control
             type="email"
-            placeholder="Your email address"
+            placeholder="enter your email address"
             name="email"
             onChange={handleInputChange}
             value={userFormData.email}
             required
           />
           <Form.Control.Feedback type="invalid">
-            Email is required!
+            email is required!
           </Form.Control.Feedback>
         </Form.Group>
 
         <Form.Group className="mb-3">
-          <Form.Label htmlFor="password">Password</Form.Label>
+          <Form.Label htmlFor="password">password</Form.Label>
           <Form.Control
             type="password"
-            placeholder="Your password"
+            placeholder="enter your password"
             name="password"
             onChange={handleInputChange}
             value={userFormData.password}
             required
           />
           <Form.Control.Feedback type="invalid">
-            Password is required!
+            password is required!
           </Form.Control.Feedback>
         </Form.Group>
         <Button
@@ -117,7 +117,7 @@ const SignupForm = () => {
           type="submit"
           variant="success"
         >
-          Submit
+          submit
         </Button>
       </Form>
     </>
